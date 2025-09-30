@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "spark.dating.app.android",
+      "sha256_cert_fingerprints": [
+        "25:97:CA:64:C3:2F:2E:F9:B2:EB:80:27:12:86:70:B7:62:97:AC:73:12:1D:F5:32:9E:00:CF:95:0C:12:47:EF"
+      ]
+    }
+  }
+]
