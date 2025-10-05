@@ -221,8 +221,8 @@
           encodedParams.set(key, value);
         });
 
-        const appUrl = `sparkapp://auth/steps/verify?${encodedParams.toString()}`;
-        const intentUrl = `intent://auth/steps/verify?${encodedParams.toString()}#Intent;scheme=sparkapp;package=spark.dating.app.android;S.browser_fallback_url=${encodeURIComponent('https://sparkapp.dev')};end`;
+        const appUrl = `sparkapp://steps/verify?${encodedParams.toString()}`;
+        const intentUrl = `intent://steps/verify?${encodedParams.toString()}#Intent;scheme=sparkapp;package=spark.dating.app.android;S.browser_fallback_url=${encodeURIComponent('https://sparkapp.dev')};end`;
 
         console.log('🔗 App URL:', appUrl);
         console.log('🔗 Intent URL:', intentUrl);
@@ -326,7 +326,7 @@
           const params = getUrlParams();
           const encodedParams = new URLSearchParams();
           params.forEach((value, key) => encodedParams.set(key, value));
-          const intentUrl = `intent://auth/steps/verify?${encodedParams.toString()}#Intent;scheme=sparkapp;package=spark.dating.app.android;end`;
+          const intentUrl = `intent://steps/verify?${encodedParams.toString()}#Intent;scheme=sparkapp;package=spark.dating.app.android;end`;
           window.location.href = intentUrl;
         });
 
