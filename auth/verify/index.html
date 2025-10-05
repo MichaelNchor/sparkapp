@@ -93,11 +93,29 @@
       .hidden {
         display: none;
       }
+
+      .debug-info {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 1rem;
+        border-radius: 10px;
+        margin: 1rem 0;
+        font-family: monospace;
+        font-size: 0.8rem;
+        text-align: left;
+        max-height: 200px;
+        overflow-y: auto;
+      }
     </style>
   </head>
   <body>
     <div class="container">
       <h1>✨ Spark</h1>
+
+      <!-- Debug Info (for troubleshooting) -->
+      <div class="debug-info">
+        <strong>🔍 Debug Info:</strong><br>
+        <div id="debug-content">Loading...</div>
+      </div>
 
       <!-- Loading State -->
       <div id="loading-state">
@@ -112,9 +130,11 @@
           Your email has been successfully verified. Opening the Spark app...
         </p>
         <a href="#" id="open-app-btn" class="button">Open Spark App</a>
+        <a href="#" id="open-intent-btn" class="button">Try Intent Method</a>
         <p style="font-size: 0.9rem; margin-top: 1rem">
-          If the app doesn't open automatically, tap the button above.
+          If the app doesn't open automatically, tap the buttons above.
         </p>
+        <div id="app-link-info" style="margin-top: 1rem; font-size: 0.8rem;"></div>
       </div>
 
       <!-- Error State -->
@@ -157,25 +177,98 @@
         return params;
       }
 
+      function updateDebugInfo() {
+        const params = getUrlParams();
+        const debugContent = document.getElementById('debug-content');
+        
+        const debugInfo = {
+          'Full URL': window.location.href,
+          'Search': window.location.search || 'None',
+          'Hash': window.location.hash || 'None',
+          'User Agent': navigator.userAgent.substring(0, 60) + '...',
+          'Is Android': /Android/i.test(navigator.userAgent),
+          'Parameters': Object.fromEntries(params),
+          'Has Access Token': params.has('access_token') || params.has('token'),
+          'Has Refresh Token': params.has('refresh_token')
+        };
+
+        let debugHtml = '';
+        for (const [key, value] of Object.entries(debugInfo)) {
+          debugHtml += `<strong>${key}:</strong> ${JSON.stringify(value)}<br>`;
+        }
+        
+        debugContent.innerHTML = debugHtml;
+      }
+
       function redirectToApp(params) {
-        // Build the deep link URL for your app
-        const appUrl = `sparkapp://auth/verify?${params.toString()}`;
+        console.log('🚀 Starting app redirect process...');
+        console.log('📋 Raw parameters:', Object.fromEntries(params));
 
-        console.log("Redirecting to app:", appUrl);
-        console.log("Parameters:", Object.fromEntries(params));
+        // Create properly encoded URLs using URLSearchParams for safety
+        const encodedParams = new URLSearchParams();
+        params.forEach((value, key) => {
+          encodedParams.set(key, value);
+        });
 
-        // Set the button href for manual fallback
+        const appUrl = `sparkapp://auth/verify?${encodedParams.toString()}`;
+        const intentUrl = `intent://auth/verify?${encodedParams.toString()}#Intent;scheme=sparkapp;package=spark.dating.app.android;S.browser_fallback_url=${encodeURIComponent('https://sparkapp.dev')};end`;
+
+        console.log('🔗 App URL:', appUrl);
+        console.log('🔗 Intent URL:', intentUrl);
+
+        // Update UI with link info
+        const linkInfo = document.getElementById('app-link-info');
+        if (linkInfo) {
+          linkInfo.innerHTML = `
+            <strong>App Link:</strong><br>
+            <code style="background: rgba(0,0,0,0.3); padding: 0.2rem; border-radius: 3px; word-break: break-all; font-size: 0.7rem;">${appUrl}</code>
+          `;
+        }
+
+        // Set button hrefs
         document.getElementById("open-app-btn").href = appUrl;
-        document.getElementById("retry-btn").href = appUrl;
+        document.getElementById("open-intent-btn").href = intentUrl;
+        if (document.getElementById("retry-btn")) {
+          document.getElementById("retry-btn").href = appUrl;
+        }
 
-        // Try to open the app automatically
-        window.location.href = appUrl;
-
-        // For Android, also try intent URL as fallback
         if (/Android/i.test(navigator.userAgent)) {
+          console.log('🤖 Android detected - using enhanced redirect methods');
+          
+          // Method 1: Intent URL (most reliable for Android with complex tokens)
           setTimeout(() => {
-            const intentUrl = `intent://auth/verify?${params.toString()}#Intent;scheme=sparkapp;package=com.spark.dating;end`;
+            console.log('📱 Method 1: Intent URL');
             window.location.href = intentUrl;
+          }, 1000);
+
+          // Method 2: Direct scheme (fallback)
+          setTimeout(() => {
+            console.log('📱 Method 2: Direct scheme fallback');
+            window.location.href = appUrl;
+          }, 3000);
+
+          // Method 3: Hidden iframe method (additional fallback)
+          setTimeout(() => {
+            console.log('📱 Method 3: iframe method');
+            try {
+              const iframe = document.createElement('iframe');
+              iframe.style.display = 'none';
+              iframe.src = appUrl;
+              document.body.appendChild(iframe);
+              setTimeout(() => {
+                if (document.body.contains(iframe)) {
+                  document.body.removeChild(iframe);
+                }
+              }, 2000);
+            } catch (e) {
+              console.log('Iframe method failed:', e);
+            }
+          }, 5000);
+
+        } else {
+          console.log('🍎 iOS/Other platform - using direct scheme');
+          setTimeout(() => {
+            window.location.href = appUrl;
           }, 1000);
         }
       }
@@ -183,10 +276,11 @@
       function handleVerification() {
         const params = getUrlParams();
 
-        console.log("Current URL:", window.location.href);
-        console.log("Search params:", window.location.search);
-        console.log("Hash params:", window.location.hash);
-        console.log("Extracted params:", Object.fromEntries(params));
+        console.log('🔍 Starting verification process...');
+        console.log('📄 Current URL:', window.location.href);
+        console.log('🔎 Search params:', window.location.search);
+        console.log('🔗 Hash params:', window.location.hash);
+        console.log('📋 Extracted params:', Object.fromEntries(params));
 
         // Check for authentication tokens
         const accessToken = params.get("access_token") || params.get("token");
@@ -194,9 +288,18 @@
         const error = params.get("error");
         const errorDescription = params.get("error_description");
 
+        console.log('🔑 Token analysis:', {
+          hasAccessToken: !!accessToken,
+          accessTokenLength: accessToken ? accessToken.length : 0,
+          hasRefreshToken: !!refreshToken,
+          refreshTokenLength: refreshToken ? refreshToken.length : 0,
+          error,
+          errorDescription
+        });
+
         if (error) {
           // Handle authentication errors
-          console.error("Auth error:", error, errorDescription);
+          console.error('❌ Auth error:', error, errorDescription);
 
           let errorMessage = "There was an error with your verification.";
 
@@ -214,42 +317,64 @@
 
           // Still try to redirect to app with error info
           setTimeout(() => redirectToApp(params), 2000);
+          
         } else if (accessToken) {
           // Success - we have tokens
-          console.log("Verification successful, redirecting to app...");
+          console.log('✅ Verification successful, redirecting to app...');
           showState("success-state");
 
           // Redirect to app after short delay
           setTimeout(() => redirectToApp(params), 1500);
+          
         } else {
           // No relevant parameters found
-          console.warn("No auth parameters found in URL");
+          console.warn('⚠️ No auth parameters found in URL');
           document.getElementById("error-message").textContent =
-            "This verification link appears to be invalid or incomplete.";
+            "This verification link appears to be invalid or incomplete. No authentication tokens found.";
           showState("error-state");
         }
       }
 
       // Initialize when page loads
       document.addEventListener("DOMContentLoaded", function () {
-        console.log("Page loaded, starting verification process...");
+        console.log('📄 Page loaded, initializing...');
+
+        // Update debug info immediately
+        updateDebugInfo();
 
         // Add click handlers
         document
           .getElementById("open-app-btn")
           .addEventListener("click", function (e) {
             e.preventDefault();
+            console.log('🔄 Manual app open button clicked');
             const params = getUrlParams();
             redirectToApp(params);
           });
 
         document
-          .getElementById("retry-btn")
+          .getElementById("open-intent-btn")
           .addEventListener("click", function (e) {
             e.preventDefault();
+            console.log('🔄 Manual intent button clicked');
+            const params = getUrlParams();
+            const encodedParams = new URLSearchParams();
+            params.forEach((value, key) => {
+              encodedParams.set(key, value);
+            });
+            const intentUrl = `intent://auth/verify?${encodedParams.toString()}#Intent;scheme=sparkapp;package=spark.dating.app.android;end`;
+            window.location.href = intentUrl;
+          });
+
+        const retryBtn = document.getElementById("retry-btn");
+        if (retryBtn) {
+          retryBtn.addEventListener("click", function (e) {
+            e.preventDefault();
+            console.log('🔄 Retry button clicked');
             const params = getUrlParams();
             redirectToApp(params);
           });
+        }
 
         // Start verification process after a brief delay
         setTimeout(handleVerification, 1000);
@@ -258,10 +383,19 @@
       // Handle page visibility changes (useful for mobile)
       document.addEventListener("visibilitychange", function () {
         if (document.hidden) {
-          console.log("Page hidden - likely app opened successfully");
+          console.log('📱 Page hidden - app likely opened successfully');
         } else {
-          console.log("Page visible again - app might not have opened");
+          console.log('👀 Page visible again - app might not have opened');
         }
+      });
+
+      // Handle window focus changes
+      window.addEventListener('blur', function() {
+        console.log('🔄 Window lost focus - app might have opened');
+      });
+
+      window.addEventListener('focus', function() {
+        console.log('🔄 Window gained focus - user returned to browser');
       });
     </script>
   </body>
