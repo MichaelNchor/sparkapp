@@ -211,6 +211,7 @@
         debugContent.innerHTML = debugHtml;
       }
 
+      // ✅ FIXED: Single redirect function with proper guards
       function redirectToApp(params) {
         console.log('🚀 Starting app redirect...');
         console.log('📋 Parameters:', Object.fromEntries(params));
@@ -227,32 +228,64 @@
         console.log('🔗 App URL:', appUrl);
         console.log('🔗 Intent URL:', intentUrl);
 
-        // Set button hrefs
+        // Set button hrefs for manual fallback
         document.getElementById("open-app-btn").href = appUrl;
         document.getElementById("open-intent-btn").href = intentUrl;
         if (document.getElementById("retry-btn")) {
           document.getElementById("retry-btn").href = appUrl;
         }
 
-        if (/Android/i.test(navigator.userAgent)) {
-          console.log('🤖 Android - using intent method first');
-          
-          // Method 1: Intent URL (most reliable)
-          setTimeout(() => {
-            console.log('📱 Trying intent URL...');
-            window.location.href = intentUrl;
-          }, 1000);
+        // ✅ FIXED: Prevent multiple redirects with global flag
+        if (window.sparkRedirectAttempted) {
+          console.log('🔒 Redirect already attempted, skipping');
+          return;
+        }
+        
+        window.sparkRedirectAttempted = true;
 
-          // Method 2: Direct scheme fallback
+        if (/Android/i.test(navigator.userAgent)) {
+          console.log('🤖 Android - using intent method');
+          
+          // ✅ FIXED: Only one redirect attempt with timeout fallback
           setTimeout(() => {
-            console.log('📱 Trying direct scheme...');
-            window.location.href = appUrl;
-          }, 3000);
+            console.log('📱 Attempting app redirect with intent URL...');
+            try {
+              window.location.href = intentUrl;
+              
+              // ✅ Show manual buttons if redirect fails after 5 seconds
+              setTimeout(() => {
+                if (!document.hidden) {
+                  console.log('⚠️ App may not have opened, showing manual options');
+                  showState("success-state");
+                }
+              }, 5000);
+              
+            } catch (error) {
+              console.error('❌ Intent redirect failed:', error);
+              showState("success-state");
+            }
+          }, 1000);
 
         } else {
           console.log('🍎 iOS/Other - using direct scheme');
+          
           setTimeout(() => {
-            window.location.href = appUrl;
+            console.log('📱 Attempting app redirect with direct scheme...');
+            try {
+              window.location.href = appUrl;
+              
+              // ✅ Show manual buttons if redirect fails after 5 seconds
+              setTimeout(() => {
+                if (!document.hidden) {
+                  console.log('⚠️ App may not have opened, showing manual options');
+                  showState("success-state");
+                }
+              }, 5000);
+              
+            } catch (error) {
+              console.error('❌ Direct scheme redirect failed:', error);
+              showState("success-state");
+            }
           }, 1000);
         }
       }
@@ -290,13 +323,14 @@
           document.getElementById("error-message").textContent = errorMessage;
           showState("error-state");
 
-          // Still try to redirect with error info
+          // ✅ FIXED: Single redirect attempt even for errors
           setTimeout(() => redirectToApp(params), 2000);
           
         } else if (accessToken) {
           console.log('✅ Success! Redirecting to app...');
-          showState("success-state");
-          setTimeout(() => redirectToApp(params), 1500);
+          
+          // ✅ FIXED: Direct redirect without showing success state first
+          redirectToApp(params);
           
         } else {
           console.warn('⚠️ No valid tokens found');
@@ -312,12 +346,19 @@
         
         updateDebugInfo();
 
-        // Add click handlers
+        // ✅ FIXED: Add proper click handlers with redirect prevention
         document.getElementById("open-app-btn").addEventListener("click", function (e) {
           e.preventDefault();
           console.log('🔄 Manual app button clicked');
-          const params = getUrlParams();
-          redirectToApp(params);
+          if (!window.sparkRedirectAttempted) {
+            const params = getUrlParams();
+            redirectToApp(params);
+          } else {
+            // Force redirect even if already attempted
+            window.sparkRedirectAttempted = false;
+            const params = getUrlParams();
+            redirectToApp(params);
+          }
         });
 
         document.getElementById("open-intent-btn").addEventListener("click", function (e) {
@@ -335,21 +376,40 @@
           retryBtn.addEventListener("click", function (e) {
             e.preventDefault();
             console.log('🔄 Retry clicked');
+            // Reset redirect flag for retry
+            window.sparkRedirectAttempted = false;
             const params = getUrlParams();
             redirectToApp(params);
           });
         }
 
-        // Start verification process
+        // ✅ Start verification process
         setTimeout(handleVerification, 1000);
       });
 
-      // Handle page visibility
+      // ✅ IMPROVED: Better page visibility handling
       document.addEventListener("visibilitychange", function () {
         if (document.hidden) {
-          console.log('📱 Page hidden - app likely opened');
+          console.log('📱 Page hidden - app likely opened successfully');
+          // App opened successfully, mark as complete
+          window.sparkAppOpened = true;
         } else {
-          console.log('👀 Page visible - app might not have opened');
+          console.log('👀 Page visible - checking if app opened...');
+          if (window.sparkRedirectAttempted && !window.sparkAppOpened) {
+            console.log('⚠️ App may not have opened, user returned to page');
+            // Show manual options if user returns without app opening
+            if (document.getElementById("loading-state").style.display !== "none") {
+              showState("success-state");
+            }
+          }
+        }
+      });
+
+      // ✅ ADDED: Handle back button / page return
+      window.addEventListener("focus", function() {
+        if (window.sparkRedirectAttempted && !window.sparkAppOpened) {
+          console.log('🔄 Window focused - user may have returned, showing manual options');
+          showState("success-state");
         }
       });
     </script>
