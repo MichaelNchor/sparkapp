@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Spark – Email Verification</title>
+    <title>Spark – Find Your Match</title>
     <style>
       body {
         margin: 0;
@@ -46,42 +46,10 @@
         background: white;
         border-radius: 30px;
         transition: all 0.3s ease;
-        margin: 0.5rem;
       }
 
       a.button:hover {
         background: #ffe0e7;
-      }
-
-      .loading {
-        color: #fff;
-      }
-
-      .success {
-        color: #28a745;
-      }
-
-      .error {
-        color: #ffc107;
-      }
-
-      .spinner {
-        border: 3px solid rgba(255, 255, 255, 0.3);
-        border-radius: 50%;
-        border-top: 3px solid white;
-        width: 30px;
-        height: 30px;
-        animation: spin 1s linear infinite;
-        margin: 1rem auto;
-      }
-
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
       }
 
       footer {
@@ -89,180 +57,17 @@
         font-size: 0.85rem;
         color: rgba(255, 255, 255, 0.7);
       }
-
-      .hidden {
-        display: none;
-      }
     </style>
   </head>
   <body>
     <div class="container">
       <h1>✨ Spark</h1>
-
-      <!-- Loading State -->
-      <div id="loading-state">
-        <div class="spinner"></div>
-        <p>Verifying your email...</p>
-      </div>
-
-      <!-- Success State -->
-      <div id="success-state" class="hidden">
-        <h2>🎉 Email Verified!</h2>
-        <p>
-          Your email has been successfully verified. Opening the Spark app...
-        </p>
-        <a href="#" id="open-app-btn" class="button">Open Spark App</a>
-        <p style="font-size: 0.9rem; margin-top: 1rem">
-          If the app doesn't open automatically, tap the button above.
-        </p>
-      </div>
-
-      <!-- Error State -->
-      <div id="error-state" class="hidden">
-        <h2>⚠️ Verification Issue</h2>
-        <p id="error-message">
-          There was an issue with your verification link.
-        </p>
-        <a href="/" class="button">Go to Spark</a>
-        <a href="#" id="retry-btn" class="button">Try Again</a>
-      </div>
-
+      <p>
+        Find your perfect match, connect instantly, and create unforgettable
+        moments. Spark is the dating app that lights up your love life.
+      </p>
+      <!-- <a href="/" class="button">Explore Spark</a> -->
       <footer>&copy; 2025 Spark Dating App. All rights reserved.</footer>
     </div>
-
-    <script>
-      // Utility functions
-      function showState(stateId) {
-        document
-          .querySelectorAll('[id$="-state"]')
-          .forEach((el) => el.classList.add("hidden"));
-        document.getElementById(stateId).classList.remove("hidden");
-      }
-
-      function getUrlParams() {
-        const params = new URLSearchParams();
-
-        // Get search parameters (?param=value)
-        const searchParams = new URLSearchParams(window.location.search);
-        searchParams.forEach((value, key) => params.set(key, value));
-
-        // Get hash parameters (#param=value) - Supabase often uses hash
-        if (window.location.hash) {
-          const hashParams = new URLSearchParams(
-            window.location.hash.substring(1)
-          );
-          hashParams.forEach((value, key) => params.set(key, value));
-        }
-
-        return params;
-      }
-
-      function redirectToApp(params) {
-        // Build the deep link URL for your app
-        const appUrl = `sparkapp://auth/verify?${params.toString()}`;
-
-        console.log("Redirecting to app:", appUrl);
-        console.log("Parameters:", Object.fromEntries(params));
-
-        // Set the button href for manual fallback
-        document.getElementById("open-app-btn").href = appUrl;
-        document.getElementById("retry-btn").href = appUrl;
-
-        // Try to open the app automatically
-        window.location.href = appUrl;
-
-        // For Android, also try intent URL as fallback
-        if (/Android/i.test(navigator.userAgent)) {
-          setTimeout(() => {
-            const intentUrl = `intent://auth/verify?${params.toString()}#Intent;scheme=sparkapp;package=com.spark.dating;end`;
-            window.location.href = intentUrl;
-          }, 1000);
-        }
-      }
-
-      function handleVerification() {
-        const params = getUrlParams();
-
-        console.log("Current URL:", window.location.href);
-        console.log("Search params:", window.location.search);
-        console.log("Hash params:", window.location.hash);
-        console.log("Extracted params:", Object.fromEntries(params));
-
-        // Check for authentication tokens
-        const accessToken = params.get("access_token") || params.get("token");
-        const refreshToken = params.get("refresh_token");
-        const error = params.get("error");
-        const errorDescription = params.get("error_description");
-
-        if (error) {
-          // Handle authentication errors
-          console.error("Auth error:", error, errorDescription);
-
-          let errorMessage = "There was an error with your verification.";
-
-          if (error === "access_denied") {
-            errorMessage = "Email verification was denied or cancelled.";
-          } else if (errorDescription?.includes("expired")) {
-            errorMessage =
-              "Your verification link has expired. Please request a new one.";
-          } else if (errorDescription) {
-            errorMessage = errorDescription;
-          }
-
-          document.getElementById("error-message").textContent = errorMessage;
-          showState("error-state");
-
-          // Still try to redirect to app with error info
-          setTimeout(() => redirectToApp(params), 2000);
-        } else if (accessToken) {
-          // Success - we have tokens
-          console.log("Verification successful, redirecting to app...");
-          showState("success-state");
-
-          // Redirect to app after short delay
-          setTimeout(() => redirectToApp(params), 1500);
-        } else {
-          // No relevant parameters found
-          console.warn("No auth parameters found in URL");
-          document.getElementById("error-message").textContent =
-            "This verification link appears to be invalid or incomplete.";
-          showState("error-state");
-        }
-      }
-
-      // Initialize when page loads
-      document.addEventListener("DOMContentLoaded", function () {
-        console.log("Page loaded, starting verification process...");
-
-        // Add click handlers
-        document
-          .getElementById("open-app-btn")
-          .addEventListener("click", function (e) {
-            e.preventDefault();
-            const params = getUrlParams();
-            redirectToApp(params);
-          });
-
-        document
-          .getElementById("retry-btn")
-          .addEventListener("click", function (e) {
-            e.preventDefault();
-            const params = getUrlParams();
-            redirectToApp(params);
-          });
-
-        // Start verification process after a brief delay
-        setTimeout(handleVerification, 1000);
-      });
-
-      // Handle page visibility changes (useful for mobile)
-      document.addEventListener("visibilitychange", function () {
-        if (document.hidden) {
-          console.log("Page hidden - likely app opened successfully");
-        } else {
-          console.log("Page visible again - app might not have opened");
-        }
-      });
-    </script>
   </body>
 </html>
