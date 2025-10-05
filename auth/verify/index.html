@@ -53,18 +53,6 @@
         background: #ffe0e7;
       }
 
-      .loading {
-        color: #fff;
-      }
-
-      .success {
-        color: #28a745;
-      }
-
-      .error {
-        color: #ffc107;
-      }
-
       .spinner {
         border: 3px solid rgba(255, 255, 255, 0.3);
         border-radius: 50%;
@@ -82,12 +70,6 @@
         100% {
           transform: rotate(360deg);
         }
-      }
-
-      footer {
-        margin-top: 2rem;
-        font-size: 0.85rem;
-        color: rgba(255, 255, 255, 0.7);
       }
 
       .hidden {
@@ -111,9 +93,9 @@
     <div class="container">
       <h1>✨ Spark</h1>
 
-      <!-- Debug Info (for troubleshooting) -->
+      <!-- Debug Info -->
       <div class="debug-info">
-        <strong>🔍 Debug Info:</strong><br>
+        <strong>🔍 URL Debug Info:</strong><br>
         <div id="debug-content">Loading...</div>
       </div>
 
@@ -126,32 +108,25 @@
       <!-- Success State -->
       <div id="success-state" class="hidden">
         <h2>🎉 Email Verified!</h2>
-        <p>
-          Your email has been successfully verified. Opening the Spark app...
-        </p>
+        <p>Opening the Spark app...</p>
         <a href="#" id="open-app-btn" class="button">Open Spark App</a>
         <a href="#" id="open-intent-btn" class="button">Try Intent Method</a>
-        <p style="font-size: 0.9rem; margin-top: 1rem">
-          If the app doesn't open automatically, tap the buttons above.
-        </p>
-        <div id="app-link-info" style="margin-top: 1rem; font-size: 0.8rem;"></div>
       </div>
 
       <!-- Error State -->
       <div id="error-state" class="hidden">
         <h2>⚠️ Verification Issue</h2>
-        <p id="error-message">
-          There was an issue with your verification link.
-        </p>
+        <p id="error-message">There was an issue with your verification link.</p>
         <a href="/" class="button">Go to Spark</a>
         <a href="#" id="retry-btn" class="button">Try Again</a>
       </div>
 
-      <footer>&copy; 2025 Spark Dating App. All rights reserved.</footer>
+      <footer style="margin-top: 2rem; font-size: 0.85rem; color: rgba(255, 255, 255, 0.7);">
+        &copy; 2025 Spark Dating App. All rights reserved.
+      </footer>
     </div>
 
     <script>
-      // Utility functions
       function showState(stateId) {
         document
           .querySelectorAll('[id$="-state"]')
@@ -162,16 +137,41 @@
       function getUrlParams() {
         const params = new URLSearchParams();
 
-        // Get search parameters (?param=value)
+        // Method 1: Get search parameters (?param=value)
         const searchParams = new URLSearchParams(window.location.search);
         searchParams.forEach((value, key) => params.set(key, value));
 
-        // Get hash parameters (#param=value) - Supabase often uses hash
+        // Method 2: Get hash parameters (#param=value) - Supabase often uses hash
         if (window.location.hash) {
-          const hashParams = new URLSearchParams(
-            window.location.hash.substring(1)
-          );
+          const hashParams = new URLSearchParams(window.location.hash.substring(1));
           hashParams.forEach((value, key) => params.set(key, value));
+        }
+
+        // Method 3: Manual parsing for malformed URLs (fallback)
+        const url = window.location.href;
+        
+        // Check if there are parameters that might be malformed
+        if (url.includes('access_token=') && !params.has('access_token')) {
+          console.log('🔧 Attempting manual parameter extraction...');
+          
+          // Extract everything after the first '?' or '#'
+          const paramString = url.split(/[?#]/)[1] || '';
+          
+          if (paramString) {
+            // Split by & and manually parse each parameter
+            const pairs = paramString.split('&');
+            pairs.forEach(pair => {
+              const [key, value] = pair.split('=');
+              if (key && value) {
+                try {
+                  params.set(decodeURIComponent(key), decodeURIComponent(value));
+                } catch (e) {
+                  // If decoding fails, use raw values
+                  params.set(key, value);
+                }
+              }
+            });
+          }
         }
 
         return params;
@@ -181,30 +181,41 @@
         const params = getUrlParams();
         const debugContent = document.getElementById('debug-content');
         
-        const debugInfo = {
-          'Full URL': window.location.href,
+        // Parse URL components manually for debugging
+        const url = window.location.href;
+        const urlParts = {
+          'Full URL': url,
           'Search': window.location.search || 'None',
           'Hash': window.location.hash || 'None',
-          'User Agent': navigator.userAgent.substring(0, 60) + '...',
-          'Is Android': /Android/i.test(navigator.userAgent),
-          'Parameters': Object.fromEntries(params),
-          'Has Access Token': params.has('access_token') || params.has('token'),
-          'Has Refresh Token': params.has('refresh_token')
+          'Contains access_token': url.includes('access_token'),
+          'Contains &': url.includes('&'),
+          'Parameter count': params.size,
+          'Is Android': /Android/i.test(navigator.userAgent)
         };
 
         let debugHtml = '';
-        for (const [key, value] of Object.entries(debugInfo)) {
-          debugHtml += `<strong>${key}:</strong> ${JSON.stringify(value)}<br>`;
+        for (const [key, value] of Object.entries(urlParts)) {
+          debugHtml += `<strong>${key}:</strong> ${value}<br>`;
+        }
+
+        debugHtml += '<br><strong>Extracted Parameters:</strong><br>';
+        if (params.size === 0) {
+          debugHtml += '<span style="color: #ff6b6b;">❌ No parameters found!</span><br>';
+        } else {
+          for (const [key, value] of params.entries()) {
+            const shortValue = value.length > 30 ? value.substring(0, 30) + '...' : value;
+            debugHtml += `&nbsp;&nbsp;${key}: ${shortValue}<br>`;
+          }
         }
         
         debugContent.innerHTML = debugHtml;
       }
 
       function redirectToApp(params) {
-        console.log('🚀 Starting app redirect process...');
-        console.log('📋 Raw parameters:', Object.fromEntries(params));
+        console.log('🚀 Starting app redirect...');
+        console.log('📋 Parameters:', Object.fromEntries(params));
 
-        // Create properly encoded URLs using URLSearchParams for safety
+        // Create properly encoded URLs
         const encodedParams = new URLSearchParams();
         params.forEach((value, key) => {
           encodedParams.set(key, value);
@@ -216,15 +227,6 @@
         console.log('🔗 App URL:', appUrl);
         console.log('🔗 Intent URL:', intentUrl);
 
-        // Update UI with link info
-        const linkInfo = document.getElementById('app-link-info');
-        if (linkInfo) {
-          linkInfo.innerHTML = `
-            <strong>App Link:</strong><br>
-            <code style="background: rgba(0,0,0,0.3); padding: 0.2rem; border-radius: 3px; word-break: break-all; font-size: 0.7rem;">${appUrl}</code>
-          `;
-        }
-
         // Set button hrefs
         document.getElementById("open-app-btn").href = appUrl;
         document.getElementById("open-intent-btn").href = intentUrl;
@@ -233,40 +235,22 @@
         }
 
         if (/Android/i.test(navigator.userAgent)) {
-          console.log('🤖 Android detected - using enhanced redirect methods');
+          console.log('🤖 Android - using intent method first');
           
-          // Method 1: Intent URL (most reliable for Android with complex tokens)
+          // Method 1: Intent URL (most reliable)
           setTimeout(() => {
-            console.log('📱 Method 1: Intent URL');
+            console.log('📱 Trying intent URL...');
             window.location.href = intentUrl;
           }, 1000);
 
-          // Method 2: Direct scheme (fallback)
+          // Method 2: Direct scheme fallback
           setTimeout(() => {
-            console.log('📱 Method 2: Direct scheme fallback');
+            console.log('📱 Trying direct scheme...');
             window.location.href = appUrl;
           }, 3000);
 
-          // Method 3: Hidden iframe method (additional fallback)
-          setTimeout(() => {
-            console.log('📱 Method 3: iframe method');
-            try {
-              const iframe = document.createElement('iframe');
-              iframe.style.display = 'none';
-              iframe.src = appUrl;
-              document.body.appendChild(iframe);
-              setTimeout(() => {
-                if (document.body.contains(iframe)) {
-                  document.body.removeChild(iframe);
-                }
-              }, 2000);
-            } catch (e) {
-              console.log('Iframe method failed:', e);
-            }
-          }, 5000);
-
         } else {
-          console.log('🍎 iOS/Other platform - using direct scheme');
+          console.log('🍎 iOS/Other - using direct scheme');
           setTimeout(() => {
             window.location.href = appUrl;
           }, 1000);
@@ -276,38 +260,29 @@
       function handleVerification() {
         const params = getUrlParams();
 
-        console.log('🔍 Starting verification process...');
-        console.log('📄 Current URL:', window.location.href);
-        console.log('🔎 Search params:', window.location.search);
-        console.log('🔗 Hash params:', window.location.hash);
-        console.log('📋 Extracted params:', Object.fromEntries(params));
+        console.log('🔍 Starting verification...');
+        console.log('📄 URL:', window.location.href);
+        console.log('📋 Params:', Object.fromEntries(params));
 
-        // Check for authentication tokens
         const accessToken = params.get("access_token") || params.get("token");
         const refreshToken = params.get("refresh_token");
         const error = params.get("error");
         const errorDescription = params.get("error_description");
 
-        console.log('🔑 Token analysis:', {
-          hasAccessToken: !!accessToken,
-          accessTokenLength: accessToken ? accessToken.length : 0,
-          hasRefreshToken: !!refreshToken,
-          refreshTokenLength: refreshToken ? refreshToken.length : 0,
-          error,
-          errorDescription
+        console.log('🔑 Tokens found:', {
+          accessToken: !!accessToken,
+          refreshToken: !!refreshToken,
+          error: error
         });
 
         if (error) {
-          // Handle authentication errors
           console.error('❌ Auth error:', error, errorDescription);
-
+          
           let errorMessage = "There was an error with your verification.";
-
           if (error === "access_denied") {
             errorMessage = "Email verification was denied or cancelled.";
           } else if (errorDescription?.includes("expired")) {
-            errorMessage =
-              "Your verification link has expired. Please request a new one.";
+            errorMessage = "Your verification link has expired. Please request a new one.";
           } else if (errorDescription) {
             errorMessage = errorDescription;
           }
@@ -315,87 +290,67 @@
           document.getElementById("error-message").textContent = errorMessage;
           showState("error-state");
 
-          // Still try to redirect to app with error info
+          // Still try to redirect with error info
           setTimeout(() => redirectToApp(params), 2000);
           
         } else if (accessToken) {
-          // Success - we have tokens
-          console.log('✅ Verification successful, redirecting to app...');
+          console.log('✅ Success! Redirecting to app...');
           showState("success-state");
-
-          // Redirect to app after short delay
           setTimeout(() => redirectToApp(params), 1500);
           
         } else {
-          // No relevant parameters found
-          console.warn('⚠️ No auth parameters found in URL');
+          console.warn('⚠️ No valid tokens found');
           document.getElementById("error-message").textContent =
-            "This verification link appears to be invalid or incomplete. No authentication tokens found.";
+            "This verification link appears to be invalid. No authentication tokens found.";
           showState("error-state");
         }
       }
 
-      // Initialize when page loads
+      // Initialize
       document.addEventListener("DOMContentLoaded", function () {
-        console.log('📄 Page loaded, initializing...');
-
-        // Update debug info immediately
+        console.log('📄 Page loaded');
+        
         updateDebugInfo();
 
         // Add click handlers
-        document
-          .getElementById("open-app-btn")
-          .addEventListener("click", function (e) {
-            e.preventDefault();
-            console.log('🔄 Manual app open button clicked');
-            const params = getUrlParams();
-            redirectToApp(params);
-          });
+        document.getElementById("open-app-btn").addEventListener("click", function (e) {
+          e.preventDefault();
+          console.log('🔄 Manual app button clicked');
+          const params = getUrlParams();
+          redirectToApp(params);
+        });
 
-        document
-          .getElementById("open-intent-btn")
-          .addEventListener("click", function (e) {
-            e.preventDefault();
-            console.log('🔄 Manual intent button clicked');
-            const params = getUrlParams();
-            const encodedParams = new URLSearchParams();
-            params.forEach((value, key) => {
-              encodedParams.set(key, value);
-            });
-            const intentUrl = `intent://auth/verify?${encodedParams.toString()}#Intent;scheme=sparkapp;package=spark.dating.app.android;end`;
-            window.location.href = intentUrl;
-          });
+        document.getElementById("open-intent-btn").addEventListener("click", function (e) {
+          e.preventDefault();
+          console.log('🔄 Manual intent button clicked');
+          const params = getUrlParams();
+          const encodedParams = new URLSearchParams();
+          params.forEach((value, key) => encodedParams.set(key, value));
+          const intentUrl = `intent://auth/verify?${encodedParams.toString()}#Intent;scheme=sparkapp;package=spark.dating.app.android;end`;
+          window.location.href = intentUrl;
+        });
 
         const retryBtn = document.getElementById("retry-btn");
         if (retryBtn) {
           retryBtn.addEventListener("click", function (e) {
             e.preventDefault();
-            console.log('🔄 Retry button clicked');
+            console.log('🔄 Retry clicked');
             const params = getUrlParams();
             redirectToApp(params);
           });
         }
 
-        // Start verification process after a brief delay
+        // Start verification process
         setTimeout(handleVerification, 1000);
       });
 
-      // Handle page visibility changes (useful for mobile)
+      // Handle page visibility
       document.addEventListener("visibilitychange", function () {
         if (document.hidden) {
-          console.log('📱 Page hidden - app likely opened successfully');
+          console.log('📱 Page hidden - app likely opened');
         } else {
-          console.log('👀 Page visible again - app might not have opened');
+          console.log('👀 Page visible - app might not have opened');
         }
-      });
-
-      // Handle window focus changes
-      window.addEventListener('blur', function() {
-        console.log('🔄 Window lost focus - app might have opened');
-      });
-
-      window.addEventListener('focus', function() {
-        console.log('🔄 Window gained focus - user returned to browser');
       });
     </script>
   </body>
