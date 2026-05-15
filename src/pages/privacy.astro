@@ -1,0 +1,81 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const updated = 'May 13, 2026';
+---
+
+<Layout
+  title="Privacy Policy — Spark"
+  description="How Spark collects, uses, and protects your information."
+>
+  <Nav />
+
+  <main class="legal">
+    <article class="legal__inner">
+      <p class="legal__eyebrow">Legal</p>
+      <h1 class="legal__title">Privacy Policy</h1>
+      <p class="legal__updated">Last updated {updated}</p>
+
+      <p>
+        Spark (“we,” “our,” or “us”) is built so people can meet each other for
+        real connections. This policy explains what we collect, why, and the
+        choices you have. We try to keep it short and plain.
+      </p>
+
+      <h2>What we collect</h2>
+      <ul>
+        <li><strong>Account info</strong> — name, date of birth, gender, email or phone, and the photos you upload.</li>
+        <li><strong>Profile content</strong> — bio, prompts, “Hit Me Up” posts, chats, and love-note replies.</li>
+        <li><strong>Location</strong> — city-level location to show you nearby people. You can disable precise location at any time in your device settings.</li>
+        <li><strong>Device data</strong> — basic technical info (OS, app version, crash logs) so we can keep the app stable.</li>
+        <li><strong>Payments</strong> — handled by Apple App Store and Google Play. We never see your card details.</li>
+      </ul>
+
+      <h2>How we use it</h2>
+      <ul>
+        <li>To match you with compatible people and keep the experience safe.</li>
+        <li>To moderate text and images for harassment, nudity, and underage content.</li>
+        <li>To send you notifications you opted into (matches, messages, calls).</li>
+        <li>To improve the product through aggregated, non-identifying analytics.</li>
+      </ul>
+
+      <h2>Photo &amp; text moderation</h2>
+      <p>
+        Every photo you upload is checked by an automated moderator before it
+        becomes visible to others. Profile photos are additionally checked for a
+        clearly visible face. Every chat, comment, prompt, and love note is
+        scanned for harmful content. We never share moderation reasons publicly.
+      </p>
+
+      <h2>Sharing</h2>
+      <p>We don’t sell your data. We share only with:</p>
+      <ul>
+        <li>Service providers who run our infrastructure (hosting, push notifications, crash reporting), under contract.</li>
+        <li>Law enforcement when required by valid legal process.</li>
+        <li>People you choose to share with inside the app.</li>
+      </ul>
+
+      <h2>Your choices</h2>
+      <ul>
+        <li>You can delete your account at any time from <strong>Settings → Account</strong>. This is permanent and removes your data.</li>
+        <li>You can pause discovery, hide your distance, or block any user.</li>
+        <li>You can opt out of marketing notifications while keeping match alerts.</li>
+      </ul>
+
+      <h2>Children</h2>
+      <p>
+        Spark is strictly 18+. We use age-verification at signup and remove
+        accounts that misrepresent age.
+      </p>
+
+      <h2>Contact</h2>
+      <p>
+        Questions or requests? Email <a href="mailto:privacy@sparkapp.dev">privacy@sparkapp.dev</a>.
+      </p>
+    </article>
+  </main>
+
+  <Footer />
+</Layout>
