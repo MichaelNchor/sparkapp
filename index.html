@@ -1,73 +1,342 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Spark – Find Your Match</title>
-    <style>
-      body {
-        margin: 0;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #ff416c, #ff4b2b);
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        text-align: center;
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spark — Find Your Match</title>
+  <meta name="description" content="Spark is a modern dating app for people looking for real connections. Available on iOS and Android." />
+  <meta name="theme-color" content="#0a0a0f" />
 
-      .container {
-        max-width: 500px;
-        padding: 2rem;
-        background: rgba(255, 255, 255, 0.08);
-        border-radius: 20px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        backdrop-filter: blur(8px);
-      }
+  <!-- Open Graph -->
+  <meta property="og:title" content="Spark — Find Your Match" />
+  <meta property="og:description" content="A dating app built for real connections. Available on iOS and Android." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://sparkapp.dev" />
 
-      h1 {
-        font-size: 2.5rem;
-        margin-bottom: 0.5rem;
-      }
+  <!-- Poppins for visual continuity with the mobile app's typography. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
 
-      p {
-        font-size: 1.1rem;
-        margin-bottom: 2rem;
-      }
+  <link rel="stylesheet" href="./styles.css" />
+</head>
 
-      a.button {
-        display: inline-block;
-        padding: 0.8rem 2rem;
-        font-size: 1rem;
-        font-weight: bold;
-        text-decoration: none;
-        color: #ff416c;
-        background: white;
-        border-radius: 30px;
-        transition: all 0.3s ease;
-      }
+<body>
+  <!-- ============================================================
+       HERO — dark navy with a Three.js heart particle field
+       behind the headline. Canvas is pointer-events:none so it
+       never interferes with the UI above.
+       ============================================================ -->
+  <header class="hero" id="home">
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
 
-      a.button:hover {
-        background: #ffe0e7;
-      }
+    <nav class="nav">
+      <a href="#home" class="nav__logo" aria-label="Spark home">
+        <svg viewBox="0 0 40 40" width="40" height="40" aria-hidden="true">
+          <defs>
+            <linearGradient id="logoGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#fd297b" />
+              <stop offset="100%" stop-color="#ff5864" />
+            </linearGradient>
+          </defs>
+          <circle cx="20" cy="20" r="19" fill="none" stroke="url(#logoGrad)" stroke-width="1.5" />
+          <path d="M20 28 L11 18.5 C8.5 16 10 11 14 11 C16 11 18 12 20 14 C22 12 24 11 26 11 C30 11 31.5 16 29 18.5 Z" fill="url(#logoGrad)" />
+        </svg>
+      </a>
 
-      footer {
-        margin-top: 2rem;
-        font-size: 0.85rem;
-        color: rgba(255, 255, 255, 0.7);
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>✨ Spark</h1>
-      <p>
-        Find your perfect match, connect instantly, and create unforgettable
-        moments. Spark is the dating app that lights up your love life.
-      </p>
-      <!-- <a href="/" class="button">Explore Spark</a> -->
-      <footer>&copy; 2025 Spark Dating App. All rights reserved.</footer>
+      <ul class="nav__links" role="navigation">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#smartmatch">Smart&nbsp;Match</a></li>
+        <li><a href="#download">Download</a></li>
+      </ul>
+
+      <a href="#download" class="btn btn--ghost nav__cta">
+        <span>Get App</span>
+        <span class="nav__cta-icons" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M17.5 12.6c0-3.1 2.5-4.6 2.7-4.7-1.5-2.2-3.8-2.5-4.6-2.5-2-.2-3.8 1.2-4.8 1.2-1 0-2.5-1.1-4.2-1.1-2.2 0-4.2 1.3-5.3 3.2-2.3 4-.6 9.9 1.6 13.2 1.1 1.6 2.4 3.4 4.1 3.3 1.7-.1 2.3-1.1 4.3-1.1 2 0 2.6 1.1 4.4 1 1.8 0 2.9-1.6 4-3.2.5-.8.7-1.2 1.1-2.1-3-.9-3.3-4.7-3.3-5.2zM14.4 4c.9-1.1 1.5-2.6 1.4-4.1-1.3.1-2.9.9-3.8 2-.8.9-1.5 2.5-1.3 3.9 1.4.1 2.9-.7 3.7-1.8z"/></svg>
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M3 2.5L13.5 12 3 21.5V2.5z"/></svg>
+        </span>
+      </a>
+    </nav>
+
+    <div class="hero__inner">
+      <div class="hero__copy reveal">
+        <h1 class="hero__title">
+          When You Would Like<br />
+          To Go On A <span class="hero__title-accent">Dating?</span>
+        </h1>
+        <p class="hero__sub">An application aimed at singles looking for a real relationship.</p>
+
+        <div class="hero__ctas">
+          <a href="#download" class="btn btn--primary">Get Started</a>
+          <button type="button" class="hero__video" id="watchIntro" aria-label="Watch intro video">
+            <span class="hero__video-icon">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+            </span>
+            <span class="hero__video-text">
+              <strong>Watch</strong>
+              <em>Intro Video</em>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <aside class="hero__stat reveal reveal--right">
+        <div class="hero__stat-num">8.6m</div>
+        <div class="hero__stat-row">
+          <span class="hero__stat-avatars" aria-hidden="true">
+            <span style="--c1:#fd297b;--c2:#ff5864"></span>
+            <span style="--c1:#A78BFA;--c2:#fd297b"></span>
+            <span style="--c1:#22C55E;--c2:#3B82F6"></span>
+          </span>
+          <p>8.6 million users worldwide — everyone is happy with our service.</p>
+        </div>
+      </aside>
     </div>
-  </body>
+
+    <div class="hero__socials" aria-label="Social links">
+      <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9V15h-2.4V12h2.4V9.8a3.4 3.4 0 0 1 3.7-3.8c1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.7-1.6 1.5V12h2.7l-.4 3h-2.3v6.9A10 10 0 0 0 22 12z"/></svg></a>
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 3.25.15 4.77 1.7 4.92 4.92.06 1.25.07 1.62.07 4.81s0 3.56-.07 4.81c-.15 3.21-1.66 4.77-4.92 4.92-1.25.06-1.62.07-4.85.07s-3.6 0-4.85-.07c-3.26-.15-4.77-1.71-4.92-4.92C2.17 15.56 2.16 15.19 2.16 12s0-3.56.07-4.81C2.38 3.97 3.89 2.42 7.15 2.27 8.4 2.21 8.77 2.2 12 2.2zm0 3.06A4.94 4.94 0 1 1 7.06 12 4.95 4.95 0 0 1 12 7.06zm0 8.16A3.22 3.22 0 1 0 8.78 12 3.22 3.22 0 0 0 12 15.22zm5.13-8.36a1.16 1.16 0 1 1-1.16-1.16 1.16 1.16 0 0 1 1.16 1.16z"/></svg></a>
+      <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M22 5.8a8.5 8.5 0 0 1-2.36.65 4.07 4.07 0 0 0 1.81-2.27 8.2 8.2 0 0 1-2.6 1 4.1 4.1 0 0 0-7 3.74 11.65 11.65 0 0 1-8.45-4.3 4.1 4.1 0 0 0 1.27 5.49A4.07 4.07 0 0 1 2.8 9.6v.05a4.1 4.1 0 0 0 3.3 4 4.1 4.1 0 0 1-1.86.07 4.1 4.1 0 0 0 3.83 2.85A8.23 8.23 0 0 1 2 18.28a11.6 11.6 0 0 0 6.29 1.85c7.55 0 11.68-6.25 11.68-11.68v-.53A8.31 8.31 0 0 0 22 5.8z"/></svg></a>
+      <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4l-8 5-8-5V6l8 5 8-5z"/></svg></a>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       HOW IT WORKS — phone mockup + 3 feature cards. Phone uses
+       a parallax tilt as you scroll past it.
+       ============================================================ -->
+  <section class="how" id="features">
+    <div class="how__inner">
+      <div class="phone-mockup reveal" data-parallax="0.15" aria-hidden="true">
+        <div class="phone-mockup__frame">
+          <div class="phone-mockup__notch"></div>
+          <div class="phone-mockup__screen">
+            <div class="phone-mockup__top">
+              <span class="phone-mockup__pill">Upgrade to Premium</span>
+            </div>
+            <div class="phone-mockup__card">
+              <span class="phone-mockup__tag">Fashion</span>
+              <div class="phone-mockup__name">Samantha, 18<br /><small>Designer · Adorable Agency</small></div>
+            </div>
+            <div class="phone-mockup__actions">
+              <button aria-label="Pass" class="phone-mockup__btn">✕</button>
+              <button aria-label="Super like" class="phone-mockup__btn phone-mockup__btn--sup">★</button>
+              <button aria-label="Like" class="phone-mockup__btn phone-mockup__btn--like">♥</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="float-card float-card--match">
+          <span class="float-card__avatar"></span>
+          <div>
+            <strong>Match Activity</strong>
+            <p>Cristina Marin <em>· Abuja, Nigeria</em></p>
+          </div>
+          <span class="float-card__badge">JOIN</span>
+        </div>
+
+        <div class="float-card float-card--users">
+          <span class="float-card__dot"></span>
+          <strong>30k+</strong>
+          <em>Users</em>
+        </div>
+      </div>
+
+      <div class="how__copy">
+        <h2 class="section-title reveal">How It Works</h2>
+
+        <div class="feature-grid">
+          <article class="feature reveal">
+            <span class="feature__icon" style="--bg: linear-gradient(135deg,#fd297b,#ff5864)">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="white" aria-hidden="true"><path d="M12 21s-7-4.35-9.5-8.5C.69 9 2.6 5 6.3 5c2.1 0 3.5 1.2 4.7 2.8C12.2 6.2 13.6 5 15.7 5 19.4 5 21.3 9 21.5 12.5 19 16.65 12 21 12 21z"/></svg>
+            </span>
+            <h3>Ideal Relationship</h3>
+            <p>We match you with people whose values, goals, and energy actually align with yours.</p>
+          </article>
+
+          <article class="feature reveal">
+            <span class="feature__icon" style="--bg: linear-gradient(135deg,#A78BFA,#fd297b)">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="white" aria-hidden="true"><path d="M20 12c0-4.42-3.58-8-8-8s-8 3.58-8 8c0 1.39.36 2.7 1 3.83V20l3.5-1.5c1.07.32 2.21.5 3.5.5 4.42 0 8-3.58 8-8z"/></svg>
+            </span>
+            <h3>Dating With Benefits</h3>
+            <p>Real-time chat, voice and video calls, GIFs and reactions — keep the spark alive once you match.</p>
+          </article>
+
+          <article class="feature reveal">
+            <span class="feature__icon" style="--bg: linear-gradient(135deg,#22C55E,#3B82F6)">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="white" aria-hidden="true"><path d="M12 2a5 5 0 0 1 5 5c0 2.76-2.24 5-5 5S7 9.76 7 7a5 5 0 0 1 5-5zm0 12c4.42 0 8 1.79 8 4v4H4v-4c0-2.21 3.58-4 8-4z"/></svg>
+            </span>
+            <h3>Date Beautiful People</h3>
+            <p>Every profile is real and verified. No bots, no catfish. Just people actually looking for what you are.</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SMART MATCH — two phones, hearts drift between them.
+       ============================================================ -->
+  <section class="smart" id="smartmatch">
+    <h2 class="section-title smart__title reveal">Chat &amp; Smart Match</h2>
+    <p class="section-sub reveal">
+      Music tastes, watch lists, hobbies — Spark surfaces what you have in common with every match so the conversation starts itself.
+    </p>
+
+    <div class="smart__stage reveal">
+      <div class="smart__phone smart__phone--left" data-parallax="0.1">
+        <div class="smart__avatar smart__avatar--a"></div>
+        <div class="smart__chip smart__chip--spotify">
+          <span class="smart__chip-dot" style="background:#1DB954"></span>
+          <strong>Spotify</strong>
+          <em>14 common songs</em>
+        </div>
+      </div>
+
+      <div class="smart__hearts" id="smart-hearts" aria-hidden="true"></div>
+
+      <div class="smart__phone smart__phone--right" data-parallax="-0.1">
+        <div class="smart__avatar smart__avatar--b"></div>
+        <div class="smart__chip smart__chip--netflix">
+          <span class="smart__chip-dot" style="background:#E50914"></span>
+          <strong>Netflix</strong>
+          <em>4 common shows</em>
+        </div>
+      </div>
+    </div>
+
+    <div class="smart__clouds" aria-hidden="true"></div>
+  </section>
+
+  <!-- ============================================================
+       VERIFIED + DOWNLOAD — iOS + Android buttons.
+       Both buttons go to placeholder URLs — replace with real
+       App Store / Play Store URLs once published.
+       ============================================================ -->
+  <section class="verified" id="download">
+    <div class="verified__inner">
+      <div class="verified__copy">
+        <h2 class="section-title reveal">
+          Only Real Verified Profiles Are Allowed To Join <span class="verified__check">✓</span>
+        </h2>
+        <p class="reveal">
+          Every profile passes manual photo + ID review before they can swipe. The result: a feed of real people, not noise.
+        </p>
+
+        <div class="store-row reveal">
+          <!-- TODO: replace href with real App Store / Play Store URLs once published. -->
+          <a class="store-btn" href="#" aria-label="Download on the App Store">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M17.5 12.6c0-3.1 2.5-4.6 2.7-4.7-1.5-2.2-3.8-2.5-4.6-2.5-2-.2-3.8 1.2-4.8 1.2-1 0-2.5-1.1-4.2-1.1-2.2 0-4.2 1.3-5.3 3.2-2.3 4-.6 9.9 1.6 13.2 1.1 1.6 2.4 3.4 4.1 3.3 1.7-.1 2.3-1.1 4.3-1.1 2 0 2.6 1.1 4.4 1 1.8 0 2.9-1.6 4-3.2.5-.8.7-1.2 1.1-2.1-3-.9-3.3-4.7-3.3-5.2zM14.4 4c.9-1.1 1.5-2.6 1.4-4.1-1.3.1-2.9.9-3.8 2-.8.9-1.5 2.5-1.3 3.9 1.4.1 2.9-.7 3.7-1.8z"/></svg>
+            <span>
+              <em>Download on the</em>
+              <strong>App Store</strong>
+            </span>
+          </a>
+          <a class="store-btn" href="#" aria-label="Get it on Google Play">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+              <defs>
+                <linearGradient id="playGrad1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00d2ff"/><stop offset="100%" stop-color="#3a7bd5"/></linearGradient>
+                <linearGradient id="playGrad2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ff4458"/><stop offset="100%" stop-color="#ffd200"/></linearGradient>
+              </defs>
+              <path d="M3 2.5v19l10-9.5L3 2.5z" fill="url(#playGrad1)"/>
+              <path d="M13 12L3 21.5l10.5-5.5L13 12z" fill="#22C55E"/>
+              <path d="M13 12l.5-4-10.5-5.5L13 12z" fill="url(#playGrad2)"/>
+              <path d="M21.5 11.1L17.5 8.8 13.5 12l4 3.2 4-2.3c1.5-.8 1.5-2.6 0-3.4z" fill="#FBBF24"/>
+            </svg>
+            <span>
+              <em>Get it on</em>
+              <strong>Google Play</strong>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <div class="verified__visual reveal" data-parallax="0.08">
+        <div class="verified__people"></div>
+        <div class="verified__bubble">
+          <span class="verified__bubble-avatar"></span>
+          <div>
+            <strong>Hello, How Are You? Sweet?</strong>
+            <em>Bella Sangwan · 27km away</em>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       REVIEWS + STATS — count-up numbers when scrolled into view.
+       ============================================================ -->
+  <section class="reviews">
+    <div class="reviews__inner">
+      <div class="reviews__panel reveal">
+        <div class="reviews__person" aria-hidden="true"></div>
+
+        <div class="reviews__body">
+          <h3 class="reviews__title">Reviews From Users</h3>
+          <p class="reviews__sub">Best stories from people who found someone real on Spark.</p>
+
+          <blockquote class="reviews__quote">
+            <span class="reviews__mark">”</span>
+            <strong>Bella Sangwan</strong>
+            <em>Africa</em>
+            <p>Spark felt different from day one — every match actually wanted a conversation. Met someone here three months ago and we're still talking every day.</p>
+          </blockquote>
+        </div>
+
+        <div class="reviews__stats" role="list">
+          <div class="reviews__stat" role="listitem">
+            <strong data-count="15000" data-suffix="k+">0</strong>
+            <em>Dates and matches every day</em>
+          </div>
+          <div class="reviews__stat" role="listitem">
+            <strong data-count="1458">0</strong>
+            <em>New members signing up daily</em>
+          </div>
+          <div class="reviews__stat" role="listitem">
+            <strong data-count="30000" data-suffix="k+">0</strong>
+            <em>Members from around the world</em>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <a href="#home" class="nav__logo nav__logo--footer" aria-label="Spark home">
+        <svg viewBox="0 0 40 40" width="36" height="36" aria-hidden="true">
+          <circle cx="20" cy="20" r="19" fill="none" stroke="#fd297b" stroke-width="1.5" />
+          <path d="M20 28 L11 18.5 C8.5 16 10 11 14 11 C16 11 18 12 20 14 C22 12 24 11 26 11 C30 11 31.5 16 29 18.5 Z" fill="#fd297b" />
+        </svg>
+      </a>
+
+      <ul class="footer__nav">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#smartmatch">Smart Match</a></li>
+        <li><a href="#download" class="footer__nav--accent">Download</a></li>
+      </ul>
+
+      <div class="footer__socials">
+        <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9V15h-2.4V12h2.4V9.8a3.4 3.4 0 0 1 3.7-3.8c1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.7-1.6 1.5V12h2.7l-.4 3h-2.3v6.9A10 10 0 0 0 22 12z"/></svg></a>
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 3.25.15 4.77 1.7 4.92 4.92.06 1.25.07 1.62.07 4.81s0 3.56-.07 4.81c-.15 3.21-1.66 4.77-4.92 4.92-1.25.06-1.62.07-4.85.07s-3.6 0-4.85-.07c-3.26-.15-4.77-1.71-4.92-4.92C2.17 15.56 2.16 15.19 2.16 12s0-3.56.07-4.81C2.38 3.97 3.89 2.42 7.15 2.27 8.4 2.21 8.77 2.2 12 2.2zm0 3.06A4.94 4.94 0 1 1 7.06 12 4.95 4.95 0 0 1 12 7.06zm0 8.16A3.22 3.22 0 1 0 8.78 12 3.22 3.22 0 0 0 12 15.22zm5.13-8.36a1.16 1.16 0 1 1-1.16-1.16 1.16 1.16 0 0 1 1.16 1.16z"/></svg></a>
+        <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M22 5.8a8.5 8.5 0 0 1-2.36.65 4.07 4.07 0 0 0 1.81-2.27 8.2 8.2 0 0 1-2.6 1 4.1 4.1 0 0 0-7 3.74 11.65 11.65 0 0 1-8.45-4.3 4.1 4.1 0 0 0 1.27 5.49A4.07 4.07 0 0 1 2.8 9.6v.05a4.1 4.1 0 0 0 3.3 4 4.1 4.1 0 0 1-1.86.07 4.1 4.1 0 0 0 3.83 2.85A8.23 8.23 0 0 1 2 18.28a11.6 11.6 0 0 0 6.29 1.85c7.55 0 11.68-6.25 11.68-11.68v-.53A8.31 8.31 0 0 0 22 5.8z"/></svg></a>
+        <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4l-8 5-8-5V6l8 5 8-5z"/></svg></a>
+      </div>
+    </div>
+
+    <p class="footer__bottom">© <span id="year"></span> Spark. Made with <span class="footer__heart">♥</span> for real connections.</p>
+  </footer>
+
+  <!-- Three.js powers the hero heart particle field. Loaded with
+       defer so it never delays the first paint. -->
+  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script defer src="./script.js"></script>
+</body>
 </html>
