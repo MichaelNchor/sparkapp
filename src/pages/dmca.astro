@@ -1,0 +1,127 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const updated = 'May 18, 2026';
+---
+
+<Layout
+  title="DMCA & Copyright Policy — Spark"
+  description="How to report copyright infringement on Spark."
+>
+  <Nav />
+
+  <main class="legal">
+    <article class="legal__inner">
+      <p class="legal__eyebrow">Legal</p>
+      <h1 class="legal__title">DMCA &amp; Copyright Policy</h1>
+      <p class="legal__updated">Last updated {updated}</p>
+
+      <p>
+        Spark respects the intellectual-property rights of others and
+        expects users of the Service to do the same. We respond to clear
+        notices of alleged copyright infringement that comply with the
+        United States Digital Millennium Copyright Act (DMCA),
+        17 U.S.C. § 512, and equivalent laws in other jurisdictions.
+      </p>
+
+      <h2>1. Reporting copyright infringement</h2>
+      <p>
+        If you believe content on Spark infringes your copyright, please
+        send a written notice (a “DMCA Notice”) to our Designated Agent at
+        the address below. To be effective, your DMCA Notice must include
+        all of the following:
+      </p>
+      <ol>
+        <li>A physical or electronic signature of the copyright owner or someone authorised to act on their behalf.</li>
+        <li>A clear identification of the copyrighted work claimed to have been infringed (or, for multiple works on Spark, a representative list).</li>
+        <li>A clear identification of the material that is claimed to be infringing — including, where possible, the Spark username, the URL or in-app location, and a screenshot or other description sufficient for us to locate it.</li>
+        <li>Your contact information: name, mailing address, telephone number, and email address.</li>
+        <li>A statement that you have a good-faith belief that the use of the material in the manner complained of is not authorised by the copyright owner, its agent, or the law.</li>
+        <li>A statement, under penalty of perjury, that the information in the notice is accurate and that you are the copyright owner or are authorised to act on the owner’s behalf.</li>
+      </ol>
+
+      <p>
+        <strong>Incomplete notices may delay or prevent action.</strong>
+        Misrepresentations in a DMCA Notice may subject you to liability
+        for damages under 17 U.S.C. § 512(f).
+      </p>
+
+      <h2>2. Designated Copyright Agent</h2>
+      <p>
+        Send DMCA Notices to our Designated Agent:
+      </p>
+      <p>
+        <strong>Spark Copyright Agent</strong>
+        <br />
+        Email: <a href="mailto:dmca@sparkapp.dev">dmca@sparkapp.dev</a>
+        <br />
+        Mail: Spark, Attn: DMCA Agent, [street address, city, state, postal code], United States
+      </p>
+      <p>
+        <em>
+          Note: this agent is also (or will be) registered with the United
+          States Copyright Office. Email is the fastest route for response.
+        </em>
+      </p>
+
+      <h2>3. What happens after we receive a notice</h2>
+      <p>
+        Once we receive a valid DMCA Notice, we will:
+      </p>
+      <ul>
+        <li>Promptly remove or disable access to the allegedly infringing material.</li>
+        <li>Notify the user who posted it, providing a copy of the notice.</li>
+        <li>For repeat infringers, terminate the account under our repeat-infringer policy.</li>
+      </ul>
+
+      <h2>4. Counter-notification</h2>
+      <p>
+        If you believe your content was removed or disabled by mistake or
+        misidentification, you may submit a written counter-notification
+        to our Designated Agent. To be effective, your counter-notification
+        must include all of the following:
+      </p>
+      <ol>
+        <li>Your physical or electronic signature.</li>
+        <li>Identification of the material that was removed or disabled and the location at which it appeared before removal.</li>
+        <li>A statement, under penalty of perjury, that you have a good-faith belief that the material was removed or disabled as a result of mistake or misidentification.</li>
+        <li>Your name, address, and telephone number, and a statement that you consent to the jurisdiction of the federal court in the district where you reside (or, if outside the United States, the federal district court for the District of Delaware), and that you will accept service of process from the person who provided the original DMCA Notice or their agent.</li>
+      </ol>
+
+      <p>
+        If we receive a valid counter-notification, we may forward it to
+        the original complainant. Unless the complainant files a lawsuit
+        seeking a court order against you within 10 business days, we may
+        restore the material at our discretion.
+      </p>
+
+      <h2>5. Repeat-infringer policy</h2>
+      <p>
+        It is our policy, in appropriate circumstances, to disable and/or
+        terminate the accounts of users who are repeat infringers. We will
+        also take steps to prevent the creation of new accounts by
+        terminated users.
+      </p>
+
+      <h2>6. Trademark and other claims</h2>
+      <p>
+        Trademark complaints and other intellectual-property claims that
+        are not covered by the DMCA can be sent to
+        <a href="mailto:legal@sparkapp.dev">legal@sparkapp.dev</a>. Please
+        include a description of the claim, the trademark or right
+        asserted, the allegedly infringing content, and your contact
+        information.
+      </p>
+
+      <h2>7. False claims</h2>
+      <p>
+        Filing a knowingly false DMCA Notice or counter-notification can
+        result in legal liability. Please be sure before you file.
+      </p>
+    </article>
+  </main>
+
+  <Footer />
+</Layout>

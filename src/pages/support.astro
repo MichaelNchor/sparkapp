@@ -1,0 +1,258 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const updated = 'May 18, 2026';
+---
+
+<Layout
+  title="Support & FAQ — Spark"
+  description="Get help, contact the team, and find answers to common questions about Spark."
+>
+  <Nav />
+
+  <main class="legal">
+    <article class="legal__inner">
+      <p class="legal__eyebrow">Help</p>
+      <h1 class="legal__title">Support &amp; FAQ</h1>
+      <p class="legal__updated">Last updated {updated}</p>
+
+      <p>
+        Need a hand? Most things can be solved in a minute with the
+        answers below. If you don’t find what you’re looking for, the
+        team is one email away.
+      </p>
+
+      <h2>Contact us</h2>
+      <ul>
+        <li><strong>General help</strong>: <a href="mailto:hello@sparkapp.dev">hello@sparkapp.dev</a></li>
+        <li><strong>Safety reports &amp; abuse</strong>: <a href="mailto:safety@sparkapp.dev">safety@sparkapp.dev</a></li>
+        <li><strong>Privacy &amp; data requests</strong>: <a href="mailto:privacy@sparkapp.dev">privacy@sparkapp.dev</a></li>
+        <li><strong>Account appeals</strong>: <a href="mailto:appeals@sparkapp.dev">appeals@sparkapp.dev</a></li>
+        <li><strong>Copyright (DMCA)</strong>: <a href="mailto:dmca@sparkapp.dev">dmca@sparkapp.dev</a></li>
+        <li><strong>Press &amp; partnerships</strong>: <a href="mailto:press@sparkapp.dev">press@sparkapp.dev</a></li>
+      </ul>
+      <p>
+        We aim to respond within 2 business days. Safety and abuse
+        reports are prioritised.
+      </p>
+
+      <h2>Account</h2>
+
+      <h3>How do I delete my account?</h3>
+      <p>
+        Open the Spark app and go to
+        <strong>Settings → Account → Delete account</strong>.
+        Confirm with your password. Deletion is permanent and removes
+        your profile, photos, matches, and messages within 30 days.
+        Backups are purged within 90 days.
+      </p>
+
+      <h3>I forgot my password.</h3>
+      <p>
+        On the sign-in screen, tap <strong>“Forgot password?”</strong> and
+        follow the link sent to your registered email. If you signed up
+        with Apple or Google, use that provider to sign back in.
+      </p>
+
+      <h3>Can I change my email or phone?</h3>
+      <p>
+        Yes — <strong>Settings → Account</strong>. You’ll be asked to
+        verify the new address before the change takes effect.
+      </p>
+
+      <h3>Can I pause my account without deleting it?</h3>
+      <p>
+        Yes — <strong>Settings → Discovery → Pause discovery</strong>.
+        Your profile won’t appear to anyone new while it’s paused. Your
+        existing matches and messages stay.
+      </p>
+
+      <h3>I was banned. How do I appeal?</h3>
+      <p>
+        Email <a href="mailto:appeals@sparkapp.dev">appeals@sparkapp.dev</a>
+        within 30 days with your account email and a brief explanation.
+        We review every appeal. Decisions on appeals are final.
+      </p>
+
+      <h2>Profile &amp; photos</h2>
+
+      <h3>My photo was rejected. Why?</h3>
+      <p>
+        Every photo is checked by an automated moderator before it’s
+        shown to others. Common reasons photos are rejected:
+      </p>
+      <ul>
+        <li>No clearly visible face (required for profile photos).</li>
+        <li>Detected nudity, swimwear that the system reads as suggestive, or sexualised content.</li>
+        <li>Detected weapons, drugs, or violence.</li>
+        <li>The photo appears to be of a minor.</li>
+        <li>The photo looks AI-generated or significantly edited.</li>
+      </ul>
+      <p>
+        We don’t reveal the exact reason to keep the system from being
+        gamed. Try uploading a clear, recent photo of just you in good
+        lighting.
+      </p>
+
+      <h3>How do I add or replace my profile photo?</h3>
+      <p>
+        Open <strong>Settings → Edit profile</strong> and tap a photo
+        slot. New photos go through moderation before they appear; this
+        usually takes seconds.
+      </p>
+
+      <h3>Why can’t I see who liked me?</h3>
+      <p>
+        Inbound likes are visible. Some Premium-only filtering features
+        sit on top of the likes list — those require Premium.
+      </p>
+
+      <h2>Matching &amp; discovery</h2>
+
+      <h3>How does matching work?</h3>
+      <p>
+        You and another user must both like (or super-like) each other
+        to match. After matching, either of you can start a chat. Some
+        surfaces, like “Hit Me Up,” work a little differently — see the
+        section below.
+      </p>
+
+      <h3>I’m not seeing many profiles.</h3>
+      <ul>
+        <li>Check <strong>Settings → Discovery</strong>: your age range and distance settings might be very narrow.</li>
+        <li>Make sure your account isn’t paused.</li>
+        <li>If your photo or bio is awaiting moderation, your profile may not yet be shown.</li>
+        <li>In smaller cities, results may simply be limited.</li>
+      </ul>
+
+      <h3>What is “Hit Me Up” (HMU)?</h3>
+      <p>
+        HMU is a public-style feed where you can post a short
+        conversation prompt (“Coffee Sunday?”, “Hiking buddy?”) and
+        other users can spend coins to send you a chat request. You
+        decide which requests to accept. HMU posts expire after 24
+        hours.
+      </p>
+
+      <h2>Coins, Premium &amp; billing</h2>
+
+      <h3>What are coins for?</h3>
+      <p>
+        Coins are used for in-app features like sending chat requests
+        on HMU, sending gifts, and applying profile boosts. You can buy
+        coins or earn them through rewarded ads, daily streaks, and the
+        referral program.
+      </p>
+
+      <h3>What does Premium include?</h3>
+      <ul>
+        <li>Ad-free experience.</li>
+        <li>Premium filters in the discovery and likes feeds.</li>
+        <li>Other features as they roll out — listed in-app on the Premium page.</li>
+      </ul>
+
+      <h3>How do I cancel Premium?</h3>
+      <p>
+        Subscriptions are billed by Apple or Google, not by Spark, so
+        you cancel through the platform that sold you the subscription:
+      </p>
+      <ul>
+        <li><strong>iOS</strong>: Settings → [your name] → Subscriptions → Spark → Cancel</li>
+        <li><strong>Android</strong>: Google Play app → Profile → Payments &amp; subscriptions → Subscriptions → Spark → Cancel</li>
+      </ul>
+      <p>
+        Cancellation stops the next renewal; you keep Premium until the
+        end of the current billing period.
+      </p>
+
+      <h3>I want a refund.</h3>
+      <p>
+        All purchases are processed by Apple or Google and refunds are
+        handled by them:
+      </p>
+      <ul>
+        <li>Apple: <a href="https://reportaproblem.apple.com" target="_blank" rel="noopener">reportaproblem.apple.com</a></li>
+        <li>Google Play: <a href="https://support.google.com/googleplay/answer/2479637" target="_blank" rel="noopener">Google Play refund policy</a></li>
+      </ul>
+      <p>
+        Where the law gives you a refund right directly against us (for
+        example, EU consumer cooling-off rights), email
+        <a href="mailto:hello@sparkapp.dev">hello@sparkapp.dev</a> within
+        the applicable window.
+      </p>
+
+      <h3>I bought coins but they didn’t show up.</h3>
+      <p>
+        Force-close the app and reopen it — coin grants usually arrive
+        within a minute. If they still don’t appear, email
+        <a href="mailto:hello@sparkapp.dev">hello@sparkapp.dev</a> with
+        your Apple or Google receipt and we’ll fix it.
+      </p>
+
+      <h2>Safety &amp; reporting</h2>
+
+      <h3>How do I report a user?</h3>
+      <p>
+        Open the user’s profile or chat, tap the menu, then
+        <strong>Report</strong>. Choose a reason and add any details
+        that help. Reports are confidential — the user you report
+        cannot see who reported them.
+      </p>
+
+      <h3>How do I block someone?</h3>
+      <p>
+        Same place as Report — open their profile or chat menu and tap
+        <strong>Block</strong>. Blocking is immediate and mutual: you
+        won’t see them, they won’t see you. Blocks can be managed in
+        <strong>Settings → Blocked users</strong>.
+      </p>
+
+      <h3>Someone is threatening me.</h3>
+      <p>
+        Read our <a href="/safety/">Safety Tips</a> — in particular the
+        sextortion section. Report inside the app and email
+        <a href="mailto:safety@sparkapp.dev">safety@sparkapp.dev</a>
+        with screenshots. If you are in immediate danger, call your
+        local emergency number first.
+      </p>
+
+      <h2>Notifications</h2>
+
+      <h3>I’m not getting notifications.</h3>
+      <ul>
+        <li>Check your device settings: <strong>Settings → Notifications → Spark</strong> on iOS, or your Android equivalent.</li>
+        <li>Make sure Spark has permission to send push notifications.</li>
+        <li>Reinstalling the app and signing back in will refresh your push token.</li>
+      </ul>
+
+      <h2>Technical</h2>
+
+      <h3>Which devices does Spark support?</h3>
+      <p>
+        iOS 15 and later, and Android 9 (Pie) and later. Older versions
+        may work but aren’t actively supported.
+      </p>
+
+      <h3>The app keeps crashing.</h3>
+      <p>
+        Update to the latest version from the App Store or Play Store.
+        If it persists, email <a href="mailto:hello@sparkapp.dev">hello@sparkapp.dev</a>
+        with your device model, OS version, and a short description of
+        what you were doing when it crashed.
+      </p>
+
+      <h2>Legal</h2>
+      <ul>
+        <li><a href="/privacy/">Privacy Policy</a></li>
+        <li><a href="/terms/">Terms of Service</a></li>
+        <li><a href="/community-guidelines/">Community Guidelines</a></li>
+        <li><a href="/safety/">Safety Tips</a></li>
+        <li><a href="/dmca/">DMCA &amp; Copyright Policy</a></li>
+      </ul>
+    </article>
+  </main>
+
+  <Footer />
+</Layout>
