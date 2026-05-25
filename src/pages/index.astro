@@ -2,569 +2,352 @@
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+
+/*
+ * Real, verified Unsplash portraits used inside the product mockups so
+ * the page shows real faces, not gradient placeholders. IDs were checked
+ * to resolve (HTTP 200) before being committed.
+ */
+const u = (id: string, w = 640, h = 0) =>
+  `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=80&w=${w}${h ? `&h=${h}` : ''}`;
+
+const maya   = '1525134479668-1bee5c7c6845'; // denim jacket, golden-hour smile
+const amara  = '1524550158212-33f2ff985344'; // auburn hair, calm smile
+const daniel = '1600603406200-5b2a104684ac'; // blue tee, relaxed
+const sofia  = '1494790108377-be9c29b29330'; // laughing, red top
+const leila  = '1567516364473-233c4b6fcfbe'; // soft smile, looking down
+const nadia  = '1544005313-94ddf0286df2';    // striped shirt, serene
 ---
 
 <Layout>
-  <!-- ============================================================
-       HERO — dark navy with a Three.js heart particle field
-       behind the headline. Canvas is pointer-events:none so it
-       never interferes with the UI above.
-       ============================================================ -->
-  <header class="hero" id="home">
-    <canvas id="hero-canvas" aria-hidden="true"></canvas>
+  <Nav />
 
-    <Nav />
-
-    <div class="hero__inner">
-      <div class="hero__copy reveal">
-        <h1 class="hero__title">
-          When You Would Like<br />
-          To Go On A <span class="hero__title-accent">Dating?</span>
-        </h1>
-        <p class="hero__sub">An application aimed at singles looking for a real relationship.</p>
-
-        <div class="hero__ctas">
-          <a href="#download" class="btn btn--primary">Get Started</a>
-          <button type="button" class="hero__video" id="watchIntro" aria-label="Watch intro video">
-            <span class="hero__video-icon">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </span>
-            <span class="hero__video-text">
-              <strong>Watch</strong>
-              <em>Intro Video</em>
-            </span>
-          </button>
-        </div>
-      </div>
-
-      <aside class="hero__stat reveal reveal--right">
-        <div class="hero__stat-num">8.6m</div>
-        <div class="hero__stat-row">
-          <span class="hero__stat-avatars" aria-hidden="true">
-            <span style="--c1:#fd297b;--c2:#ff5864"></span>
-            <span style="--c1:#A78BFA;--c2:#fd297b"></span>
-            <span style="--c1:#22C55E;--c2:#3B82F6"></span>
+  <main>
+    <!-- ============================================================
+         HERO
+         ============================================================ -->
+    <section class="hero" id="top">
+      <div class="hero__glow" aria-hidden="true"></div>
+      <div class="hero__inner">
+        <div class="hero__copy">
+          <span class="kicker reveal">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V5z"/><path d="m9 12 2 2 4-4"/></svg>
+            Verified-only dating
           </span>
-          <p>8.6 million users worldwide — everyone is happy with our service.</p>
-        </div>
-      </aside>
-    </div>
 
-    <div class="hero__socials" aria-label="Social links">
-      <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9V15h-2.4V12h2.4V9.8a3.4 3.4 0 0 1 3.7-3.8c1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.7-1.6 1.5V12h2.7l-.4 3h-2.3v6.9A10 10 0 0 0 22 12z"/></svg></a>
-      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 3.25.15 4.77 1.7 4.92 4.92.06 1.25.07 1.62.07 4.81s0 3.56-.07 4.81c-.15 3.21-1.66 4.77-4.92 4.92-1.25.06-1.62.07-4.85.07s-3.6 0-4.85-.07c-3.26-.15-4.77-1.71-4.92-4.92C2.17 15.56 2.16 15.19 2.16 12s0-3.56.07-4.81C2.38 3.97 3.89 2.42 7.15 2.27 8.4 2.21 8.77 2.2 12 2.2zm0 3.06A4.94 4.94 0 1 1 7.06 12 4.95 4.95 0 0 1 12 7.06zm0 8.16A3.22 3.22 0 1 0 8.78 12 3.22 3.22 0 0 0 12 15.22zm5.13-8.36a1.16 1.16 0 1 1-1.16-1.16 1.16 1.16 0 0 1 1.16 1.16z"/></svg></a>
-      <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M22 5.8a8.5 8.5 0 0 1-2.36.65 4.07 4.07 0 0 0 1.81-2.27 8.2 8.2 0 0 1-2.6 1 4.1 4.1 0 0 0-7 3.74 11.65 11.65 0 0 1-8.45-4.3 4.1 4.1 0 0 0 1.27 5.49A4.07 4.07 0 0 1 2.8 9.6v.05a4.1 4.1 0 0 0 3.3 4 4.1 4.1 0 0 1-1.86.07 4.1 4.1 0 0 0 3.83 2.85A8.23 8.23 0 0 1 2 18.28a11.6 11.6 0 0 0 6.29 1.85c7.55 0 11.68-6.25 11.68-11.68v-.53A8.31 8.31 0 0 0 22 5.8z"/></svg></a>
-      <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4l-8 5-8-5V6l8 5 8-5z"/></svg></a>
-    </div>
-  </header>
+          <h1 class="hero__title reveal" style="--reveal-delay:80ms">
+            Find someone worth <br class="hero-br" />staying <span class="em-pink">offline</span> for.
+          </h1>
 
-  <!-- ============================================================
-       HOW IT WORKS — phone mockup + 3 feature cards.
-       ============================================================ -->
-  <section class="how" id="features">
-    <div class="how__inner">
-      <div class="phone-mockup reveal" data-parallax="0.15" aria-hidden="true">
-        <div class="phone-mockup__frame">
-          <div class="phone-mockup__notch"></div>
-          <div class="phone-mockup__screen">
-            <div class="phone-mockup__top">
-              <span class="phone-mockup__pill">Upgrade to Premium</span>
-            </div>
-            <div class="phone-mockup__card">
-              <span class="phone-mockup__tag">Fashion</span>
-              <div class="phone-mockup__name">Samantha, 18<br /><small>Designer · Adorable Agency</small></div>
-            </div>
-            <div class="phone-mockup__actions">
-              <button aria-label="Pass" class="phone-mockup__btn">✕</button>
-              <button aria-label="Super like" class="phone-mockup__btn phone-mockup__btn--sup">★</button>
-              <button aria-label="Like" class="phone-mockup__btn phone-mockup__btn--like">♥</button>
-            </div>
+          <p class="hero__sub reveal" style="--reveal-delay:160ms">
+            Spark checks every profile against a real photo and ID before
+            they can match. Meet people who are actually who they say
+            they are, then make a first move that gets read.
+          </p>
+
+          <div class="hero__ctas reveal" style="--reveal-delay:240ms">
+            <a href="#get" class="btn btn--primary">Get the app</a>
+            <a href="#how" class="textlink">
+              See how it works
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+            </a>
+          </div>
+
+          <div class="hero__trust reveal" style="--reveal-delay:320ms">
+            <span class="facepile" aria-hidden="true">
+              <img src={u(amara, 80, 80)} alt="" loading="lazy" />
+              <img src={u(daniel, 80, 80)} alt="" loading="lazy" />
+              <img src={u(sofia, 80, 80)} alt="" loading="lazy" />
+            </span>
+            <span><b>Real, human-verified profiles.</b> Free to join on iOS &amp; Android.</span>
           </div>
         </div>
 
-        <div class="float-card float-card--match">
-          <span class="float-card__avatar"></span>
-          <div>
-            <strong>Match Activity</strong>
-            <p>Cristina Marin <em>· Abuja, Nigeria</em></p>
+        <div class="hero__stage reveal" style="--reveal-delay:200ms">
+          <div class="device" data-tilt>
+            <div class="device__notch" aria-hidden="true"></div>
+            <div class="device__screen">
+              <div class="discover">
+                <img src={u(maya, 720, 1040)} alt="Maya, 26, smiling in a field at golden hour" loading="eager" />
+                <div class="discover__scrim" aria-hidden="true"></div>
+                <span class="discover__verified">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V5z"/><path d="m9 12 2 2 4-4"/></svg>
+                  Verified
+                </span>
+                <div class="discover__meta">
+                  <h4>Maya, 26</h4>
+                  <p>
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-5.3-7-11a7 7 0 0 1 14 0c0 5.7-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                    2 km away
+                  </p>
+                </div>
+                <div class="discover__actions" aria-hidden="true">
+                  <span class="discover__btn discover__btn--pass"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></span>
+                  <span class="discover__btn discover__btn--like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9.5-8.6C.8 9.3 2.5 5.3 6.2 5.3c2.1 0 3.6 1.2 5.8 3.6 2.2-2.4 3.7-3.6 5.8-3.6 3.7 0 5.4 4 3.7 7.1C19 16.5 12 21 12 21Z"/></svg></span>
+                </div>
+              </div>
+            </div>
           </div>
-          <span class="float-card__badge">JOIN</span>
-        </div>
 
-        <div class="float-card float-card--users">
-          <span class="float-card__dot"></span>
-          <strong>30k+</strong>
-          <em>Users</em>
+          <div class="floatcard hero__float--match" data-float>
+            <img src={u(amara, 80, 80)} alt="" loading="lazy" />
+            <div>
+              <strong>Amara liked you</strong>
+              <em>Verified · 4 km away</em>
+            </div>
+          </div>
+
+          <div class="floatcard hero__float--hmu" data-float="b">
+            <img src={u(daniel, 80, 80)} alt="" loading="lazy" />
+            <div>
+              <strong>Daniel sent a request</strong>
+              <span class="hmu-mini-msg">“Coffee this week? ☕”</span>
+            </div>
+          </div>
         </div>
       </div>
+    </section>
 
-      <div class="how__copy">
-        <h2 class="section-title reveal">How It Works</h2>
+    <!-- ============================================================
+         TRUST STRIP
+         ============================================================ -->
+    <section class="trust">
+      <div class="trust__inner">
+        <div class="trust__item reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V5z"/><path d="m9 12 2 2 4-4"/></svg>
+          <div><strong>Photo + ID verified</strong><span>Reviewed by a real person</span></div>
+        </div>
+        <div class="trust__item reveal" style="--reveal-delay:100ms">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="M15 9 9 15M9 9l6 6"/></svg>
+          <div><strong>Block &amp; report fast</strong><span>Two taps, and we act on it</span></div>
+        </div>
+        <div class="trust__item reveal" style="--reveal-delay:200ms">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-5.3-7-11a7 7 0 0 1 14 0c0 5.7-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          <div><strong>Real people near you</strong><span>Nobody you can't actually meet</span></div>
+        </div>
+      </div>
+    </section>
 
-        <div class="feature-grid">
-          <article class="feature reveal">
-            <span class="feature__icon" style="--bg: linear-gradient(135deg,#fd297b,#ff5864)">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="white" aria-hidden="true"><path d="M12 21s-7-4.35-9.5-8.5C.69 9 2.6 5 6.3 5c2.1 0 3.5 1.2 4.7 2.8C12.2 6.2 13.6 5 15.7 5 19.4 5 21.3 9 21.5 12.5 19 16.65 12 21 12 21z"/></svg>
-            </span>
-            <h3>Ideal Relationship</h3>
-            <p>We match you with people whose values, goals, and energy actually align with yours.</p>
+    <!-- ============================================================
+         HOW IT WORKS
+         ============================================================ -->
+    <section class="section" id="how">
+      <div class="shell">
+        <div class="section__head reveal">
+          <span class="kicker">Three steps</span>
+          <h2 class="section-title" style="margin-top:16px">From download to a real conversation.</h2>
+        </div>
+
+        <div class="how__grid">
+          <div class="how__visual reveal">
+            <div class="device" data-tilt>
+              <div class="device__notch" aria-hidden="true"></div>
+              <div class="device__screen">
+                <div class="hmu-screen">
+                  <div class="hmu-screen__top">
+                    <strong>Requests</strong>
+                    <span class="hmu-coin"><span aria-hidden="true"></span> 12</span>
+                  </div>
+                  <div class="hmu-card">
+                    <div class="hmu-card__head">
+                      <img src={u(sofia, 96, 96)} alt="" loading="lazy" />
+                      <div>
+                        <strong>Sofia, 27</strong>
+                        <em>Verified · 3 km away</em>
+                      </div>
+                    </div>
+                    <p class="hmu-card__msg">Saw you're into bouldering too. Real crag or the gym wall?</p>
+                    <div class="hmu-card__actions">
+                      <span class="hmu-pill hmu-pill--accept">Accept</span>
+                      <span class="hmu-pill hmu-pill--later">Maybe later</span>
+                    </div>
+                  </div>
+                  <p class="hmu-screen__hint">Requests skip the match queue.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <ol class="steps">
+            <li class="step reveal">
+              <span class="step__num">1</span>
+              <div>
+                <h3>Get verified</h3>
+                <p>A quick selfie and ID check, reviewed by a real person on our team. There's no way around it, which is exactly the point.</p>
+              </div>
+            </li>
+            <li class="step reveal" style="--reveal-delay:90ms">
+              <span class="step__num">2</span>
+              <div>
+                <h3>Meet real people</h3>
+                <p>Swipe a feed of verified profiles near you, inside the age range you set. Everyone you see cleared the same check you did.</p>
+              </div>
+            </li>
+            <li class="step reveal" style="--reveal-delay:180ms">
+              <span class="step__num">3</span>
+              <div>
+                <h3>Hit them up</h3>
+                <p>Like someone? Send a chat request that lands at the top of their inbox, instead of waiting around on a maybe-match.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         FEATURES / HMU SPOTLIGHT
+         ============================================================ -->
+    <section class="section section--warm" id="features">
+      <div class="shell">
+        <div class="section__head reveal">
+          <span class="kicker">What makes Spark different</span>
+          <h2 class="section-title" style="margin-top:16px">Skip the match-and-pray. Just say hi.</h2>
+          <p class="lead">Most apps make you both swipe right, then hope one of you breaks the silence. Spark lets you reach out first, so conversations actually start.</p>
+        </div>
+
+        <div class="spotlight__grid">
+          <article class="tile tile--hmu reveal">
+            <div class="tile__body">
+              <h3>HMU: the request that gets read</h3>
+              <p>Spend a few coins to send someone a real opening message. It lands above the noise, they accept, and you're talking. No mutual-swipe lottery required.</p>
+            </div>
+            <div class="hmu-demo" aria-hidden="true">
+              <div class="hmu-bubble hmu-bubble--in">ok so the bouldering thing wasn't a line, you actually go?</div>
+              <div class="hmu-bubble hmu-bubble--out">every saturday. come find out 🧗</div>
+              <span class="hmu-demo__stamp">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                Request accepted in 6 minutes
+              </span>
+            </div>
           </article>
 
-          <article class="feature reveal">
-            <span class="feature__icon" style="--bg: linear-gradient(135deg,#A78BFA,#fd297b)">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="white" aria-hidden="true"><path d="M20 12c0-4.42-3.58-8-8-8s-8 3.58-8 8c0 1.39.36 2.7 1 3.83V20l3.5-1.5c1.07.32 2.21.5 3.5.5 4.42 0 8-3.58 8-8z"/></svg>
-            </span>
-            <h3>Dating With Benefits</h3>
-            <p>Real-time chat, voice and video calls, GIFs and reactions — keep the spark alive once you match.</p>
+          <article class="tile reveal" style="--reveal-delay:90ms">
+            <span class="tile__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 10.5 20 7v10l-4.5-3.5z"/><rect x="3" y="6" width="12.5" height="12" rx="3"/></svg></span>
+            <h3>Calls, built in</h3>
+            <p>Voice and video live inside Spark. Hear someone's laugh before you meet, and never have to hand over your number.</p>
           </article>
 
-          <article class="feature reveal">
-            <span class="feature__icon" style="--bg: linear-gradient(135deg,#22C55E,#3B82F6)">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="white" aria-hidden="true"><path d="M12 2a5 5 0 0 1 5 5c0 2.76-2.24 5-5 5S7 9.76 7 7a5 5 0 0 1 5-5zm0 12c4.42 0 8 1.79 8 4v4H4v-4c0-2.21 3.58-4 8-4z"/></svg>
-            </span>
-            <h3>Date Beautiful People</h3>
-            <p>Every profile is real and verified. No bots, no catfish. Just people actually looking for what you are.</p>
+          <article class="tile reveal" style="--reveal-delay:180ms">
+            <span class="tile__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+            <h3>On your terms</h3>
+            <p>Set your age range and distance, and hide your profile whenever you want a break. You decide who gets to see you.</p>
           </article>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ============================================================
-       SMART MATCH
-       ============================================================ -->
-  <section class="smart" id="smartmatch">
-    <h2 class="section-title smart__title reveal">Chat &amp; Smart Match</h2>
-    <p class="section-sub reveal">
-      Music tastes, watch lists, hobbies — Spark surfaces what you have in common with every match so the conversation starts itself.
-    </p>
+    <!-- ============================================================
+         VERIFIED / REAL PEOPLE
+         ============================================================ -->
+    <section class="section" id="verified">
+      <div class="shell">
+        <div class="verified__grid">
+          <div class="verified__copy">
+            <span class="kicker reveal">Real people only</span>
+            <h2 class="section-title reveal" style="margin-top:16px">No bots. No catfish.<br />No “wait, is this real?”</h2>
+            <p class="lead reveal">Verification isn't a blue tick you buy. On Spark it's the front door, and there's no other way in.</p>
+            <ul class="verified__list reveal">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Photo and government ID checked by a human, not a model.</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Re-verification kicks in the moment a profile looks off.</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Report or block in seconds. Every report gets looked at.</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Your data is never sold. Ever.</li>
+            </ul>
+            <a href="/safety/" class="textlink verified__cta reveal">
+              Read the safety guide
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+            </a>
+          </div>
 
-    <div class="smart__stage reveal">
-      <div class="smart__phone smart__phone--left" data-parallax="0.1">
-        <div class="smart__avatar smart__avatar--a"></div>
-        <div class="smart__chip smart__chip--spotify">
-          <span class="smart__chip-dot" style="background:#1DB954"></span>
-          <strong>Spotify</strong>
-          <em>14 common songs</em>
-        </div>
-      </div>
-
-      <div class="smart__hearts" id="smart-hearts" aria-hidden="true"></div>
-
-      <div class="smart__phone smart__phone--right" data-parallax="-0.1">
-        <div class="smart__avatar smart__avatar--b"></div>
-        <div class="smart__chip smart__chip--netflix">
-          <span class="smart__chip-dot" style="background:#E50914"></span>
-          <strong>Netflix</strong>
-          <em>4 common shows</em>
-        </div>
-      </div>
-    </div>
-
-    <div class="smart__clouds" aria-hidden="true"></div>
-  </section>
-
-  <!-- ============================================================
-       VERIFIED + DOWNLOAD — replace href once App Store + Play
-       Store URLs are live.
-       ============================================================ -->
-  <section class="verified" id="download">
-    <div class="verified__inner">
-      <div class="verified__copy">
-        <h2 class="section-title reveal">
-          Only Real Verified Profiles Are Allowed To Join <span class="verified__check">✓</span>
-        </h2>
-        <p class="reveal">
-          Every profile passes manual photo + ID review before they can swipe. The result: a feed of real people, not noise.
-        </p>
-
-        <div class="store-row reveal">
-          <!-- TODO: replace href with real App Store / Play Store URLs once published. -->
-          <a class="store-btn" href="#" aria-label="Download on the App Store">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true"><path d="M17.5 12.6c0-3.1 2.5-4.6 2.7-4.7-1.5-2.2-3.8-2.5-4.6-2.5-2-.2-3.8 1.2-4.8 1.2-1 0-2.5-1.1-4.2-1.1-2.2 0-4.2 1.3-5.3 3.2-2.3 4-.6 9.9 1.6 13.2 1.1 1.6 2.4 3.4 4.1 3.3 1.7-.1 2.3-1.1 4.3-1.1 2 0 2.6 1.1 4.4 1 1.8 0 2.9-1.6 4-3.2.5-.8.7-1.2 1.1-2.1-3-.9-3.3-4.7-3.3-5.2zM14.4 4c.9-1.1 1.5-2.6 1.4-4.1-1.3.1-2.9.9-3.8 2-.8.9-1.5 2.5-1.3 3.9 1.4.1 2.9-.7 3.7-1.8z"/></svg>
-            <span><em>Download on the</em><strong>App Store</strong></span>
-          </a>
-          <a class="store-btn" href="#" aria-label="Get it on Google Play">
-            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-              <defs>
-                <linearGradient id="playGrad1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#00d2ff"/><stop offset="100%" stop-color="#3a7bd5"/></linearGradient>
-                <linearGradient id="playGrad2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#ff4458"/><stop offset="100%" stop-color="#ffd200"/></linearGradient>
-              </defs>
-              <path d="M3 2.5v19l10-9.5L3 2.5z" fill="url(#playGrad1)"/>
-              <path d="M13 12L3 21.5l10.5-5.5L13 12z" fill="#22C55E"/>
-              <path d="M13 12l.5-4-10.5-5.5L13 12z" fill="url(#playGrad2)"/>
-              <path d="M21.5 11.1L17.5 8.8 13.5 12l4 3.2 4-2.3c1.5-.8 1.5-2.6 0-3.4z" fill="#FBBF24"/>
-            </svg>
-            <span><em>Get it on</em><strong>Google Play</strong></span>
-          </a>
-        </div>
-      </div>
-
-      <div class="verified__visual reveal" data-parallax="0.08">
-        <div class="verified__people"></div>
-        <div class="verified__bubble">
-          <span class="verified__bubble-avatar"></span>
-          <div>
-            <strong>Hello, How Are You? Sweet?</strong>
-            <em>Bella Sangwan · 27km away</em>
+          <div class="faces reveal" aria-label="A few verified Spark members">
+            <figure><img src={u(amara, 420, 560)} alt="Amara, a verified member with auburn hair" loading="lazy" /></figure>
+            <figure><img src={u(daniel, 420, 560)} alt="Daniel, a verified member in a blue shirt" loading="lazy" /></figure>
+            <figure><img src={u(leila, 420, 560)} alt="Leila, a verified member smiling" loading="lazy" /></figure>
+            <figure><img src={u(nadia, 420, 560)} alt="Nadia, a verified member in a striped shirt" loading="lazy" /></figure>
+            <figure><img src={u(sofia, 760, 480)} alt="Sofia, a verified member laughing" loading="lazy" /></figure>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ============================================================
-       REVIEWS + STATS
-       ============================================================ -->
-  <section class="reviews">
-    <div class="reviews__inner">
-      <div class="reviews__panel reveal">
-        <div class="reviews__person" aria-hidden="true"></div>
-
-        <div class="reviews__body">
-          <h3 class="reviews__title">Reviews From Users</h3>
-          <p class="reviews__sub">Best stories from people who found someone real on Spark.</p>
-
-          <blockquote class="reviews__quote">
-            <span class="reviews__mark">”</span>
-            <strong>Bella Sangwan</strong>
-            <em>Africa</em>
-            <p>Spark felt different from day one — every match actually wanted a conversation. Met someone here three months ago and we're still talking every day.</p>
-          </blockquote>
-        </div>
-
-        <div class="reviews__stats" role="list">
-          <div class="reviews__stat" role="listitem">
-            <strong data-count="15000" data-suffix="k+">0</strong>
-            <em>Dates and matches every day</em>
-          </div>
-          <div class="reviews__stat" role="listitem">
-            <strong data-count="1458">0</strong>
-            <em>New members signing up daily</em>
-          </div>
-          <div class="reviews__stat" role="listitem">
-            <strong data-count="30000" data-suffix="k+">0</strong>
-            <em>Members from around the world</em>
+    <!-- ============================================================
+         CTA BAND — the single rich / dark moment
+         ============================================================ -->
+    <section id="get">
+      <div class="cta reveal">
+        <div class="cta__glow" aria-hidden="true"></div>
+        <div class="cta__inner">
+          <h2 class="cta__title">Go meet someone real.</h2>
+          <p class="cta__sub">Spark is free to download. Get verified in a day, and start talking to people who are exactly who they say they are.</p>
+          <div class="cta__actions">
+            <!-- TODO: swap href for the real App Store / Play Store URLs once published. -->
+            <a class="store" href="#" aria-label="Download on the App Store">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 12.6c0-3.1 2.5-4.6 2.7-4.7-1.5-2.2-3.8-2.5-4.6-2.5-2-.2-3.8 1.2-4.8 1.2-1 0-2.5-1.1-4.2-1.1-2.2 0-4.2 1.3-5.3 3.2-2.3 4-.6 9.9 1.6 13.2 1.1 1.6 2.4 3.4 4.1 3.3 1.7-.1 2.3-1.1 4.3-1.1 2 0 2.6 1.1 4.4 1 1.8 0 2.9-1.6 4-3.2.5-.8.7-1.2 1.1-2.1-3-.9-3.3-4.7-3.3-5.2zM14.4 4c.9-1.1 1.5-2.6 1.4-4.1-1.3.1-2.9.9-3.8 2-.8.9-1.5 2.5-1.3 3.9 1.4.1 2.9-.7 3.7-1.8z"/></svg>
+              <span><em>Download on the</em><strong>App Store</strong></span>
+            </a>
+            <a class="store" href="#" aria-label="Get it on Google Play">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M3 2.5v19l10-9.5L3 2.5z" fill="#00d2ff"/>
+                <path d="M13 12 3 21.5l10.5-5.5L13 12z" fill="#22C55E"/>
+                <path d="M13 12l.5-4-10.5-5.5L13 12z" fill="#ff4458"/>
+                <path d="M21.5 11.1 17.5 8.8 13.5 12l4 3.2 4-2.3c1.5-.8 1.5-2.6 0-3.4z" fill="#FBBF24"/>
+              </svg>
+              <span><em>Get it on</em><strong>Google Play</strong></span>
+            </a>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
   <Footer />
 </Layout>
 
 <!--
-  Astro client script — gets bundled by Vite, ESM imports work, Three.js
-  is tree-shaken from the npm package. Runs after the page renders.
-  All animations gracefully no-op when prefers-reduced-motion is set.
+  Minimal client behaviour: staggered reveal-on-scroll and a gentle
+  pointer tilt on the phone mockups. Everything no-ops under
+  prefers-reduced-motion.
 -->
 <script>
-  import * as THREE from 'three';
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // ── Reveal-on-scroll ──────────────────────────────────────────
+  // Reveal-on-scroll
   const revealEls = document.querySelectorAll<HTMLElement>('.reveal');
-  if ('IntersectionObserver' in window && !prefersReducedMotion) {
+  if ('IntersectionObserver' in window && !reduce) {
     const io = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            io.unobserve(entry.target);
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible');
+            io.unobserve(e.target);
           }
         });
       },
-      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+      { threshold: 0.14, rootMargin: '0px 0px -8% 0px' },
     );
     revealEls.forEach((el) => io.observe(el));
   } else {
     revealEls.forEach((el) => el.classList.add('is-visible'));
   }
 
-  // ── Parallax — translates [data-parallax] elements as you scroll ──
-  const parallaxEls = Array.from(document.querySelectorAll<HTMLElement>('[data-parallax]'));
-  if (parallaxEls.length && !prefersReducedMotion) {
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        const vh = window.innerHeight;
-        parallaxEls.forEach((el) => {
-          const rect = el.getBoundingClientRect();
-          if (rect.bottom < -200 || rect.top > vh + 200) return;
-          const coef = parseFloat(el.dataset.parallax || '0') || 0.1;
-          const offset = (rect.top + rect.height / 2 - vh / 2) * coef * -1;
-          el.style.transform = `translate3d(0, ${offset.toFixed(1)}px, 0)`;
-        });
-        ticking = false;
-      });
-    };
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-  }
-
-  // ── Count-up stats ──────────────────────────────────────────
-  const countEls = document.querySelectorAll<HTMLElement>('[data-count]');
-  const formatNum = (n: number, suffix: string) => {
-    if (suffix === 'k+') {
-      const k = Math.floor(n / 1000);
-      return k > 0 ? `${k}k+` : String(Math.floor(n));
-    }
-    return Math.floor(n).toLocaleString('en-US');
-  };
-  if ('IntersectionObserver' in window && countEls.length && !prefersReducedMotion) {
-    const countIo = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          const el = entry.target as HTMLElement;
-          const target = parseInt(el.dataset.count || '0', 10);
-          const suffix = el.dataset.suffix || '';
-          const duration = 1600;
-          const start = performance.now();
-          const tick = (now: number) => {
-            const t = Math.min(1, (now - start) / duration);
-            const eased = 1 - Math.pow(1 - t, 3);
-            el.textContent = formatNum(target * eased, suffix);
-            if (t < 1) requestAnimationFrame(tick);
-            else
-              el.textContent =
-                suffix === 'k+'
-                  ? `${Math.floor(target / 1000)}k+`
-                  : target.toLocaleString('en-US');
-          };
-          requestAnimationFrame(tick);
-          countIo.unobserve(el);
+  // Gentle device tilt toward the pointer
+  if (!reduce && window.matchMedia('(pointer: fine)').matches) {
+    const tiltEls = Array.from(document.querySelectorAll<HTMLElement>('[data-tilt]'));
+    let raf = 0;
+    window.addEventListener(
+      'pointermove',
+      (ev) => {
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          const x = (ev.clientX / window.innerWidth - 0.5) * 2;
+          const y = (ev.clientY / window.innerHeight - 0.5) * 2;
+          tiltEls.forEach((el) => {
+            el.style.transform = `perspective(1100px) rotateY(${x * 4}deg) rotateX(${y * -3}deg)`;
+          });
+          raf = 0;
         });
       },
-      { threshold: 0.4 },
+      { passive: true },
     );
-    countEls.forEach((el) => countIo.observe(el));
-  } else {
-    countEls.forEach((el) => {
-      const target = parseInt((el as HTMLElement).dataset.count || '0', 10);
-      const suffix = (el as HTMLElement).dataset.suffix || '';
-      el.textContent = suffix === 'k+'
-        ? `${Math.floor(target / 1000)}k+`
-        : target.toLocaleString('en-US');
-    });
-  }
-
-  // ── Smart Match — drifting hearts ──────────────────────────
-  const heartsHost = document.getElementById('smart-hearts');
-  if (heartsHost && !prefersReducedMotion) {
-    const MAX_HEARTS = 14;
-    const SPAWN_INTERVAL_MS = 700;
-    const HEART_LIFETIME_MS = 5500;
-    let alive = 0;
-    let visible = false;
-
-    const visibilityIo = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { visible = e.isIntersecting; }),
-      { threshold: 0.1 },
-    );
-    visibilityIo.observe(heartsHost);
-
-    const spawn = () => {
-      if (!visible || alive >= MAX_HEARTS) return;
-      alive++;
-      const heart = document.createElement('span');
-      heart.textContent = '♥';
-      const startX = 30 + Math.random() * (heartsHost.clientWidth - 60);
-      const driftX = (Math.random() - 0.5) * 60;
-      const size = 14 + Math.random() * 18;
-      const opacity = 0.55 + Math.random() * 0.35;
-      const duration = HEART_LIFETIME_MS - 1000 + Math.random() * 2000;
-      heart.style.cssText = `
-        position: absolute;
-        left: ${startX}px;
-        bottom: -10px;
-        font-size: ${size}px;
-        color: #fd297b;
-        opacity: 0;
-        text-shadow: 0 4px 12px rgba(253, 41, 123, 0.4);
-        pointer-events: none;
-        will-change: transform, opacity;
-        animation: heartRise ${duration}ms ease-out forwards;
-        --drift: ${driftX}px;
-        --peak-opacity: ${opacity};
-      `;
-      heartsHost.appendChild(heart);
-      window.setTimeout(() => {
-        heart.remove();
-        alive--;
-      }, duration);
-    };
-
-    window.setInterval(spawn, SPAWN_INTERVAL_MS);
-
-    const styleTag = document.createElement('style');
-    styleTag.textContent = `
-      @keyframes heartRise {
-        0%   { transform: translate(0, 0) scale(0.5); opacity: 0; }
-        15%  { opacity: var(--peak-opacity); transform: translate(0, -10px) scale(1); }
-        85%  { opacity: var(--peak-opacity); }
-        100% { transform: translate(var(--drift), -360px) scale(0.6); opacity: 0; }
-      }
-    `;
-    document.head.appendChild(styleTag);
-  }
-
-  // ── Watch-intro stub ──────────────────────────────────────
-  const watchBtn = document.getElementById('watchIntro');
-  if (watchBtn) {
-    watchBtn.addEventListener('click', () => {
-      console.info('[spark-landing] intro-video CTA tapped — wire to real video.');
-    });
-  }
-
-  // ============================================================
-  // THREE.JS HERO PARTICLE FIELD
-  // ============================================================
-  const heroCanvas = document.getElementById('hero-canvas') as HTMLCanvasElement | null;
-  if (heroCanvas && !prefersReducedMotion) {
-    initHeroScene(heroCanvas);
-  }
-
-  function makeHeartTexture(): THREE.CanvasTexture {
-    const size = 64;
-    const cv = document.createElement('canvas');
-    cv.width = cv.height = size;
-    const ctx = cv.getContext('2d')!;
-    ctx.translate(size / 2, size / 2);
-    const s = size * 0.36;
-    ctx.beginPath();
-    ctx.moveTo(0, s * 0.85);
-    ctx.bezierCurveTo(s * 1.3, s * 0.1, s * 0.9, -s * 0.95, 0, -s * 0.25);
-    ctx.bezierCurveTo(-s * 0.9, -s * 0.95, -s * 1.3, s * 0.1, 0, s * 0.85);
-    ctx.closePath();
-    const grad = ctx.createRadialGradient(0, 0, 2, 0, 0, s);
-    grad.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
-    grad.addColorStop(0.5, 'rgba(253, 41, 123, 0.85)');
-    grad.addColorStop(1, 'rgba(253, 41, 123, 0)');
-    ctx.fillStyle = grad;
-    ctx.fill();
-    const tex = new THREE.CanvasTexture(cv);
-    tex.minFilter = THREE.LinearFilter;
-    return tex;
-  }
-
-  function initHeroScene(canvas: HTMLCanvasElement): void {
-    const scene = new THREE.Scene();
-    const heroEl = canvas.parentElement!;
-    const initialW = heroEl.clientWidth;
-    const initialH = heroEl.clientHeight;
-
-    const camera = new THREE.PerspectiveCamera(70, initialW / initialH, 0.1, 1000);
-    camera.position.z = 50;
-
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.setSize(initialW, initialH, false);
-
-    const heartTex = makeHeartTexture();
-
-    const PARTICLE_COUNT = 140;
-    const positions = new Float32Array(PARTICLE_COUNT * 3);
-    const sizes = new Float32Array(PARTICLE_COUNT);
-    const velocities = new Float32Array(PARTICLE_COUNT * 3);
-    const phases = new Float32Array(PARTICLE_COUNT);
-
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
-      const i3 = i * 3;
-      positions[i3] = (Math.random() - 0.5) * 90;
-      positions[i3 + 1] = (Math.random() - 0.5) * 60;
-      positions[i3 + 2] = (Math.random() - 0.5) * 60;
-      sizes[i] = 1.5 + Math.random() * 3.5;
-      velocities[i3] = (Math.random() - 0.5) * 0.04;
-      velocities[i3 + 1] = 0.04 + Math.random() * 0.06;
-      velocities[i3 + 2] = (Math.random() - 0.5) * 0.02;
-      phases[i] = Math.random() * Math.PI * 2;
-    }
-
-    const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
-
-    const material = new THREE.PointsMaterial({
-      map: heartTex,
-      size: 4,
-      sizeAttenuation: true,
-      transparent: true,
-      depthWrite: false,
-      blending: THREE.AdditiveBlending,
-      color: new THREE.Color('#fd297b'),
-    });
-
-    const points = new THREE.Points(geometry, material);
-    scene.add(points);
-
-    let pointerX = 0;
-    let pointerY = 0;
-    const onPointerMove = (ev: MouseEvent | TouchEvent) => {
-      const x = (ev as MouseEvent).clientX
-        || ((ev as TouchEvent).touches && (ev as TouchEvent).touches[0]?.clientX) || 0;
-      const y = (ev as MouseEvent).clientY
-        || ((ev as TouchEvent).touches && (ev as TouchEvent).touches[0]?.clientY) || 0;
-      pointerX = (x / window.innerWidth) * 2 - 1;
-      pointerY = (y / window.innerHeight) * 2 - 1;
-    };
-    window.addEventListener('mousemove', onPointerMove, { passive: true });
-    window.addEventListener('touchmove', onPointerMove, { passive: true });
-
-    let resizeRaf = 0;
-    const onResize = () => {
-      cancelAnimationFrame(resizeRaf);
-      resizeRaf = requestAnimationFrame(() => {
-        const w = heroEl.clientWidth;
-        const h = heroEl.clientHeight;
-        camera.aspect = w / h;
-        camera.updateProjectionMatrix();
-        renderer.setSize(w, h, false);
-      });
-    };
-    window.addEventListener('resize', onResize);
-
-    let heroVisible = true;
-    const heroIo = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { heroVisible = e.isIntersecting; }),
-      { threshold: 0 },
-    );
-    heroIo.observe(heroEl);
-
-    let frame = 0;
-    const animate = () => {
-      requestAnimationFrame(animate);
-      if (!heroVisible) return;
-      frame++;
-
-      const posAttr = geometry.attributes.position;
-      const arr = posAttr.array as Float32Array;
-
-      for (let i = 0; i < PARTICLE_COUNT; i++) {
-        const i3 = i * 3;
-        arr[i3] += velocities[i3] + Math.sin(frame * 0.005 + phases[i]) * 0.02;
-        arr[i3 + 1] += velocities[i3 + 1];
-        arr[i3 + 2] += velocities[i3 + 2];
-        if (arr[i3 + 1] > 35) {
-          arr[i3] = (Math.random() - 0.5) * 90;
-          arr[i3 + 1] = -35;
-          arr[i3 + 2] = (Math.random() - 0.5) * 60;
-        }
-      }
-      posAttr.needsUpdate = true;
-
-      camera.position.x += (pointerX * 4 - camera.position.x) * 0.04;
-      camera.position.y += (-pointerY * 4 - camera.position.y) * 0.04;
-      camera.lookAt(scene.position);
-
-      renderer.render(scene, camera);
-    };
-    animate();
   }
 </script>

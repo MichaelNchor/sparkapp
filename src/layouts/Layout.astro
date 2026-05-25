@@ -15,8 +15,8 @@ interface Props {
 }
 
 const {
-  title = 'Spark — Find Your Match',
-  description = 'Spark is a modern dating app for people looking for real connections. Available on iOS and Android.',
+  title = 'Spark — Verified-only dating',
+  description = 'Spark is a dating app where every profile is checked by a real human. Meet verified people near you, and make the first move that actually gets read.',
   ogImage,
 } = Astro.props;
 
@@ -30,7 +30,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#0a0a0f" />
+    <meta name="theme-color" content="#fff9fb" />
+    <meta name="color-scheme" content="light" />
     <link rel="canonical" href={canonical} />
 
     <!-- Open Graph -->
@@ -38,13 +39,19 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Spark" />
     {ogImage && <meta property="og:image" content={ogImage} />}
 
-    <!-- Poppins for visual continuity with the mobile app's typography. -->
+    <!--
+      Type system: Bricolage Grotesque carries the display voice (warm,
+      a little characterful, grown-up); Hanken Grotesk is the clean
+      workhorse for body + UI. Both are warm grotesques so they share
+      a family feel without being the Inter/Poppins reflex.
+    -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
   </head>
