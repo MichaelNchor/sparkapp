@@ -1,10 +1,10 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-// Custom-domain GitHub Pages deploy. The CNAME at public/CNAME (=
-// sparkapp.dev) is what makes Pages serve under that hostname; `site`
-// here just helps Astro emit absolute URLs (sitemap, og:url, canonicals)
-// pointed at the real domain rather than the github.io fallback.
+// Deployed on Vercel (auto-detected Astro static build → dist/). The custom
+// domain sparkapp.dev is attached in the Vercel dashboard, not via a repo
+// file. `site` here helps Astro emit absolute URLs (sitemap, og:url,
+// canonicals) pointed at the real domain.
 export default defineConfig({
   site: 'https://sparkapp.dev',
   output: 'static',
