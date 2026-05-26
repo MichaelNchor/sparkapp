@@ -15,8 +15,8 @@ interface Props {
 }
 
 const {
-  title = 'Spark — Verified-only dating',
-  description = 'Spark is a dating app where every profile is checked by a real human. Meet verified people near you, and make the first move that actually gets read.',
+  title = 'Luvmood — Photo-verified dating',
+  description = 'Luvmood is a dating app where every profile is photo-verified by a selfie-match check. Meet people who match the photos you\'re seeing, and make a first move that gets read.',
   ogImage,
 } = Astro.props;
 
@@ -39,7 +39,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
-    <meta property="og:site_name" content="Spark" />
+    <meta property="og:site_name" content="Luvmood" />
     {ogImage && <meta property="og:image" content={ogImage} />}
 
     <!--
