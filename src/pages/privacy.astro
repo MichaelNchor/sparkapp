@@ -36,7 +36,7 @@ const updated = 'May 18, 2026';
       <p><strong>Information you give us</strong></p>
       <ul>
         <li><strong>Account &amp; profile</strong> — first name, date of birth, gender, email address or phone number, password (hashed), photos, bio, prompts, occupation, education, height, religion, languages, anthem, social links, and any other content you add to your profile.</li>
-        <li><strong>Verification</strong> — selfie or ID image during age &amp; identity verification. Verification images are processed by an automated face-match service and deleted within 30 days; only a pass/fail flag is retained.</li>
+        <li><strong>Verification</strong> — a selfie you submit during photo verification. The selfie is processed in memory by an automated face-match service and discarded as soon as the check completes; we do not store the image. Only a pass/fail flag is recorded against your account.</li>
         <li><strong>Communications</strong> — messages, “Hit Me Up” posts, comments, love-note replies, gifts, video and voice call signaling, and any other content you exchange with other users.</li>
         <li><strong>Customer support</strong> — emails, screenshots, and other information you send when you contact us.</li>
         <li><strong>Payments</strong> — purchases are processed by Apple App Store and Google Play. We receive a transaction ID and amount; we never see your card details.</li>
@@ -127,10 +127,10 @@ const updated = 'May 18, 2026';
       <h2>7. How long we keep your information</h2>
       <ul>
         <li><strong>Active accounts</strong> — for as long as your account exists.</li>
-        <li><strong>Deleted accounts</strong> — your profile, photos, and messages are deleted within 30 days of account deletion. Backups are purged within 90 days. We retain a hashed identifier and minimal transaction history for fraud prevention and tax/audit obligations.</li>
+        <li><strong>Deleted accounts</strong> — when you delete your account we <strong>anonymize</strong> your profile (name, photos, bio, social links, and other identifying content are removed) and your account becomes inaccessible. Conversations you had with people you matched with remain visible to those matches as messages from “Deleted User” so their chat history stays intact. We retain anonymized transaction history, hashed identifiers, and safety/abuse signals for fraud prevention, tax/audit obligations, and ban enforcement. Database backups are retained on a rolling schedule for disaster recovery and aged out per our infrastructure retention policy.</li>
         <li><strong>Banned accounts</strong> — we keep limited information (hashed device ID, hashed email/phone) indefinitely to enforce bans.</li>
         <li><strong>Moderation evidence</strong> — content removed for policy violations may be retained up to 12 months to handle appeals, investigate patterns, and cooperate with law enforcement.</li>
-        <li><strong>Verification images</strong> — deleted within 30 days; only the pass/fail flag is kept.</li>
+        <li><strong>Verification selfies</strong> — never stored on our servers. The image is processed in memory by the face-match check and discarded as soon as the check completes; only the pass/fail flag is recorded.</li>
       </ul>
 
       <h2>8. Your rights</h2>
