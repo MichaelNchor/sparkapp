@@ -17,6 +17,7 @@ const daniel = '1600603406200-5b2a104684ac'; // blue tee, relaxed
 const sofia  = '1494790108377-be9c29b29330'; // laughing, red top
 const leila  = '1567516364473-233c4b6fcfbe'; // soft smile, looking down
 const nadia  = '1544005313-94ddf0286df2';    // striped shirt, serene
+const kofi   = '1531123897727-8f129e1688ce'; // warm portrait, used in Vibes / Calls
 ---
 
 <Layout>
@@ -24,7 +25,7 @@ const nadia  = '1544005313-94ddf0286df2';    // striped shirt, serene
 
   <main>
     <!-- ============================================================
-         HERO
+         HERO — editorial. Big claim, photo-led right rail, two CTAs.
          ============================================================ -->
     <section class="hero" id="top">
       <div class="hero__glow" aria-hidden="true"></div>
@@ -32,17 +33,15 @@ const nadia  = '1544005313-94ddf0286df2';    // striped shirt, serene
         <div class="hero__copy">
           <span class="kicker reveal">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V5z"/><path d="m9 12 2 2 4-4"/></svg>
-            Verified-only dating
+            Photo-verified only
           </span>
 
           <h1 class="hero__title reveal" style="--reveal-delay:80ms">
-            Find someone worth <br class="hero-br" />staying <span class="em-pink">offline</span> for.
+            Real people.<br class="hero-br" /> <span class="em-pink">Real</span> conversations.
           </h1>
 
           <p class="hero__sub reveal" style="--reveal-delay:160ms">
-            Luvmood photo-verifies every profile by matching a fresh selfie
-            against the photo on your profile. Meet people who match the
-            photos you're seeing, then make a first move that gets read.
+            Luvmood photo-verifies every profile by matching a fresh selfie against the photo you already posted. Meet people who look like their pictures — then say hi without waiting for a match.
           </p>
 
           <div class="hero__ctas reveal" style="--reveal-delay:240ms">
@@ -59,7 +58,7 @@ const nadia  = '1544005313-94ddf0286df2';    // striped shirt, serene
               <img src={u(daniel, 80, 80)} alt="" loading="lazy" />
               <img src={u(sofia, 80, 80)} alt="" loading="lazy" />
             </span>
-            <span><b>Photo-verified profiles.</b> Free to join on iOS &amp; Android.</span>
+            <span><b>Verified profiles.</b> Free to join on iOS &amp; Android.</span>
           </div>
         </div>
 
@@ -135,7 +134,7 @@ const nadia  = '1544005313-94ddf0286df2';    // striped shirt, serene
       <div class="shell">
         <div class="section__head reveal">
           <span class="kicker">Three steps</span>
-          <h2 class="section-title" style="margin-top:16px">From download to a real conversation.</h2>
+          <h2 class="section-title" style="margin-top:18px">From download to a conversation that actually starts.</h2>
         </div>
 
         <div class="how__grid">
@@ -196,60 +195,165 @@ const nadia  = '1544005313-94ddf0286df2';    // striped shirt, serene
     </section>
 
     <!-- ============================================================
-         FEATURES / HMU SPOTLIGHT
+         FEATURE 1 — HMU (the signature feature). Cream band.
          ============================================================ -->
-    <section class="section section--warm" id="features">
+    <section class="section section--cream" id="features">
       <div class="shell">
-        <div class="section__head reveal">
-          <span class="kicker">What makes Luvmood different</span>
-          <h2 class="section-title" style="margin-top:16px">Skip the match-and-pray. Just say hi.</h2>
-          <p class="lead">Most apps make you both swipe right, then hope one of you breaks the silence. Luvmood lets you reach out first, so conversations actually start.</p>
-        </div>
+        <div class="feature reveal">
+          <div class="feature__copy">
+            <p class="feature__eyebrow">HMU · Hit me up</p>
+            <h2 class="feature__title">Skip the match-and-pray. Just say hi.</h2>
+            <p class="feature__body">
+              Most apps make you both swipe right, then hope one of you breaks the silence. On Luvmood, you can spend a few coins to send a real opening message — it lands above the noise, they accept, and you're talking.
+            </p>
+            <ul class="feature__points">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> No mutual-swipe required to send a request.</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> They see your name, photo, and message — they decide.</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Coin cost keeps the inbox quality high. No spam.</li>
+            </ul>
+          </div>
 
-        <div class="spotlight__grid">
-          <article class="tile tile--hmu reveal">
-            <div class="tile__body">
-              <h3>HMU: the request that gets read</h3>
-              <p>Spend a few coins to send someone a real opening message. It lands above the noise, they accept, and you're talking. No mutual-swipe lottery required.</p>
+          <div class="feature__visual">
+            <div class="device" data-tilt>
+              <div class="device__notch" aria-hidden="true"></div>
+              <div class="device__screen">
+                <div class="hmu-screen">
+                  <div class="hmu-screen__top">
+                    <strong>Inbox</strong>
+                    <span class="hmu-coin"><span aria-hidden="true"></span> 12</span>
+                  </div>
+                  <div class="hmu-card">
+                    <div class="hmu-card__head">
+                      <img src={u(daniel, 96, 96)} alt="" loading="lazy" />
+                      <div>
+                        <strong>Daniel, 28</strong>
+                        <em>Verified · 1 km away</em>
+                      </div>
+                    </div>
+                    <p class="hmu-card__msg">ok so the bouldering thing wasn't a line — you actually go?</p>
+                    <div class="hmu-card__actions">
+                      <span class="hmu-pill hmu-pill--accept">Accept</span>
+                      <span class="hmu-pill hmu-pill--later">Maybe later</span>
+                    </div>
+                  </div>
+                  <p class="hmu-screen__hint">Accepted in 6 minutes.</p>
+                </div>
+              </div>
             </div>
-            <div class="hmu-demo" aria-hidden="true">
-              <div class="hmu-bubble hmu-bubble--in">ok so the bouldering thing wasn't a line, you actually go?</div>
-              <div class="hmu-bubble hmu-bubble--out">every saturday. come find out 🧗</div>
-              <span class="hmu-demo__stamp">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-                Request accepted in 6 minutes
-              </span>
-            </div>
-          </article>
-
-          <article class="tile reveal" style="--reveal-delay:90ms">
-            <span class="tile__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M15.5 10.5 20 7v10l-4.5-3.5z"/><rect x="3" y="6" width="12.5" height="12" rx="3"/></svg></span>
-            <h3>Calls, built in</h3>
-            <p>Voice and video live inside Luvmood. Hear someone's laugh before you meet, and never have to hand over your number.</p>
-          </article>
-
-          <article class="tile reveal" style="--reveal-delay:180ms">
-            <span class="tile__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
-            <h3>On your terms</h3>
-            <p>Set your age range and distance, and hide your profile whenever you want a break. You decide who gets to see you.</p>
-          </article>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- ============================================================
-         VERIFIED / REAL PEOPLE
+         FEATURE 2 — Calls built in. Reverse layout.
+         ============================================================ -->
+    <section class="section">
+      <div class="shell">
+        <div class="feature feature--reverse reveal">
+          <div class="feature__copy">
+            <p class="feature__eyebrow">Voice &amp; video</p>
+            <h2 class="feature__title">Hear the laugh before you meet.</h2>
+            <p class="feature__body">
+              Voice and video calls live inside Luvmood. Take the awkwardness out of the first meet — and never have to hand over your number to a stranger.
+            </p>
+            <ul class="feature__points">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Calls only after you've both matched or accepted a request.</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Your number stays private. Always.</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> End the call any time, no hard feelings.</li>
+            </ul>
+          </div>
+
+          <div class="feature__visual">
+            <div class="device" data-tilt>
+              <div class="device__notch" aria-hidden="true"></div>
+              <div class="device__screen">
+                <div class="call-screen">
+                  <p class="call-screen__name">Sofia</p>
+                  <p class="call-screen__timer">02:41</p>
+                  <img src={u(sofia, 256, 256)} alt="" loading="lazy" />
+                  <div class="call-screen__bar" aria-hidden="true">
+                    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 9v6M15 9v6M3 5l18 14"/></svg></span>
+                    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg></span>
+                    <span class="end"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         FEATURE 3 — Vibes. Cream band. Forward layout.
+         ============================================================ -->
+    <section class="section section--cream">
+      <div class="shell">
+        <div class="feature reveal">
+          <div class="feature__copy">
+            <p class="feature__eyebrow">Vibes</p>
+            <h2 class="feature__title">Drop a vibe. See who's around.</h2>
+            <p class="feature__body">
+              Post a one-line vibe — what you're doing, what you're up for, where you are. People who match send a chat request. It's the easiest way to start something casual without doing the whole swipe ritual.
+            </p>
+            <ul class="feature__points">
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Vibes expire after 24 hours — no old posts haunting you.</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Only verified people can post or reply.</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Filtered to your age range and the people you'd actually meet.</li>
+            </ul>
+          </div>
+
+          <div class="feature__visual">
+            <div class="device" data-tilt>
+              <div class="device__notch" aria-hidden="true"></div>
+              <div class="device__screen">
+                <div class="vibes-screen">
+                  <div class="vibe-card">
+                    <img src={u(leila, 80, 80)} alt="" loading="lazy" />
+                    <div class="vibe-card__body">
+                      <div class="vibe-card__head"><strong>Leila, 25</strong><em>2 km · 1h</em></div>
+                      <p class="vibe-card__text">Free Sunday afternoon, museum or beach?</p>
+                      <span class="vibe-card__cta">Hit her up <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+                    </div>
+                  </div>
+                  <div class="vibe-card">
+                    <img src={u(kofi, 80, 80)} alt="" loading="lazy" />
+                    <div class="vibe-card__body">
+                      <div class="vibe-card__head"><strong>Kofi, 29</strong><em>4 km · 3h</em></div>
+                      <p class="vibe-card__text">Coffee at Vida e Caffe in an hour, anyone?</p>
+                      <span class="vibe-card__cta">Hit him up <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+                    </div>
+                  </div>
+                  <div class="vibe-card">
+                    <img src={u(nadia, 80, 80)} alt="" loading="lazy" />
+                    <div class="vibe-card__body">
+                      <div class="vibe-card__head"><strong>Nadia, 26</strong><em>1 km · 5h</em></div>
+                      <p class="vibe-card__text">First time at the gym today, no judgement plz</p>
+                      <span class="vibe-card__cta">Hit her up <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         VERIFIED / REAL PEOPLE — the trust story with the face wall
          ============================================================ -->
     <section class="section" id="verified">
       <div class="shell">
         <div class="verified__grid">
           <div class="verified__copy">
             <span class="kicker reveal">Real people only</span>
-            <h2 class="section-title reveal" style="margin-top:16px">No bots. No catfish.<br />No “wait, is this real?”</h2>
-            <p class="lead reveal">Verification isn't a blue tick you buy. On Luvmood it's the front door, and there's no other way in.</p>
+            <h2 class="section-title reveal" style="margin-top:18px">No bots. No catfish.<br />No “wait, is this real?”</h2>
+            <p class="lead reveal">Verification isn't a blue tick you buy. On Luvmood it's the front door — there's no other way in.</p>
             <ul class="verified__list reveal">
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Fresh selfie matched to your profile photo by our face-match check.</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Photos pass an automated moderation check; profile photo changes re-run the check.</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Every photo passes an automated moderation check; profile-photo changes re-run the check.</li>
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Report or block in seconds. Every report gets looked at.</li>
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Your data is never sold. Ever.</li>
             </ul>
@@ -267,6 +371,25 @@ const nadia  = '1544005313-94ddf0286df2';    // striped shirt, serene
             <figure><img src={u(sofia, 760, 480)} alt="Sofia, a verified member laughing" loading="lazy" /></figure>
           </div>
         </div>
+
+        <!-- Safe-by-design strip: three quiet cards under the face wall -->
+        <div class="safety-strip">
+          <div class="safety-card reveal">
+            <div class="safety-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></div>
+            <h3>Block in two taps</h3>
+            <p>You never have to explain. Blocked profiles disappear from every feed, including chat history.</p>
+          </div>
+          <div class="safety-card reveal" style="--reveal-delay:90ms">
+            <div class="safety-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+            <h3>You set the limits</h3>
+            <p>Age range, distance, and visibility — all in your hands. Pause your profile when you need a break.</p>
+          </div>
+          <div class="safety-card reveal" style="--reveal-delay:180ms">
+            <div class="safety-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V5z"/><path d="m9 12 2 2 4-4"/></svg></div>
+            <h3>Moderation that's actually staffed</h3>
+            <p>Every report goes to a human, not a bot. Repeat offenders get banned across all their accounts.</p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -278,7 +401,7 @@ const nadia  = '1544005313-94ddf0286df2';    // striped shirt, serene
         <div class="cta__glow" aria-hidden="true"></div>
         <div class="cta__inner">
           <h2 class="cta__title">Go meet someone real.</h2>
-          <p class="cta__sub">Luvmood is free to download. Get photo-verified in a minute, and start meeting people who match the photos you're seeing.</p>
+          <p class="cta__sub">Luvmood is free to download. Get photo-verified in a minute, and start meeting people who look like their pictures.</p>
           <div class="cta__actions">
             <!-- TODO: swap href for the real App Store / Play Store URLs once published. -->
             <a class="store" href="#" aria-label="Download on the App Store">
@@ -342,7 +465,7 @@ const nadia  = '1544005313-94ddf0286df2';    // striped shirt, serene
           const x = (ev.clientX / window.innerWidth - 0.5) * 2;
           const y = (ev.clientY / window.innerHeight - 0.5) * 2;
           tiltEls.forEach((el) => {
-            el.style.transform = `perspective(1100px) rotateY(${x * 4}deg) rotateX(${y * -3}deg)`;
+            el.style.transform = `perspective(1100px) rotateY(${x * 3}deg) rotateX(${y * -2.4}deg)`;
           });
           raf = 0;
         });

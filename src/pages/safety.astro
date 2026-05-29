@@ -12,8 +12,13 @@ const updated = 'May 18, 2026';
 >
   <Nav />
 
-  <main class="legal">
-    <article class="legal__inner">
+  <main class="legal legal--with-toc">
+    <div class="legal__layout">
+      <aside class="legal__toc" aria-label="On this page">
+        <p class="legal__toc-title">On this page</p>
+        <ul id="legalTocList"></ul>
+      </aside>
+      <article class="legal__inner">
       <p class="legal__eyebrow">Safety</p>
       <h1 class="legal__title">Safety Tips</h1>
       <p class="legal__updated">Last updated {updated}</p>
@@ -161,8 +166,52 @@ const updated = 'May 18, 2026';
         respectful connections can happen — protecting them is everyone’s
         job, including ours.
       </p>
-    </article>
+      </article>
+    </div>
+
+    <div class="legal__more">
+      <p><strong>Have a safety concern?</strong> Email us at <a href="mailto:safety@luvmood.com">safety@luvmood.com</a> — every report gets read.</p>
+      <a href="/community-guidelines/" class="textlink">Community guidelines<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+    </div>
   </main>
 
   <Footer />
+
+  <!-- Auto-build a TOC from the page's h2 elements + scrollspy the active one. -->
+  <script>
+    const article = document.querySelector('.legal__inner');
+    const tocList = document.getElementById('legalTocList');
+    if (article && tocList) {
+      const slugify = (s) => s.toLowerCase().trim()
+        .replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-');
+      const headings = Array.from(article.querySelectorAll('h2'));
+      const links = headings.map((h) => {
+        const id = h.id || slugify(h.textContent || '');
+        h.id = id;
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = '#' + id;
+        a.textContent = h.textContent || '';
+        li.appendChild(a);
+        tocList.appendChild(li);
+        return { id, a };
+      });
+
+      // Scrollspy — highlight whichever h2 is closest to the top of the viewport.
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if ('IntersectionObserver' in window) {
+        const setActive = (id) => links.forEach((l) => l.a.classList.toggle('is-active', l.id === id));
+        const io = new IntersectionObserver(
+          (entries) => {
+            const visible = entries.filter((e) => e.isIntersecting)
+              .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+            if (visible.length) setActive(visible[0].target.id);
+          },
+          { rootMargin: '-110px 0px -65% 0px' },
+        );
+        headings.forEach((h) => io.observe(h));
+        if (headings.length) setActive(headings[0].id);
+      }
+    }
+  </script>
 </Layout>
