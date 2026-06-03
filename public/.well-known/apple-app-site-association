@@ -3,7 +3,7 @@
     "apps": [],
     "details": [
       {
-        "appID": "TEAMID.com.spark.app.ios",
+        "appID": "TEAMID.com.michaelnchor.luvmood",
         "paths": [ "/auth/*" ]
       }
     ]
