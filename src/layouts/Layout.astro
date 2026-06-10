@@ -21,6 +21,7 @@ const {
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const ogImageUrl = new URL(ogImage ?? '/luvmood-og.png', Astro.site).toString();
 ---
 
 <!doctype html>
@@ -31,8 +32,10 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <title>{title}</title>
     <meta name="description" content={description} />
     <meta name="theme-color" content="#fff9fb" />
-    <meta name="color-scheme" content="light" />
+    <meta name="color-scheme" content="light dark" />
     <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/png" href="/luvmood-heart.png" />
+    <link rel="apple-touch-icon" href="/luvmood-og.png" />
 
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
@@ -40,7 +43,8 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content="Luvmood" />
-    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta property="og:image" content={ogImageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
 
     <!--
       Type system: Bricolage Grotesque carries the display voice (warm,

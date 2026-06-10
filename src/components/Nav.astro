@@ -11,13 +11,7 @@ const home = Astro.url.pathname === '/' ? '' : '/';
 <div class="nav-wrap" id="navWrap">
   <nav class="nav" aria-label="Primary">
     <a href={`${home}#top`} class="brand" aria-label="Luvmood home">
-      <svg class="brand__mark" viewBox="0 0 40 40" aria-hidden="true">
-        <circle cx="20" cy="20" r="18.5" fill="none" stroke="#fd297b" stroke-width="1.6" />
-        <path
-          d="M20 28.5 L10.8 18.6 C8.2 16 9.8 10.8 14 10.8 C16.1 10.8 18.1 11.9 20 14 C21.9 11.9 23.9 10.8 26 10.8 C30.2 10.8 31.8 16 29.2 18.6 Z"
-          fill="#fd297b"
-        />
-      </svg>
+      <img class="brand__mark" src="/luvmood-heart.png" alt="" width="32" height="32" loading="eager" />
       <span class="brand__name">Luvmood</span>
     </a>
 
