@@ -4,421 +4,320 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 
 /*
- * Real, verified Unsplash portraits placed inside the CSS product
- * mockups so the page shows real faces, not gradient placeholders.
- * Every ID was re-checked to resolve (HTTP 200) and visually matched
- * to its caption before being committed — no app screenshots needed,
- * the device UIs are drawn in CSS (see global.css).
+ * Luvmood landing — Bumble's "make the first move" concept rendered in the
+ * app's own wine-purple dark theme (see spark/utils/theme.tsx DARK palette).
+ * Photo-led, soft-rounded, confident. The signature element is a rotating
+ * profile-card hero deck. Every face is a real, verified Unsplash portrait
+ * (IDs re-checked HTTP 200 + caption-matched) — no gradient placeholders,
+ * no invented stats or testimonials (honest-copy rule).
+ *
+ * Self-contained: all styling is scoped here (incl. dark-theming the shared
+ * Nav/Footer via :global on THIS page only), so the legal routes keep
+ * global.css untouched.
  */
 const u = (id: string, w = 640, h = 0) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=80&w=${w}${h ? `&h=${h}` : ''}`;
 
-const maya   = '1525134479668-1bee5c7c6845'; // denim jacket, golden-hour smile
-const amara  = '1524550158212-33f2ff985344'; // auburn hair, calm smile
-const daniel = '1600603406200-5b2a104684ac'; // blue tee, relaxed
-const sofia  = '1494790108377-be9c29b29330'; // laughing, red top
-const leila  = '1567516364473-233c4b6fcfbe'; // soft smile, looking down
-const nadia  = '1544005313-94ddf0286df2';    // striped shirt, serene
-const kofi   = '1463453091185-61582044d556'; // striped tee, street portrait
+const maya   = '1525134479668-1bee5c7c6845';
+const amara  = '1524550158212-33f2ff985344';
+const daniel = '1600603406200-5b2a104684ac';
+const sofia  = '1494790108377-be9c29b29330';
+const leila  = '1567516364473-233c4b6fcfbe';
+const nadia  = '1544005313-94ddf0286df2';
+const kofi   = '1463453091185-61582044d556';
+
+// Hero deck — real verified members the card carousel cycles through.
+const deck = [
+  { id: maya,   name: 'Maya',   age: 26, dist: '2 km away', alt: 'Maya, 26, smiling in a field at golden hour' },
+  { id: daniel, name: 'Daniel', age: 28, dist: '1 km away', alt: 'Daniel, 28, in a blue shirt' },
+  { id: sofia,  name: 'Sofia',  age: 27, dist: '3 km away', alt: 'Sofia, 27, laughing' },
+  { id: kofi,   name: 'Kofi',   age: 29, dist: '4 km away', alt: 'Kofi, 29, street portrait' },
+  { id: leila,  name: 'Leila',  age: 25, dist: '2 km away', alt: 'Leila, 25, soft smile' },
+];
 ---
 
-<Layout>
+<Layout title="Luvmood — Make the first move">
   <div class="scroll-progress" aria-hidden="true"></div>
   <Nav />
 
-  <main>
-    <!-- ============================================================
-         HERO — editorial. Big claim, photo-led right rail, two CTAs.
-         ============================================================ -->
+  <main class="lp">
+    <!-- ============================================================ HERO -->
     <section class="hero" id="top">
-      <div class="hero__glow" aria-hidden="true"></div>
-      <div class="hero__inner">
+      <span class="bloom bloom--pink" aria-hidden="true"></span>
+      <span class="bloom bloom--violet" aria-hidden="true"></span>
+      <div class="hero__grid shell">
         <div class="hero__copy">
-          <span class="kicker reveal">
+          <span class="pill reveal">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V5z"/><path d="m9 12 2 2 4-4"/></svg>
-            Photo-verified only
+            Photo-verified dating
           </span>
 
           <h1 class="hero__title reveal-lines">
-            <span class="line"><span style="--reveal-delay:90ms">Real people.</span></span>
-            <span class="line"><span style="--reveal-delay:210ms"><span class="em-pink">Real</span> conversations.</span></span>
+            <span class="line"><span style="--d:80ms">Make the</span></span>
+            <span class="line"><span style="--d:200ms"><span class="grad">first move.</span></span></span>
           </h1>
 
-          <p class="hero__sub reveal" style="--reveal-delay:340ms">
-            Luvmood photo-verifies every profile by matching a fresh selfie against the photo you already posted. Meet people who look like their pictures, then say hi without waiting for a match.
+          <p class="hero__sub reveal" style="--d:340ms">
+            No match required. On Luvmood you can say hi to anyone first, every profile is photo-verified by a selfie match, so the people you meet really look like their pictures.
           </p>
 
-          <div class="hero__ctas reveal" style="--reveal-delay:440ms">
+          <div class="hero__ctas reveal" style="--d:440ms">
             <a href="#get" class="btn btn--primary" data-magnetic>Get the app</a>
-            <a href="#how" class="textlink">
-              See how it works
+            <a href="#how" class="btn btn--ghost">
+              How it works
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
             </a>
           </div>
 
-          <div class="hero__trust reveal" style="--reveal-delay:540ms">
+          <div class="hero__trust reveal" style="--d:540ms">
             <span class="facepile" aria-hidden="true">
-              <img src={u(amara, 80, 80)} alt="" loading="lazy" />
-              <img src={u(daniel, 80, 80)} alt="" loading="lazy" />
-              <img src={u(sofia, 80, 80)} alt="" loading="lazy" />
+              <img src={u(amara, 96, 96)} alt="" loading="eager" />
+              <img src={u(daniel, 96, 96)} alt="" loading="eager" />
+              <img src={u(sofia, 96, 96)} alt="" loading="eager" />
             </span>
-            <span><b>Verified profiles.</b> Free to join on iOS &amp; Android.</span>
+            <span><b>Verified profiles.</b> Free on iOS &amp; Android.</span>
           </div>
         </div>
 
-        <div class="hero__stage reveal reveal--scale" style="--reveal-delay:240ms">
-          <div class="device" data-tilt>
-            <div class="device__notch" aria-hidden="true"></div>
-            <div class="device__screen">
-              <div class="discover">
-                <img src={u(maya, 720, 1040)} alt="Maya, 26, smiling in a field at golden hour" loading="eager" fetchpriority="high" />
-                <div class="discover__scrim" aria-hidden="true"></div>
-                <span class="discover__verified">
+        <!-- Rotating profile-card deck (Bumble's signature hero move) -->
+        <div class="hero__stage reveal" style="--d:260ms">
+          <div class="deck" aria-label="A few verified Luvmood members">
+            {deck.map((p, i) => (
+              <article class="pcard" data-pos={i}>
+                <img src={u(p.id, 640, 820)} alt={p.alt} loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : undefined} />
+                <span class="pcard__scrim" aria-hidden="true"></span>
+                <span class="pcard__badge">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V5z"/><path d="m9 12 2 2 4-4"/></svg>
                   Verified
                 </span>
-                <div class="discover__meta">
-                  <h4>Maya, 26</h4>
-                  <p>
-                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-5.3-7-11a7 7 0 0 1 14 0c0 5.7-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
-                    2 km away
-                  </p>
+                <div class="pcard__meta">
+                  <div class="pcard__line">
+                    <h3>{p.name} <span>{p.age}</span></h3>
+                    <span class="pcard__dist">
+                      <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-5.3-7-11a7 7 0 0 1 14 0c0 5.7-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                      {p.dist}
+                    </span>
+                  </div>
+                  <span class="pcard__hi">Say hi
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+                  </span>
                 </div>
-                <div class="discover__actions" aria-hidden="true">
-                  <span class="discover__btn discover__btn--pass"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></span>
-                  <span class="discover__btn discover__btn--like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7-4.5-9.5-8.6C.8 9.3 2.5 5.3 6.2 5.3c2.1 0 3.6 1.2 5.8 3.6 2.2-2.4 3.7-3.6 5.8-3.6 3.7 0 5.4 4 3.7 7.1C19 16.5 12 21 12 21Z"/></svg></span>
-                </div>
-              </div>
-            </div>
+              </article>
+            ))}
           </div>
 
-          <div class="floatcard hero__float--match" data-float>
-            <img src={u(amara, 80, 80)} alt="" loading="lazy" />
-            <div>
-              <strong>Amara liked you</strong>
-              <em>Verified · 4 km away</em>
-            </div>
+          <div class="chip chip--a" data-float>
+            <img src={u(amara, 72, 72)} alt="" loading="lazy" />
+            <div><strong>Amara liked you</strong><em>Verified · 4 km</em></div>
           </div>
-
-          <div class="floatcard hero__float--hmu" data-float="b">
-            <img src={u(daniel, 80, 80)} alt="" loading="lazy" />
-            <div>
-              <strong>Daniel sent a request</strong>
-              <span class="hmu-mini-msg">“Coffee this week? ☕”</span>
-            </div>
+          <div class="chip chip--b" data-float="b">
+            <span class="chip__ic">💬</span>
+            <div><strong>Daniel said hi</strong><em>“Coffee this week?”</em></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ============================================================
-         TRUST STRIP
-         ============================================================ -->
-    <section class="trust">
-      <div class="trust__inner">
-        <div class="trust__item reveal">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V5z"/><path d="m9 12 2 2 4-4"/></svg>
-          <div><strong>Photo verified</strong><span>Selfie matched to your profile photo</span></div>
-        </div>
-        <div class="trust__item reveal" style="--reveal-delay:100ms">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="M15 9 9 15M9 9l6 6"/></svg>
-          <div><strong>Block &amp; report fast</strong><span>Two taps, and we act on it</span></div>
-        </div>
-        <div class="trust__item reveal" style="--reveal-delay:200ms">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-5.3-7-11a7 7 0 0 1 14 0c0 5.7-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
-          <div><strong>Real people near you</strong><span>Nobody you can't actually meet</span></div>
-        </div>
+    <!-- ============================================================ TRUST -->
+    <section class="trust shell">
+      <div class="trust__item reveal">
+        <span class="trust__ic ic--pink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V5z"/><path d="m9 12 2 2 4-4"/></svg></span>
+        <div><strong>Photo verified</strong><span>Selfie matched to your profile photo</span></div>
+      </div>
+      <div class="trust__item reveal" style="--d:90ms">
+        <span class="trust__ic ic--violet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="M15 9 9 15M9 9l6 6"/></svg></span>
+        <div><strong>Block &amp; report fast</strong><span>Two taps, and we act on it</span></div>
+      </div>
+      <div class="trust__item reveal" style="--d:180ms">
+        <span class="trust__ic ic--coral"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.3-7-11a7 7 0 0 1 14 0c0 5.7-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+        <div><strong>Real people near you</strong><span>Nobody you can't actually meet</span></div>
       </div>
     </section>
 
-    <!-- ============================================================
-         HOW IT WORKS
-         ============================================================ -->
+    <!-- ====================================================== MARKER CARDS -->
     <section class="section" id="how">
       <div class="shell">
-        <div class="section__head reveal">
-          <span class="kicker">Three steps</span>
-          <h2 class="section-title" style="margin-top:18px">From download to a conversation that actually starts.</h2>
+        <div class="head reveal">
+          <span class="eyebrow">Everything you need</span>
+          <h2 class="h2">A dating app that actually wants you to talk.</h2>
         </div>
-
-        <div class="how__grid">
-          <div class="how__visual reveal reveal--left">
-            <div class="device" data-tilt>
-              <div class="device__notch" aria-hidden="true"></div>
-              <div class="device__screen">
-                <div class="hmu-screen">
-                  <div class="hmu-screen__top">
-                    <strong>Requests</strong>
-                    <span class="hmu-coin"><span aria-hidden="true"></span> 12</span>
-                  </div>
-                  <div class="hmu-card">
-                    <div class="hmu-card__head">
-                      <img src={u(sofia, 96, 96)} alt="" loading="lazy" />
-                      <div>
-                        <strong>Sofia, 27</strong>
-                        <em>Verified · 3 km away</em>
-                      </div>
-                    </div>
-                    <p class="hmu-card__msg">Saw you're into bouldering too. Real crag or the gym wall?</p>
-                    <div class="hmu-card__actions">
-                      <span class="hmu-pill hmu-pill--accept">Accept</span>
-                      <span class="hmu-pill hmu-pill--later">Maybe later</span>
-                    </div>
-                  </div>
-                  <p class="hmu-screen__hint">Requests skip the match queue.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <ol class="steps">
-            <li class="step reveal">
-              <span class="step__num">1</span>
-              <div>
-                <h3>Get photo-verified</h3>
-                <p>A quick selfie that we match against the photo on your profile. Takes a minute, and adds a Photo verified badge to your profile.</p>
-              </div>
-            </li>
-            <li class="step reveal" style="--reveal-delay:90ms">
-              <span class="step__num">2</span>
-              <div>
-                <h3>Meet real people</h3>
-                <p>Swipe a feed of verified profiles near you, inside the age range you set. Everyone you see cleared the same check you did.</p>
-              </div>
-            </li>
-            <li class="step reveal" style="--reveal-delay:180ms">
-              <span class="step__num">3</span>
-              <div>
-                <h3>Hit them up</h3>
-                <p>Like someone? Send a chat request that lands at the top of their inbox, instead of waiting around on a maybe-match.</p>
-              </div>
-            </li>
-          </ol>
+        <div class="markers">
+          <article class="marker reveal" style="--d:0ms; --m:var(--pink)">
+            <span class="marker__ic">📸</span>
+            <h3>Photo-verified</h3>
+            <p>Every profile clears a selfie-match check. The Verified badge means it's real.</p>
+          </article>
+          <article class="marker reveal" style="--d:70ms; --m:var(--violet)">
+            <span class="marker__ic">💬</span>
+            <h3>Say hi first</h3>
+            <p>Send a chat request without a match. It lands at the top of their inbox.</p>
+          </article>
+          <article class="marker reveal" style="--d:140ms; --m:var(--blue)">
+            <span class="marker__ic">📞</span>
+            <h3>Voice &amp; video</h3>
+            <p>Call inside the app once you've connected. Your number stays private.</p>
+          </article>
+          <article class="marker reveal" style="--d:210ms; --m:var(--gold)">
+            <span class="marker__ic">⚡</span>
+            <h3>Vibes</h3>
+            <p>Drop a one-line vibe. People around you who match it reach out.</p>
+          </article>
+          <article class="marker reveal" style="--d:280ms; --m:var(--green)">
+            <span class="marker__ic">🗺️</span>
+            <h3>Nearby</h3>
+            <p>See where Sparkers are, by area. Approximate, never your exact spot.</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- ============================================================
-         FEATURE 1 — HMU (the signature feature). Cream band.
-         ============================================================ -->
-    <section class="section section--cream" id="features">
-      <div class="shell">
-        <div class="feature">
-          <div class="feature__copy reveal">
-            <p class="feature__eyebrow">HMU · Hit me up</p>
-            <h2 class="feature__title">Skip the match-and-pray. Just say hi.</h2>
-            <p class="feature__body">
-              Most apps make you both swipe right, then hope one of you breaks the silence. On Luvmood, you can spend a few coins to send a real opening message: it lands above the noise, they accept, and you're talking.
-            </p>
-            <ul class="feature__points">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> No mutual-swipe required to send a request.</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> They see your name, photo, and message, then decide.</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Coin cost keeps the inbox quality high. No spam.</li>
-            </ul>
-          </div>
-
-          <div class="feature__visual reveal reveal--right">
-            <div class="device" data-tilt>
-              <div class="device__notch" aria-hidden="true"></div>
-              <div class="device__screen">
-                <div class="hmu-screen">
-                  <div class="hmu-screen__top">
-                    <strong>Inbox</strong>
-                    <span class="hmu-coin"><span aria-hidden="true"></span> 12</span>
-                  </div>
-                  <div class="hmu-card">
-                    <div class="hmu-card__head">
-                      <img src={u(daniel, 96, 96)} alt="" loading="lazy" />
-                      <div>
-                        <strong>Daniel, 28</strong>
-                        <em>Verified · 1 km away</em>
-                      </div>
-                    </div>
-                    <p class="hmu-card__msg">ok so the bouldering thing wasn't a line, you actually go?</p>
-                    <div class="hmu-card__actions">
-                      <span class="hmu-pill hmu-pill--accept">Accept</span>
-                      <span class="hmu-pill hmu-pill--later">Maybe later</span>
-                    </div>
-                  </div>
-                  <p class="hmu-screen__hint">Accepted in 6 minutes.</p>
-                </div>
+    <!-- ============================================ FEATURE — first move -->
+    <section class="section section--band" id="features">
+      <span class="bloom bloom--violet bloom--soft" aria-hidden="true"></span>
+      <div class="shell feature">
+        <div class="feature__copy reveal">
+          <span class="eyebrow eyebrow--violet">The first move</span>
+          <h2 class="h2">Like them? Say it. Today, not someday.</h2>
+          <p class="lead">Most apps make you both swipe right, then hope someone breaks the silence. On Luvmood you spend a few coins to send a real opening line, it lands above the noise, they accept, you're talking.</p>
+          <ul class="ticks">
+            <li>No mutual-swipe required to reach out.</li>
+            <li>They see your name, photo, and message, then decide.</li>
+            <li>The coin cost keeps inboxes clean. No spam.</li>
+          </ul>
+        </div>
+        <div class="feature__visual reveal reveal--right">
+          <div class="reqcard">
+            <div class="reqcard__top">
+              <span>Requests</span>
+              <span class="reqcard__coin">● 12</span>
+            </div>
+            <div class="reqcard__body">
+              <img src={u(daniel, 120, 120)} alt="" loading="lazy" />
+              <div>
+                <strong>Daniel, 28</strong>
+                <em>Verified · 1 km away</em>
               </div>
             </div>
+            <p class="reqcard__msg">ok so the bouldering thing wasn't a line, you actually go?</p>
+            <div class="reqcard__actions">
+              <span class="reqcard__btn reqcard__btn--yes">Accept</span>
+              <span class="reqcard__btn reqcard__btn--no">Maybe later</span>
+            </div>
+            <span class="reqcard__hint">Accepted in 6 minutes.</span>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ============================================================
-         FEATURE 2 — Calls built in. Reverse layout.
-         ============================================================ -->
+    <!-- ============================================ FEATURE — calls (rev) -->
     <section class="section">
-      <div class="shell">
-        <div class="feature feature--reverse">
-          <div class="feature__copy reveal">
-            <p class="feature__eyebrow">Voice &amp; video</p>
-            <h2 class="feature__title">Hear the laugh before you meet.</h2>
-            <p class="feature__body">
-              Voice and video calls live inside Luvmood. Take the awkwardness out of the first meet, and never have to hand over your number to a stranger.
-            </p>
-            <ul class="feature__points">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Calls only after you've both matched or accepted a request.</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Your number stays private. Always.</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> End the call any time, no hard feelings.</li>
-            </ul>
-          </div>
+      <div class="shell feature feature--reverse">
+        <div class="feature__copy reveal">
+          <span class="eyebrow eyebrow--blue">Voice &amp; video</span>
+          <h2 class="h2">Hear the laugh before you meet.</h2>
+          <p class="lead">Calls live inside Luvmood, only after you've matched or accepted a request. Take the edge off the first meet, and never hand your number to a stranger.</p>
+          <ul class="ticks">
+            <li>Calls only after you've connected.</li>
+            <li>Your number stays private. Always.</li>
+            <li>End the call any time, no hard feelings.</li>
+          </ul>
+        </div>
+        <div class="feature__visual reveal reveal--left">
+          <figure class="photo photo--tall">
+            <img src={u(sofia, 760, 950)} alt="Sofia, a verified member, mid-call" loading="lazy" />
+            <span class="photo__badge" aria-hidden="true"></span>
+            <span class="callbar" aria-hidden="true">
+              <span></span><span></span><span class="callbar__end"></span>
+            </span>
+          </figure>
+        </div>
+      </div>
+    </section>
 
-          <div class="feature__visual reveal reveal--left">
-            <div class="device" data-tilt>
-              <div class="device__notch" aria-hidden="true"></div>
-              <div class="device__screen">
-                <div class="call-screen">
-                  <p class="call-screen__name">Sofia</p>
-                  <p class="call-screen__timer">02:41</p>
-                  <img src={u(sofia, 256, 256)} alt="" loading="lazy" />
-                  <div class="call-screen__bar" aria-hidden="true">
-                    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 9v6M15 9v6M3 5l18 14"/></svg></span>
-                    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8"/></svg></span>
-                    <span class="end"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
-                  </div>
-                </div>
-              </div>
+    <!-- ============================================ FEATURE — vibes -->
+    <section class="section section--band">
+      <div class="shell feature">
+        <div class="feature__copy reveal">
+          <span class="eyebrow eyebrow--pink">Vibes</span>
+          <h2 class="h2">Drop a vibe. See who's around.</h2>
+          <p class="lead">Post a one-line vibe, what you're doing, what you're up for, where you are. People nearby who match it send a request. The easiest way to start something without the whole swipe ritual.</p>
+          <ul class="ticks">
+            <li>Vibes expire after 24 hours. No old posts haunting you.</li>
+            <li>Only verified people can post or reply.</li>
+            <li>Filtered to your age range and people you'd actually meet.</li>
+          </ul>
+        </div>
+        <div class="feature__visual reveal reveal--right">
+          <div class="vibes">
+            <div class="vibe">
+              <img src={u(leila, 96, 96)} alt="" loading="lazy" />
+              <div><div class="vibe__h"><strong>Leila, 25</strong><em>2 km · 1h</em></div><p>Free Sunday afternoon, museum or beach?</p></div>
+            </div>
+            <div class="vibe">
+              <img src={u(kofi, 96, 96)} alt="" loading="lazy" />
+              <div><div class="vibe__h"><strong>Kofi, 29</strong><em>4 km · 3h</em></div><p>Coffee at Vida e Caffe in an hour, anyone?</p></div>
+            </div>
+            <div class="vibe">
+              <img src={u(nadia, 96, 96)} alt="" loading="lazy" />
+              <div><div class="vibe__h"><strong>Nadia, 26</strong><em>1 km · 5h</em></div><p>First time at the gym today, no judgement plz</p></div>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ============================================================
-         FEATURE 3 — Vibes. Cream band. Forward layout.
-         ============================================================ -->
-    <section class="section section--cream">
-      <div class="shell">
-        <div class="feature">
-          <div class="feature__copy reveal">
-            <p class="feature__eyebrow">Vibes</p>
-            <h2 class="feature__title">Drop a vibe. See who's around.</h2>
-            <p class="feature__body">
-              Post a one-line vibe — what you're doing, what you're up for, where you are. People who match send a chat request. It's the easiest way to start something casual without doing the whole swipe ritual.
-            </p>
-            <ul class="feature__points">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Vibes expire after 24 hours, no old posts haunting you.</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Only verified people can post or reply.</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Filtered to your age range and the people you'd actually meet.</li>
-            </ul>
-          </div>
-
-          <div class="feature__visual reveal reveal--right">
-            <div class="device" data-tilt>
-              <div class="device__notch" aria-hidden="true"></div>
-              <div class="device__screen">
-                <div class="vibes-screen">
-                  <div class="vibe-card">
-                    <img src={u(leila, 80, 80)} alt="" loading="lazy" />
-                    <div class="vibe-card__body">
-                      <div class="vibe-card__head"><strong>Leila, 25</strong><em>2 km · 1h</em></div>
-                      <p class="vibe-card__text">Free Sunday afternoon, museum or beach?</p>
-                      <span class="vibe-card__cta">Hit her up <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
-                    </div>
-                  </div>
-                  <div class="vibe-card">
-                    <img src={u(kofi, 80, 80)} alt="" loading="lazy" />
-                    <div class="vibe-card__body">
-                      <div class="vibe-card__head"><strong>Kofi, 29</strong><em>4 km · 3h</em></div>
-                      <p class="vibe-card__text">Coffee at Vida e Caffe in an hour, anyone?</p>
-                      <span class="vibe-card__cta">Hit him up <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
-                    </div>
-                  </div>
-                  <div class="vibe-card">
-                    <img src={u(nadia, 80, 80)} alt="" loading="lazy" />
-                    <div class="vibe-card__body">
-                      <div class="vibe-card__head"><strong>Nadia, 26</strong><em>1 km · 5h</em></div>
-                      <p class="vibe-card__text">First time at the gym today, no judgement plz</p>
-                      <span class="vibe-card__cta">Hit her up <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============================================================
-         VERIFIED / REAL PEOPLE — the trust story with the face wall
-         ============================================================ -->
+    <!-- ====================================================== VERIFIED -->
     <section class="section" id="verified">
       <div class="shell">
-        <div class="verified__grid">
-          <div class="verified__copy">
-            <span class="kicker reveal">Real people only</span>
-            <h2 class="section-title reveal" style="margin-top:18px">No bots. No catfish.<br />No “wait, is this real?”</h2>
-            <p class="lead reveal">Verification isn't a blue tick you buy. On Luvmood it's the front door, there's no other way in.</p>
-            <ul class="verified__list reveal">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Fresh selfie matched to your profile photo by our face-match check.</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Every photo passes an automated moderation check; profile-photo changes re-run the check.</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Report or block in seconds. Every report gets looked at.</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Your data is never sold. Ever.</li>
-            </ul>
-            <a href="/safety/" class="textlink verified__cta reveal">
-              Read the safety guide
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-            </a>
-          </div>
-
-          <div class="faces reveal reveal--scale" aria-label="A few verified Luvmood members">
-            <figure><img src={u(amara, 420, 560)} alt="Amara, a verified member with auburn hair" loading="lazy" /></figure>
-            <figure><img src={u(daniel, 420, 560)} alt="Daniel, a verified member in a blue shirt" loading="lazy" /></figure>
-            <figure><img src={u(leila, 420, 560)} alt="Leila, a verified member smiling" loading="lazy" /></figure>
-            <figure><img src={u(nadia, 420, 560)} alt="Nadia, a verified member in a striped shirt" loading="lazy" /></figure>
-            <figure><img src={u(sofia, 760, 480)} alt="Sofia, a verified member laughing" loading="lazy" /></figure>
-          </div>
+        <div class="head reveal">
+          <span class="eyebrow">Real people only</span>
+          <h2 class="h2">No bots. No catfish. No “wait, is this real?”</h2>
+          <p class="lead lead--center">Verification isn't a blue tick you buy. On Luvmood it's the front door, there's no other way in.</p>
         </div>
 
-        <!-- Safe-by-design strip: three quiet cards under the face wall -->
-        <div class="safety-strip">
-          <div class="safety-card reveal">
-            <div class="safety-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></div>
-            <h3>Block in two taps</h3>
-            <p>You never have to explain. Blocked profiles disappear from every feed, including chat history.</p>
-          </div>
-          <div class="safety-card reveal" style="--reveal-delay:90ms">
-            <div class="safety-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+        <div class="facewall reveal reveal--scale" aria-label="A few verified Luvmood members">
+          <figure><img src={u(amara, 440, 580)} alt="Amara, a verified member with auburn hair" loading="lazy" /></figure>
+          <figure><img src={u(daniel, 440, 580)} alt="Daniel, a verified member in a blue shirt" loading="lazy" /></figure>
+          <figure><img src={u(leila, 440, 580)} alt="Leila, a verified member smiling" loading="lazy" /></figure>
+          <figure><img src={u(nadia, 440, 580)} alt="Nadia, a verified member in a striped shirt" loading="lazy" /></figure>
+          <figure class="facewall__wide"><img src={u(sofia, 880, 560)} alt="Sofia, a verified member laughing" loading="lazy" /></figure>
+        </div>
+
+        <div class="safety">
+          <article class="safety__card reveal">
+            <span class="safety__ic ic--pink"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V5z"/><path d="m9 12 2 2 4-4"/></svg></span>
+            <h3>Face-match on the way in</h3>
+            <p>A fresh selfie is matched to your profile photo. Change your photo later and the check re-runs.</p>
+          </article>
+          <article class="safety__card reveal" style="--d:90ms">
+            <span class="safety__ic ic--violet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
             <h3>You set the limits</h3>
-            <p>Age range, distance, and visibility, all in your hands. Pause your profile when you need a break.</p>
-          </div>
-          <div class="safety-card reveal" style="--reveal-delay:180ms">
-            <div class="safety-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V5z"/><path d="m9 12 2 2 4-4"/></svg></div>
-            <h3>Moderation that's actually staffed</h3>
-            <p>Every report goes to a human, not a bot. Repeat offenders get banned across all their accounts.</p>
-          </div>
+            <p>Age range, distance, and visibility are in your hands. Pause your profile when you need a break.</p>
+          </article>
+          <article class="safety__card reveal" style="--d:180ms">
+            <span class="safety__ic ic--green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+            <h3>Reports reach a human</h3>
+            <p>Every report gets looked at. Repeat offenders get banned across all their accounts. Your data is never sold.</p>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- ============================================================
-         CTA BAND — the single rich / dark moment
-         ============================================================ -->
+    <!-- ============================================================ CTA -->
     <section id="get">
-      <div class="cta reveal">
-        <div class="cta__glow" aria-hidden="true"></div>
+      <div class="cta shell reveal">
+        <span class="cta__bloom" aria-hidden="true"></span>
         <div class="cta__inner">
           <h2 class="cta__title">Go meet someone real.</h2>
-          <p class="cta__sub">Luvmood is free to download. Get photo-verified in a minute, and start meeting people who look like their pictures.</p>
-          <div class="cta__actions">
-            <!-- TODO: swap href for the real App Store / Play Store URLs once published. -->
+          <p class="cta__sub">Free to download. Get photo-verified in a minute, then make the first move.</p>
+          <div class="stores">
+            <!-- TODO: real App Store / Play Store URLs once published. -->
             <a class="store" href="#" aria-label="Download on the App Store">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 12.6c0-3.1 2.5-4.6 2.7-4.7-1.5-2.2-3.8-2.5-4.6-2.5-2-.2-3.8 1.2-4.8 1.2-1 0-2.5-1.1-4.2-1.1-2.2 0-4.2 1.3-5.3 3.2-2.3 4-.6 9.9 1.6 13.2 1.1 1.6 2.4 3.4 4.1 3.3 1.7-.1 2.3-1.1 4.3-1.1 2 0 2.6 1.1 4.4 1 1.8 0 2.9-1.6 4-3.2.5-.8.7-1.2 1.1-2.1-3-.9-3.3-4.7-3.3-5.2zM14.4 4c.9-1.1 1.5-2.6 1.4-4.1-1.3.1-2.9.9-3.8 2-.8.9-1.5 2.5-1.3 3.9 1.4.1 2.9-.7 3.7-1.8z"/></svg>
               <span><em>Download on the</em><strong>App Store</strong></span>
             </a>
             <a class="store" href="#" aria-label="Get it on Google Play">
-              <svg viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M3 2.5v19l10-9.5L3 2.5z" fill="#00d2ff"/>
-                <path d="M13 12 3 21.5l10.5-5.5L13 12z" fill="#22C55E"/>
-                <path d="M13 12l.5-4-10.5-5.5L13 12z" fill="#ff4458"/>
-                <path d="M21.5 11.1 17.5 8.8 13.5 12l4 3.2 4-2.3c1.5-.8 1.5-2.6 0-3.4z" fill="#FBBF24"/>
-              </svg>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 2.5v19l10-9.5L3 2.5z" fill="#fd297b"/><path d="M13 12 3 21.5l10.5-5.5L13 12z" fill="#14C25E"/><path d="M13 12l.5-4-10.5-5.5L13 12z" fill="#1E9BFF"/><path d="M21.5 11.1 17.5 8.8 13.5 12l4 3.2 4-2.3c1.5-.8 1.5-2.6 0-3.4z" fill="#F59E0B"/></svg>
               <span><em>Get it on</em><strong>Google Play</strong></span>
             </a>
           </div>
@@ -430,39 +329,318 @@ const kofi   = '1463453091185-61582044d556'; // striped tee, street portrait
   <Footer />
 </Layout>
 
-<!--
-  Client behaviour, all no-ops under prefers-reduced-motion:
-    1. staggered reveal-on-scroll (sections + hero title lines)
-    2. scroll progress bar + a slow parallax drift on the hero glow
-    3. gentle pointer tilt on the phone mockups
-    4. a light magnetic pull on the primary CTA
--->
+<style is:global>
+  /* Dark-theme the shared chrome (Nav + Footer + page) — index page only. */
+  html { color-scheme: dark; }
+  body { background: #0E0612; }
+
+  .nav-wrap.is-stuck {
+    background: rgba(14, 6, 18, 0.72) !important;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.06), 0 18px 40px -28px rgba(0,0,0,0.8) !important;
+  }
+  .nav .brand__name { color: #fff; }
+  .nav__links a { color: #C4B5CC; }
+  .nav__links a:hover { color: #fff; background: rgba(253,41,123,0.14); }
+  .nav__cta { background: #fd297b; color: #fff; box-shadow: 0 14px 30px -12px rgba(253,41,123,0.6); }
+  .nav__cta:hover { background: #ff4d8d; }
+
+  .footer { background: #0B040F; border-top: 1px solid rgba(255,255,255,0.07); }
+  .footer__tag { color: #C4B5CC; }
+  .footer__col h4 { color: #7A6A82; }
+  .footer__col a { color: #C4B5CC; }
+  .footer__col a:hover { color: #fd297b; }
+  .footer__socials a { background: #150A1C; border-color: #2A1A36; color: #C4B5CC; }
+  .footer__socials a:hover { background: #fd297b; color: #fff; border-color: #fd297b; }
+  .footer__bottom { border-top: 1px solid rgba(255,255,255,0.07); color: #7A6A82; }
+  ::selection { background: #fd297b; color: #fff; }
+</style>
+
+<style>
+  /* ============================ TOKENS (wine-purple dark) ============================ */
+  .lp {
+    --bg: #0E0612;
+    --surface: #150A1C;
+    --surface-2: #1C1024;
+    --line: rgba(255,255,255,0.08);
+    --line-2: rgba(255,255,255,0.05);
+    --ink: #FFFFFF;
+    --ink-2: #C4B5CC;
+    --ink-3: #8B7A94;
+    --pink: #fd297b;
+    --coral: #ff5864;
+    --coral-2: #ff655b;
+    --violet: #8B2FE6;
+    --blue: #1E9BFF;
+    --gold: #F59E0B;
+    --green: #14C25E;
+    --grad: linear-gradient(102deg, #fd297b 0%, #ff5864 55%, #ff655b 100%);
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    color: var(--ink);
+    font-family: 'Hanken Grotesk', system-ui, sans-serif;
+    background: var(--bg);
+    overflow-x: clip;
+  }
+  .lp .shell { width: min(1160px, 92vw); margin-inline: auto; }
+  .lp h1, .lp h2, .lp h3 { font-family: 'Bricolage Grotesque', 'Hanken Grotesk', sans-serif; letter-spacing: -0.03em; }
+  .lp .section { padding: clamp(72px, 10vw, 132px) 0; position: relative; }
+  .lp .section--band { background: linear-gradient(180deg, transparent, rgba(139,47,230,0.05) 30%, rgba(253,41,123,0.04) 70%, transparent); }
+  .lp .h2 { font-size: clamp(30px, 4.8vw, 52px); line-height: 1.02; font-weight: 700; margin: 14px 0 0; }
+  .lp .eyebrow { display: inline-block; font-size: 12.5px; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; color: var(--pink); }
+  .lp .eyebrow--violet { color: #b07bff; }
+  .lp .eyebrow--blue { color: #66bcff; }
+  .lp .eyebrow--pink { color: var(--pink); }
+  .lp .head { max-width: 760px; }
+  .lp .lead { font-size: clamp(16px, 1.6vw, 19px); line-height: 1.6; color: var(--ink-2); margin-top: 16px; max-width: 58ch; }
+  .lp .lead--center { text-align: center; margin-inline: auto; }
+  .lp .head .lead--center { margin-top: 18px; }
+  .lp .grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+  /* ambient blooms */
+  .lp .bloom { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; z-index: 0; }
+  .lp .bloom--pink { width: 620px; height: 620px; top: -220px; right: -140px; background: radial-gradient(circle, rgba(253,41,123,0.5), transparent 68%); }
+  .lp .bloom--violet { width: 560px; height: 560px; bottom: -260px; left: -180px; background: radial-gradient(circle, rgba(139,47,230,0.42), transparent 68%); }
+  .lp .bloom--soft { opacity: 0.5; }
+
+  /* ============================ BUTTONS ============================ */
+  .lp .btn { position: relative; display: inline-flex; align-items: center; gap: 9px; font-weight: 700; font-size: 16px; border-radius: 999px; padding: 15px 28px; text-decoration: none; transition: transform .25s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease); overflow: hidden; }
+  .lp .btn svg { width: 18px; height: 18px; }
+  .lp .btn--primary { background: var(--grad); color: #fff; box-shadow: 0 18px 40px -14px rgba(253,41,123,0.7); }
+  .lp .btn--primary::after { content: ""; position: absolute; inset: 0; background: linear-gradient(110deg, transparent 25%, rgba(255,255,255,0.4) 50%, transparent 75%); transform: translateX(-135%); transition: transform .8s var(--ease); pointer-events: none; }
+  .lp .btn--primary:hover { transform: translateY(-2px); box-shadow: 0 26px 52px -14px rgba(253,41,123,0.85); }
+  .lp .btn--primary:hover::after { transform: translateX(135%); }
+  .lp .btn--ghost { background: rgba(255,255,255,0.05); color: #fff; border: 1.5px solid var(--line); backdrop-filter: blur(6px); }
+  .lp .btn--ghost:hover { transform: translateY(-2px); border-color: rgba(253,41,123,0.55); color: #fff; }
+  .lp .pill { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 700; color: #fff; background: rgba(255,255,255,0.06); border: 1px solid var(--line); border-radius: 999px; padding: 7px 15px 7px 12px; }
+  .lp .pill svg { width: 15px; height: 15px; color: var(--green); }
+
+  /* ============================ HERO ============================ */
+  .lp .hero { position: relative; isolation: isolate; padding: clamp(28px, 5vw, 64px) 0 clamp(56px, 8vw, 104px); }
+  .lp .hero__grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.04fr 0.96fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
+  .lp .hero__title { font-size: clamp(44px, 8vw, 92px); line-height: 0.95; font-weight: 700; margin: 22px 0 0; }
+  .lp .hero__sub { font-size: clamp(16px, 1.7vw, 20px); line-height: 1.55; color: var(--ink-2); margin: 22px 0 0; max-width: 50ch; }
+  .lp .hero__ctas { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 32px; }
+  .lp .hero__trust { display: flex; align-items: center; gap: 12px; margin-top: 30px; font-size: 14px; color: var(--ink-3); }
+  .lp .hero__trust b { color: var(--ink-2); font-weight: 700; }
+  .lp .facepile { display: inline-flex; }
+  .lp .facepile img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2.5px solid var(--bg); margin-left: -12px; transition: transform .4s var(--ease); }
+  .lp .facepile img:first-child { margin-left: 0; }
+  .lp .facepile:hover img:first-child { transform: translateX(-5px); }
+  .lp .facepile:hover img:last-child { transform: translateX(5px); }
+
+  /* hero deck */
+  .lp .hero__stage { position: relative; justify-self: center; width: min(100%, 380px); aspect-ratio: 360 / 480; }
+  .lp .deck { position: absolute; inset: 0; }
+  .lp .pcard { position: absolute; inset: 0; border-radius: 28px; overflow: hidden; box-shadow: 0 40px 90px -30px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.06); transform-origin: 50% 100%; transition: transform .65s var(--ease), opacity .65s var(--ease), filter .65s var(--ease); will-change: transform, opacity; }
+  .lp .pcard img { width: 100%; height: 100%; object-fit: cover; }
+  .lp .pcard__scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(14,6,18,0) 38%, rgba(14,6,18,0.32) 64%, rgba(14,6,18,0.86) 100%); }
+  .lp .pcard__badge { position: absolute; top: 14px; left: 14px; display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 800; color: #fff; background: rgba(20,194,94,0.92); padding: 6px 11px 6px 8px; border-radius: 999px; backdrop-filter: blur(4px); }
+  .lp .pcard__badge svg { width: 13px; height: 13px; }
+  .lp .pcard__meta { position: absolute; left: 16px; right: 16px; bottom: 16px; }
+  .lp .pcard__line { display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; }
+  .lp .pcard__meta h3 { margin: 0; font-size: 24px; font-weight: 800; color: #fff; }
+  .lp .pcard__meta h3 span { font-weight: 500; opacity: 0.9; }
+  .lp .pcard__dist { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: rgba(255,255,255,0.85); padding-bottom: 4px; }
+  .lp .pcard__hi { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; font-size: 13.5px; font-weight: 800; color: #fff; background: var(--grad); padding: 9px 16px; border-radius: 999px; box-shadow: 0 12px 26px -10px rgba(253,41,123,0.7); }
+  .lp .pcard__hi svg { width: 14px; height: 14px; }
+  /* deck positions */
+  .lp .pcard[data-pos="0"] { transform: translateY(0) scale(1) rotate(0); opacity: 1; z-index: 5; }
+  .lp .pcard[data-pos="1"] { transform: translateY(14px) scale(0.93) rotate(-2.5deg); opacity: 0.6; filter: saturate(0.85); z-index: 4; }
+  .lp .pcard[data-pos="2"] { transform: translateY(26px) scale(0.86) rotate(2.5deg); opacity: 0.32; z-index: 3; }
+  .lp .pcard[data-pos="3"] { transform: translateY(34px) scale(0.82) rotate(-1.5deg); opacity: 0; z-index: 2; }
+  .lp .pcard[data-pos="4"] { transform: translateY(40px) scale(0.8); opacity: 0; z-index: 1; }
+  .lp .pcard--exit { transform: translateY(-72px) scale(1.04) rotate(-5deg) !important; opacity: 0 !important; }
+
+  /* floating chips */
+  .lp .chip { position: absolute; z-index: 6; display: flex; align-items: center; gap: 10px; background: rgba(28,16,36,0.92); border: 1px solid var(--line); border-radius: 16px; padding: 10px 14px 10px 10px; box-shadow: 0 22px 50px -18px rgba(0,0,0,0.85); backdrop-filter: blur(10px); }
+  .lp .chip img { width: 38px; height: 38px; border-radius: 50%; object-fit: cover; }
+  .lp .chip__ic { width: 38px; height: 38px; display: grid; place-items: center; font-size: 18px; background: rgba(139,47,230,0.2); border-radius: 50%; }
+  .lp .chip strong { display: block; font-size: 13px; font-weight: 800; color: #fff; }
+  .lp .chip em { font-size: 11.5px; color: var(--ink-3); font-style: normal; }
+  .lp .chip--a { top: 8%; left: -10%; animation: bob 5s ease-in-out infinite; }
+  .lp .chip--b { bottom: 10%; right: -12%; animation: bob 5s ease-in-out infinite .9s; }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+  /* ============================ TRUST ============================ */
+  .lp .trust { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: -8px; }
+  .lp .trust__item { display: flex; align-items: center; gap: 13px; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 18px 20px; }
+  .lp .trust__ic { display: grid; place-items: center; width: 42px; height: 42px; flex: none; border-radius: 12px; color: #fff; }
+  .lp .trust__ic svg { width: 21px; height: 21px; }
+  .lp .ic--pink { background: rgba(253,41,123,0.16); color: var(--pink); }
+  .lp .ic--violet { background: rgba(139,47,230,0.18); color: #b07bff; }
+  .lp .ic--coral { background: rgba(255,88,100,0.16); color: var(--coral); }
+  .lp .ic--blue { background: rgba(30,155,255,0.16); color: var(--blue); }
+  .lp .ic--green { background: rgba(20,194,94,0.16); color: var(--green); }
+  .lp .ic--gold { background: rgba(245,158,11,0.16); color: var(--gold); }
+  .lp .trust__item strong { display: block; font-size: 15px; font-weight: 800; color: #fff; }
+  .lp .trust__item span span, .lp .trust__item > div span { font-size: 13px; color: var(--ink-3); }
+
+  /* ============================ MARKERS ============================ */
+  .lp .markers { margin-top: 44px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+  .lp .marker { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 22px 18px; overflow: hidden; transition: transform .4s var(--ease), border-color .4s var(--ease), background .4s var(--ease); }
+  .lp .marker::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 3px; background: var(--m); opacity: 0.85; }
+  .lp .marker:hover { transform: translateY(-6px); border-color: color-mix(in oklab, var(--m) 50%, transparent); background: var(--surface-2); }
+  .lp .marker__ic { display: grid; place-items: center; width: 46px; height: 46px; font-size: 22px; border-radius: 14px; background: color-mix(in oklab, var(--m) 18%, transparent); margin-bottom: 14px; }
+  .lp .marker h3 { font-size: 17px; font-weight: 700; margin: 0 0 6px; color: #fff; }
+  .lp .marker p { font-size: 13.5px; line-height: 1.5; color: var(--ink-3); margin: 0; }
+
+  /* ============================ FEATURE ============================ */
+  .lp .feature { position: relative; z-index: 1; display: grid; grid-template-columns: 1.02fr 0.98fr; gap: clamp(28px, 5vw, 72px); align-items: center; }
+  .lp .feature--reverse .feature__copy { order: 2; }
+  .lp .feature__visual { display: grid; place-items: center; }
+  .lp .ticks { list-style: none; padding: 0; margin: 26px 0 0; display: grid; gap: 13px; }
+  .lp .ticks li { position: relative; padding-left: 34px; font-size: 15.5px; line-height: 1.5; color: var(--ink-2); }
+  .lp .ticks li::before { content: ""; position: absolute; left: 0; top: 0; width: 22px; height: 22px; border-radius: 7px; background: var(--grad);
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg>") center / 13px no-repeat;
+    mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg>") center / 13px no-repeat; }
+
+  /* request card visual */
+  .lp .reqcard { width: min(100%, 360px); background: var(--surface); border: 1px solid var(--line); border-radius: 26px; padding: 18px; box-shadow: 0 50px 90px -40px rgba(0,0,0,0.8); }
+  .lp .reqcard__top { display: flex; align-items: center; justify-content: space-between; }
+  .lp .reqcard__top span:first-child { font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; font-size: 17px; color: #fff; }
+  .lp .reqcard__coin { font-size: 12px; font-weight: 800; color: var(--gold); background: rgba(245,158,11,0.14); border-radius: 999px; padding: 4px 11px; }
+  .lp .reqcard__body { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
+  .lp .reqcard__body img { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; }
+  .lp .reqcard__body strong { display: block; font-size: 15px; font-weight: 800; color: #fff; }
+  .lp .reqcard__body em { font-style: normal; font-size: 12px; color: var(--ink-3); }
+  .lp .reqcard__msg { margin: 14px 0 0; font-size: 13.5px; line-height: 1.5; color: var(--ink-2); background: rgba(253,41,123,0.1); border: 1px solid rgba(253,41,123,0.18); border-radius: 14px 14px 14px 5px; padding: 11px 13px; }
+  .lp .reqcard__actions { display: flex; gap: 9px; margin-top: 14px; }
+  .lp .reqcard__btn { flex: 1; text-align: center; font-size: 13.5px; font-weight: 800; padding: 11px; border-radius: 13px; }
+  .lp .reqcard__btn--yes { background: var(--grad); color: #fff; }
+  .lp .reqcard__btn--no { background: rgba(255,255,255,0.06); color: var(--ink-2); }
+  .lp .reqcard__hint { display: block; margin-top: 12px; text-align: center; font-size: 11.5px; color: var(--ink-3); }
+
+  /* photo cards */
+  .lp .photo { position: relative; width: min(100%, 420px); aspect-ratio: 4/5; border-radius: 28px; overflow: hidden; box-shadow: 0 50px 100px -40px rgba(0,0,0,0.85), 0 0 0 1px rgba(255,255,255,0.06); }
+  .lp .photo img { width: 100%; height: 100%; object-fit: cover; }
+  .lp .photo__badge { position: absolute; top: 16px; right: 16px; width: 30px; height: 30px; border-radius: 50%; background: var(--green) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center / 16px no-repeat; box-shadow: 0 8px 20px -6px rgba(0,0,0,0.6); }
+  .lp .photo--tall .callbar { position: absolute; left: 0; right: 0; bottom: 18px; display: flex; justify-content: center; gap: 12px; }
+  .lp .photo--tall .callbar span { width: 44px; height: 44px; border-radius: 50%; background: rgba(255,255,255,0.16); backdrop-filter: blur(8px); }
+  .lp .photo--tall .callbar__end { background: var(--coral) !important; box-shadow: 0 10px 24px -8px rgba(255,88,100,0.8); }
+
+  /* vibes list */
+  .lp .vibes { width: min(100%, 380px); display: grid; gap: 11px; }
+  .lp .vibe { display: flex; gap: 12px; align-items: flex-start; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 14px; transition: transform .35s var(--ease), border-color .35s var(--ease); }
+  .lp .vibe:hover { transform: translateX(4px); border-color: rgba(253,41,123,0.4); }
+  .lp .vibe img { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; flex: none; }
+  .lp .vibe__h { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .lp .vibe__h strong { font-size: 14px; font-weight: 800; color: #fff; }
+  .lp .vibe__h em { font-style: normal; font-size: 11px; color: var(--ink-3); }
+  .lp .vibe p { margin: 4px 0 0; font-size: 13px; line-height: 1.45; color: var(--ink-2); }
+
+  /* ============================ FACEWALL ============================ */
+  .lp .facewall { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 44px; }
+  .lp .facewall figure { margin: 0; position: relative; border-radius: 20px; overflow: hidden; aspect-ratio: 3/4; box-shadow: 0 30px 60px -34px rgba(0,0,0,0.8); }
+  .lp .facewall figure img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s var(--ease); }
+  .lp .facewall figure:hover img { transform: scale(1.05); }
+  .lp .facewall figure::after { content: ""; position: absolute; top: 10px; right: 10px; width: 22px; height: 22px; border-radius: 50%; background: var(--green) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center / 13px no-repeat; }
+  .lp .facewall figure:nth-child(2), .lp .facewall figure:nth-child(4) { transform: translateY(26px); }
+  .lp .facewall__wide { grid-column: span 2; aspect-ratio: 16/10 !important; }
+
+  /* ============================ SAFETY ============================ */
+  .lp .safety { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 56px; }
+  .lp .safety__card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 24px; transition: transform .35s var(--ease), border-color .35s var(--ease); }
+  .lp .safety__card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.16); }
+  .lp .safety__ic { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 13px; margin-bottom: 14px; }
+  .lp .safety__ic svg { width: 22px; height: 22px; }
+  .lp .safety__card h3 { font-size: 17px; font-weight: 700; margin: 0 0 7px; color: #fff; }
+  .lp .safety__card p { font-size: 14px; line-height: 1.55; color: var(--ink-3); margin: 0; }
+
+  /* ============================ CTA ============================ */
+  .lp .cta { position: relative; margin: clamp(40px,7vw,90px) auto; border-radius: 34px; overflow: hidden; padding: clamp(48px, 7vw, 92px) clamp(24px, 5vw, 72px); text-align: center; background: var(--grad); isolation: isolate; box-shadow: 0 60px 120px -50px rgba(253,41,123,0.7); }
+  .lp .cta__bloom { position: absolute; inset: 0; z-index: -1; background: radial-gradient(50% 70% at 50% -10%, rgba(255,255,255,0.4), transparent 60%), radial-gradient(40% 60% at 90% 120%, rgba(139,47,230,0.5), transparent 60%); }
+  .lp .cta__title { font-size: clamp(32px, 5vw, 56px); font-weight: 800; margin: 0; color: #fff; }
+  .lp .cta__sub { font-size: clamp(15px, 1.6vw, 18px); line-height: 1.5; color: rgba(255,255,255,0.92); margin: 14px auto 0; max-width: 42ch; }
+  .lp .stores { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 32px; }
+  .lp .store { display: inline-flex; align-items: center; gap: 11px; background: #120713; color: #fff; border-radius: 14px; padding: 12px 22px; text-decoration: none; transition: transform .25s var(--ease); }
+  .lp .store:hover { transform: translateY(-3px); }
+  .lp .store svg { width: 26px; height: 26px; transition: transform .3s var(--ease); }
+  .lp .store:hover svg { transform: scale(1.08) rotate(-3deg); }
+  .lp .store span { display: grid; line-height: 1.1; text-align: left; }
+  .lp .store em { font-size: 11px; font-style: normal; opacity: 0.78; }
+  .lp .store strong { font-size: 16px; font-weight: 700; }
+
+  /* ============================ MOTION ============================ */
+  .lp .reveal { opacity: 0; transform: translateY(24px); filter: blur(7px); transition: opacity .85s var(--ease), transform .85s var(--ease), filter .7s var(--ease); transition-delay: var(--d, 0ms); }
+  .lp .reveal.is-visible { opacity: 1; transform: none; filter: blur(0); }
+  .lp .reveal--right { transform: translateX(46px); }
+  .lp .reveal--left { transform: translateX(-46px); }
+  .lp .reveal--scale { transform: scale(0.93); }
+  .lp .reveal--right.is-visible, .lp .reveal--left.is-visible, .lp .reveal--scale.is-visible { transform: none; }
+  .lp .reveal-lines .line { display: block; overflow: hidden; padding-bottom: 0.08em; }
+  .lp .reveal-lines .line > span { display: inline-block; transform: translateY(120%); transition: transform .95s var(--ease); transition-delay: var(--d, 0ms); }
+  .lp .reveal-lines.is-visible .line > span { transform: none; }
+
+  .scroll-progress { position: fixed; inset: 0 0 auto 0; height: 3px; z-index: 60; background: linear-gradient(90deg, #fd297b, #ff655b); transform: scaleX(0); transform-origin: 0 50%; will-change: transform; }
+
+  /* ============================ RESPONSIVE ============================ */
+  @media (max-width: 940px) {
+    .lp .hero__grid { grid-template-columns: 1fr; text-align: center; }
+    .lp .hero__sub, .lp .lead { margin-inline: auto; }
+    .lp .hero__ctas, .lp .hero__trust { justify-content: center; }
+    .lp .hero__stage { margin-top: 18px; width: min(82vw, 340px); }
+    .lp .feature, .lp .feature--reverse .feature__copy { grid-template-columns: 1fr; order: 0; text-align: center; }
+    .lp .feature__copy .ticks { text-align: left; max-width: 420px; margin-inline: auto; }
+    .lp .head { margin-inline: auto; text-align: center; }
+    .lp .trust { grid-template-columns: 1fr; }
+    .lp .markers { grid-template-columns: repeat(2, 1fr); }
+    .lp .safety { grid-template-columns: 1fr; }
+    .lp .chip--a { left: -2%; } .lp .chip--b { right: -2%; }
+  }
+  @media (max-width: 560px) {
+    .lp .markers { grid-template-columns: 1fr; }
+    .lp .facewall { grid-template-columns: repeat(2, 1fr); }
+    .lp .facewall figure:nth-child(2), .lp .facewall figure:nth-child(4) { transform: none; }
+    .lp .facewall__wide { grid-column: span 2; aspect-ratio: 3/4 !important; }
+    .lp .chip { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .lp .reveal { opacity: 1; transform: none; filter: none; transition: none; }
+    .lp .reveal-lines .line > span { transform: none; transition: none; }
+    .lp .chip--a, .lp .chip--b { animation: none; }
+    .scroll-progress { display: none; }
+  }
+</style>
+
 <script>
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // 1. Reveal-on-scroll (runs even under reduced-motion so content shows)
+  // 1. Reveal-on-scroll
   const revealEls = document.querySelectorAll<HTMLElement>('.reveal, .reveal-lines');
   if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            e.target.classList.add('is-visible');
-            io.unobserve(e.target);
-          }
-        });
-      },
-      { threshold: 0.14, rootMargin: '0px 0px -8% 0px' },
-    );
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.14, rootMargin: '0px 0px -8% 0px' });
     revealEls.forEach((el) => io.observe(el));
   } else {
     revealEls.forEach((el) => el.classList.add('is-visible'));
   }
 
+  // 2. Rotating profile-card deck
+  const deck = document.querySelector<HTMLElement>('.deck');
+  if (deck) {
+    const cards = Array.from(deck.querySelectorAll<HTMLElement>('.pcard'));
+    let order = cards.map((_, i) => i);
+    const apply = () => order.forEach((idx, pos) => { cards[idx].dataset.pos = String(pos); });
+    apply();
+    if (!reduce && cards.length > 1) {
+      let timer: ReturnType<typeof setInterval> | null = null;
+      const advance = () => {
+        const front = cards[order[0]];
+        front.classList.add('pcard--exit');
+        setTimeout(() => { order.push(order.shift()!); front.classList.remove('pcard--exit'); apply(); }, 480);
+      };
+      const start = () => { timer = setInterval(advance, 3200); };
+      const stop = () => { if (timer) { clearInterval(timer); timer = null; } };
+      start();
+      deck.addEventListener('pointerenter', stop);
+      deck.addEventListener('pointerleave', start);
+    }
+  }
+
   if (!reduce) {
-    // 2. Scroll progress + hero-glow parallax (single rAF-batched handler)
+    // 3. Scroll progress + bloom parallax
     const bar = document.querySelector<HTMLElement>('.scroll-progress');
-    const glow = document.querySelector<HTMLElement>('.hero__glow');
+    const blooms = Array.from(document.querySelectorAll<HTMLElement>('.bloom'));
     let ticking = false;
     const onScroll = () => {
       if (ticking) return;
@@ -471,34 +649,15 @@ const kofi   = '1463453091185-61582044d556'; // striped tee, street portrait
         const y = window.scrollY;
         const max = document.documentElement.scrollHeight - window.innerHeight;
         if (bar) bar.style.transform = `scaleX(${max > 0 ? Math.min(y / max, 1) : 0})`;
-        if (glow) glow.style.transform = `translateY(${y * 0.12}px)`;
+        blooms.forEach((b, i) => { b.style.transform = `translateY(${y * (i % 2 ? 0.06 : -0.05)}px)`; });
         ticking = false;
       });
     };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
 
+    // 4. Magnetic primary CTA (fine pointers only)
     if (window.matchMedia('(pointer: fine)').matches) {
-      // 3. Gentle device tilt toward the pointer
-      const tiltEls = Array.from(document.querySelectorAll<HTMLElement>('[data-tilt]'));
-      let traf = 0;
-      window.addEventListener(
-        'pointermove',
-        (ev) => {
-          if (traf) return;
-          traf = requestAnimationFrame(() => {
-            const x = (ev.clientX / window.innerWidth - 0.5) * 2;
-            const y = (ev.clientY / window.innerHeight - 0.5) * 2;
-            tiltEls.forEach((el) => {
-              el.style.transform = `perspective(1100px) rotateY(${x * 3}deg) rotateX(${y * -2.4}deg)`;
-            });
-            traf = 0;
-          });
-        },
-        { passive: true },
-      );
-
-      // 4. Light magnetic pull on the primary CTA
       document.querySelectorAll<HTMLElement>('[data-magnetic]').forEach((btn) => {
         btn.addEventListener('pointermove', (ev) => {
           const r = btn.getBoundingClientRect();
@@ -506,9 +665,7 @@ const kofi   = '1463453091185-61582044d556'; // striped tee, street portrait
           const my = (ev.clientY - r.top - r.height / 2) / r.height;
           btn.style.transform = `translate(${mx * 8}px, ${my * 8 - 2}px)`;
         });
-        btn.addEventListener('pointerleave', () => {
-          btn.style.transform = '';
-        });
+        btn.addEventListener('pointerleave', () => { btn.style.transform = ''; });
       });
     }
   }
