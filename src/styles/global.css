@@ -1080,3 +1080,101 @@ img { display: block; max-width: 100%; }
   .footer__bottom { flex-direction: column; text-align: center; }
   .legal__more { flex-direction: column; align-items: flex-start; text-align: left; }
 }
+
+/* ============================================================
+   MOTION & INTERACTION LAYER
+   ------------------------------------------------------------
+   Layered on top of the system above. Transform / opacity /
+   filter only, ease-out (var(--ease) = ease-out-expo), and
+   fully disabled under prefers-reduced-motion. No layout
+   properties are animated.
+   ============================================================ */
+
+/* Reveal — soften the settle with a blur-up under the existing rise */
+.reveal {
+  transition: opacity 0.85s var(--ease), transform 0.85s var(--ease),
+              filter 0.7s var(--ease);
+  filter: blur(7px);
+}
+.reveal.is-visible { filter: blur(0); }
+
+/* Directional reveal variants (feature visuals, face wall, device) */
+.reveal--left  { transform: translateX(-46px); }
+.reveal--right { transform: translateX(46px); }
+.reveal--scale { transform: scale(0.92); }
+.reveal--left.is-visible,
+.reveal--right.is-visible,
+.reveal--scale.is-visible { transform: none; }
+
+/* Hero title — line-by-line mask reveal */
+.reveal-lines .line { display: block; overflow: hidden; padding-bottom: 0.08em; }
+.reveal-lines .line > span {
+  display: inline-block;
+  transform: translateY(120%);
+  transition: transform 0.95s var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: transform;
+}
+.reveal-lines.is-visible .line > span { transform: none; }
+
+/* Primary button — light sheen sweep + the existing lift */
+.btn--primary { position: relative; overflow: hidden; }
+.btn--primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 25%,
+              rgba(255, 255, 255, 0.38) 50%, transparent 75%);
+  transform: translateX(-135%);
+  transition: transform 0.75s var(--ease);
+}
+.btn--primary:hover::after { transform: translateX(135%); }
+
+/* Text link arrow + store icon micro-motion */
+.textlink:hover svg { transform: translateX(3px); }
+.store svg { transition: transform 0.3s var(--ease); }
+.store:hover svg { transform: scale(1.08) rotate(-3deg); }
+
+/* Face wall — lift + warm on hover */
+.faces figure { transition: box-shadow 0.4s var(--ease); }
+.faces figure:hover { box-shadow: var(--shadow-lg); }
+.faces figure img { transition: transform 0.7s var(--ease), filter 0.5s var(--ease); }
+.faces figure:hover img { transform: scale(1.05); filter: saturate(1.06) brightness(1.02); }
+
+/* Facepile — gentle spread on hover */
+.facepile img { transition: transform 0.4s var(--ease); }
+.facepile:hover img:first-child { transform: translateX(-5px); }
+.facepile:hover img:last-child  { transform: translateX(5px); }
+
+/* Living detail inside the hero mockup — the Like button breathes */
+@keyframes likePulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.09); } }
+.discover__btn--like { animation: likePulse 2.6s var(--ease) infinite; }
+
+/* Ambient glows breathe — opacity only, transform stays free for parallax */
+@keyframes breathe { 0%, 100% { opacity: 0.82; } 50% { opacity: 1; } }
+.hero__glow { animation: breathe 11s ease-in-out infinite; will-change: opacity, transform; }
+.cta__glow  { animation: breathe 13s ease-in-out infinite; }
+
+/* Nav links — quick press feedback */
+.nav__links a { transition: color 0.2s var(--ease), background 0.25s var(--ease), transform 0.18s var(--ease); }
+.nav__links a:active { transform: scale(0.96); }
+
+/* Scroll progress bar (landing) */
+.scroll-progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 3px;
+  z-index: 60;
+  background: var(--pink);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { filter: none !important; }
+  .reveal-lines .line > span { transform: none !important; transition: none !important; }
+  .discover__btn--like, .hero__glow, .cta__glow { animation: none !important; }
+  .scroll-progress { display: none !important; }
+}
