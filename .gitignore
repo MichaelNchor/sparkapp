@@ -14,3 +14,5 @@ dist
 .env
 .env.local
 .env.*.local
+.screens-raw/
+.screens-all/
