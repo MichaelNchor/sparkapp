@@ -224,7 +224,15 @@ const Shield = 'M12 2 4 5v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V5z';
     --pink: #fd297b; --coral: #ff5864; --violet: #8B2FE6; --blue: #1E9BFF; --green: #14C25E; --gold: #F59E0B;
     --grad: linear-gradient(102deg, #fd297b 0%, #ff5864 55%, #ff655b 100%);
     --ease: cubic-bezier(0.16, 1, 0.3, 1);
-    color: var(--ink); font-family: 'Hanken Grotesk', system-ui, sans-serif; background: var(--bg); overflow-x: clip;
+    color: var(--ink); font-family: 'Hanken Grotesk', system-ui, sans-serif; overflow-x: clip;
+    /* ambient color flow — soft glows drift side to side down the page so the
+       long dark stretch below the hero has movement and depth, not one flat value */
+    background:
+      radial-gradient(46% 20% at 88% 20%, rgba(253,41,123,0.16), transparent 62%),
+      radial-gradient(48% 22% at 10% 37%, rgba(139,47,230,0.17), transparent 62%),
+      radial-gradient(46% 20% at 90% 55%, rgba(253,41,123,0.13), transparent 62%),
+      radial-gradient(50% 24% at 8% 72%, rgba(139,47,230,0.16), transparent 62%),
+      var(--bg);
   }
   .lp .shell { width: min(1160px, 92vw); margin-inline: auto; }
   .lp h1, .lp h2, .lp h3 { font-family: 'Bricolage Grotesque', 'Hanken Grotesk', sans-serif; letter-spacing: -0.03em; }
@@ -325,7 +333,7 @@ const Shield = 'M12 2 4 5v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V5z';
   /* cta */
   .lp .cta { position: relative; margin: clamp(40px,7vw,90px) auto; border-radius: 34px; overflow: hidden; padding: clamp(52px, 8vw, 96px) clamp(24px, 5vw, 72px); text-align: center; background: var(--grad); isolation: isolate; box-shadow: 0 60px 120px -50px rgba(253,41,123,0.7); }
   .lp .cta__bloom { position: absolute; inset: 0; z-index: -1; background: radial-gradient(50% 70% at 50% -10%, rgba(255,255,255,0.4), transparent 60%), radial-gradient(40% 60% at 90% 120%, rgba(139,47,230,0.5), transparent 60%); }
-  .lp .cta__logo { width: 64px; height: 64px; margin: 0 auto 18px; filter: drop-shadow(0 10px 24px rgba(0,0,0,0.35)); }
+  .lp .cta__logo { box-sizing: border-box; width: 74px; height: 74px; margin: 0 auto 22px; padding: 14px; background: #fff; border-radius: 20px; box-shadow: 0 16px 34px -12px rgba(0,0,0,0.45); }
   .lp .cta__title { font-size: clamp(32px, 5vw, 56px); font-weight: 800; margin: 0; color: #fff; }
   .lp .cta__sub { font-size: clamp(15px, 1.6vw, 18px); line-height: 1.5; color: rgba(255,255,255,0.92); margin: 14px auto 0; max-width: 42ch; }
   .lp .stores { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-top: 32px; }
@@ -346,6 +354,31 @@ const Shield = 'M12 2 4 5v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V5z';
   .lp .reveal-lines .line > span { display: inline-block; transform: translateY(120%); transition: transform .95s var(--ease); transition-delay: var(--d, 0ms); }
   .lp .reveal-lines.is-visible .line > span { transform: none; }
   .scroll-progress { position: fixed; inset: 0 0 auto 0; height: 3px; z-index: 60; background: linear-gradient(90deg, #fd297b, #ff655b); transform: scaleX(0); transform-origin: 0 50%; will-change: transform; }
+
+  /* feature phones — gentle float, lift + halo on hover */
+  .lp .feat__phone .device { animation: floatA 7s ease-in-out infinite; }
+  .lp .feat--rev .feat__phone .device { animation: floatB 7.8s ease-in-out infinite; }
+  @keyframes floatA { 0%, 100% { transform: rotate(-2.5deg) translateY(0); } 50% { transform: rotate(-2.5deg) translateY(-11px); } }
+  @keyframes floatB { 0%, 100% { transform: rotate(2.5deg) translateY(0); } 50% { transform: rotate(2.5deg) translateY(-11px); } }
+  .lp .feat__phone { transition: transform .5s var(--ease); }
+  .lp .feat__phone:hover { transform: translateY(-6px) scale(1.02); }
+  .lp .feat__phone .phoneglow { transition: transform .5s var(--ease); }
+  .lp .feat__phone:hover .phoneglow { transform: translate(-50%,-50%) scale(1.18); }
+
+  /* hero scene follows the cursor — parallax via the `translate` property so it
+     layers cleanly over the float animations' `transform` */
+  .lp .device--hero, .lp .matchcard, .lp .spark, .lp .phonering { transition: translate .3s ease-out; }
+
+  /* checklist items stagger in as their section reveals */
+  .lp .ticks li { opacity: 0; transform: translateX(-12px); transition: opacity .55s var(--ease), transform .55s var(--ease); }
+  .lp .reveal.is-visible .ticks li { opacity: 1; transform: none; }
+  .lp .reveal.is-visible .ticks li:nth-child(2) { transition-delay: .1s; }
+  .lp .reveal.is-visible .ticks li:nth-child(3) { transition-delay: .2s; }
+
+  /* CTA app icon — gentle idle float + springy 3D tilt on press */
+  .lp .cta__logo { animation: iconfloat 4.6s ease-in-out infinite; cursor: pointer; touch-action: manipulation; will-change: transform;
+    transition: transform .42s cubic-bezier(0.34, 1.42, 0.5, 1); }
+  @keyframes iconfloat { 0%, 100% { translate: 0 0; rotate: -2deg; } 50% { translate: 0 -7px; rotate: 2deg; } }
 
   /* responsive */
   @media (max-width: 940px) {
@@ -372,7 +405,9 @@ const Shield = 'M12 2 4 5v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V5z';
     .lp .reveal { opacity: 1; transform: none; filter: none; transition: none; }
     .lp .reveal-lines .line > span { transform: none; transition: none; }
     .lp .device--hero, .lp .matchcard, .lp .spark, .lp .phonering { animation: none; }
+    .lp .feat__phone .device, .lp .cta__logo { animation: none; }
     .lp .hero__title .grad { animation: none; }
+    .lp .ticks li { opacity: 1; transform: none; transition: none; }
     .scroll-progress { display: none; }
   }
 </style>
@@ -415,6 +450,43 @@ const Shield = 'M12 2 4 5v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V5z';
         });
         btn.addEventListener('pointerleave', () => { btn.style.transform = ''; });
       });
+
+      // hero scene parallax — layers drift toward the cursor at different depths
+      const hero = document.querySelector<HTMLElement>('.hero');
+      const layers: Array<[HTMLElement | null, number]> = [
+        [document.querySelector<HTMLElement>('.phonering'), -6],
+        [document.querySelector<HTMLElement>('.device--hero'), 8],
+        [document.querySelector<HTMLElement>('.matchcard'), 17],
+        [document.querySelector<HTMLElement>('.spark'), 25],
+      ];
+      if (hero) {
+        hero.addEventListener('pointermove', (ev) => {
+          const r = hero.getBoundingClientRect();
+          const mx = (ev.clientX - r.left - r.width / 2) / r.width;
+          const my = (ev.clientY - r.top - r.height / 2) / r.height;
+          layers.forEach(([el, depth]) => { if (el) el.style.setProperty('translate', `${mx * depth}px ${my * depth}px`); });
+        });
+        hero.addEventListener('pointerleave', () => {
+          layers.forEach(([el]) => { if (el) el.style.removeProperty('translate'); });
+        });
+      }
+    }
+
+    // CTA app icon — springy 3D tilt toward your press, bounces back on release
+    const ctaIcon = document.querySelector<HTMLElement>('.cta__logo');
+    if (ctaIcon) {
+      let holding = false;
+      const tiltIcon = (ev: PointerEvent) => {
+        const r = ctaIcon.getBoundingClientRect();
+        const px = (ev.clientX - r.left - r.width / 2) / (r.width / 2);
+        const py = (ev.clientY - r.top - r.height / 2) / (r.height / 2);
+        ctaIcon.style.transform = `perspective(520px) rotateX(${(-py * 12).toFixed(2)}deg) rotateY(${(px * 12).toFixed(2)}deg) scale(0.94)`;
+      };
+      const releaseIcon = () => { if (!holding) return; holding = false; ctaIcon.style.transform = ''; };
+      ctaIcon.addEventListener('pointerdown', (ev) => { holding = true; ctaIcon.setPointerCapture(ev.pointerId); tiltIcon(ev); });
+      ctaIcon.addEventListener('pointermove', (ev) => { if (holding) tiltIcon(ev); });
+      ctaIcon.addEventListener('pointerup', releaseIcon);
+      ctaIcon.addEventListener('pointercancel', releaseIcon);
     }
   }
 </script>
