@@ -21,6 +21,7 @@ const Shield = 'M12 2 4 5v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V5z';
     <section class="hero" id="top">
       <span class="bloom bloom--pink" aria-hidden="true"></span>
       <span class="bloom bloom--violet" aria-hidden="true"></span>
+      <span class="grain" aria-hidden="true"></span>
       <div class="hero__grid shell">
         <div class="hero__copy">
           <h1 class="hero__title reveal-lines">
@@ -48,11 +49,19 @@ const Shield = 'M12 2 4 5v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V5z';
 
         <!-- real app discovery screen -->
         <div class="hero__stage reveal" style="--d:240ms">
+          <span class="phonering" aria-hidden="true"></span>
           <div class="phoneglow" aria-hidden="true"></div>
           <div class="device device--hero">
             <span class="device__island" aria-hidden="true"></span>
             <img src="/screens/hero-swipe.webp" alt="The Luvmood app showing a verified member in discovery" width="330" height="714" loading="eager" fetchpriority="high" />
           </div>
+          <figure class="matchcard" aria-hidden="true">
+            <img src="/people/bots/w-ama.webp" alt="" loading="eager" />
+            <figcaption><span class="matchcard__tick"></span> Verified</figcaption>
+          </figure>
+          <span class="spark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </span>
         </div>
       </div>
 
@@ -266,6 +275,38 @@ const Shield = 'M12 2 4 5v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V5z';
   .lp .phoneglow--violet { background: radial-gradient(circle, rgba(139,47,230,0.5), transparent 70%); }
   @keyframes floaty { 0%, 100% { transform: rotate(-2deg) translateY(0); } 50% { transform: rotate(-2deg) translateY(-12px); } }
 
+  /* hero scene accents — a living discovery scene, not a flat screenshot */
+  .lp .phonering { position: absolute; top: 50%; left: 50%; width: 122%; aspect-ratio: 1; transform: translate(-50%,-50%); border-radius: 50%; z-index: 0;
+    background: conic-gradient(from 0deg, transparent, rgba(253,41,123,0.55), rgba(139,47,230,0.5), rgba(255,88,100,0.6), transparent);
+    -webkit-mask: radial-gradient(circle, transparent 57%, #000 60%, #000 71%, transparent 75%);
+    mask: radial-gradient(circle, transparent 57%, #000 60%, #000 71%, transparent 75%);
+    filter: blur(8px); opacity: 0.9; animation: ringspin 20s linear infinite; }
+  @keyframes ringspin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+
+  .lp .matchcard { position: absolute; z-index: 4; bottom: 5%; left: -9%; width: clamp(116px, 12vw, 150px); margin: 0; padding: 8px;
+    border-radius: 20px; background: rgba(28,16,36,0.74); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,0.13);
+    box-shadow: 0 26px 54px -22px rgba(0,0,0,0.9), 0 0 0 4px rgba(11,4,15,0.55); transform: rotate(5deg); animation: cardfloat 7.5s ease-in-out infinite; }
+  .lp .matchcard img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; object-position: center 22%; border-radius: 13px; }
+  .lp .matchcard figcaption { display: flex; align-items: center; gap: 6px; margin-top: 7px; padding: 0 3px 2px; font-size: 12px; font-weight: 700; color: #fff; }
+  .lp .matchcard__tick { width: 15px; height: 15px; flex: none; border-radius: 50%; background: var(--grad);
+    -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg>") center / 10px no-repeat;
+    mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.6' stroke-linecap='round' stroke-linejoin='round'><path d='M20 6 9 17l-5-5'/></svg>") center / 10px no-repeat; }
+
+  .lp .spark { position: absolute; z-index: 4; top: 7%; right: -3%; width: 54px; height: 54px; display: grid; place-items: center; color: #fff;
+    border-radius: 50%; background: var(--grad); box-shadow: 0 16px 32px -8px rgba(253,41,123,0.85), inset 0 1px 1px rgba(255,255,255,0.45); animation: sparkfloat 5.5s ease-in-out infinite; }
+  .lp .spark svg { width: 26px; height: 26px; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.28)); }
+
+  @keyframes cardfloat { 0%, 100% { transform: rotate(5deg) translateY(0); } 50% { transform: rotate(5deg) translateY(-14px); } }
+  @keyframes sparkfloat { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-11px) scale(1.06); } }
+
+  /* hero title sheen */
+  .lp .hero__title .grad { background-size: 220% 100%; animation: sheen 7s ease-in-out infinite; }
+  @keyframes sheen { 0%, 100% { background-position: 0% 0; } 50% { background-position: 100% 0; } }
+
+  /* grain texture */
+  .lp .grain { position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0.05; mix-blend-mode: soft-light;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
   /* inline trust line */
   .lp .trustline { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 14px 18px; margin-top: clamp(44px, 6vw, 72px); padding-top: 28px; border-top: 1px solid var(--line); }
   .lp .trustline span { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--ink-2); }
@@ -311,6 +352,8 @@ const Shield = 'M12 2 4 5v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V5z';
     .lp .hero__sub { margin-inline: auto; }
     .lp .hero__ctas, .lp .hero__trust { justify-content: center; }
     .lp .hero__stage { margin-top: 18px; width: min(80vw, 320px); }
+    .lp .matchcard { left: -5%; width: 112px; bottom: 7%; }
+    .lp .spark { right: -1%; top: 4%; }
     .lp .feat__grid { grid-template-columns: 1fr; text-align: center; }
     .lp .feat--rev .feat__copy { order: 0; }
     .lp .feat__copy .lead { margin-inline: auto; }
@@ -319,6 +362,7 @@ const Shield = 'M12 2 4 5v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V5z';
   @media (max-width: 560px) {
     .lp .peek--1 { left: -6%; width: 34%; }
     .lp .peek--2 { right: -6%; width: 34%; }
+    .lp .matchcard, .lp .spark { display: none; }
     .lp .trustline { gap: 10px; }
     .lp .trustline__dot { display: none; }
     .lp .trustline span { width: 100%; justify-content: center; }
@@ -326,7 +370,8 @@ const Shield = 'M12 2 4 5v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V5z';
   @media (prefers-reduced-motion: reduce) {
     .lp .reveal { opacity: 1; transform: none; filter: none; transition: none; }
     .lp .reveal-lines .line > span { transform: none; transition: none; }
-    .lp .device--hero { animation: none; }
+    .lp .device--hero, .lp .matchcard, .lp .spark, .lp .phonering { animation: none; }
+    .lp .hero__title .grad { animation: none; }
     .scroll-progress { display: none; }
   }
 </style>
