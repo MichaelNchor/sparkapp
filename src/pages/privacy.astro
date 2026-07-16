@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 
-const updated = 'May 18, 2026';
+const updated = 'July 16, 2026';
 ---
 
 <Layout
@@ -40,7 +40,7 @@ const updated = 'May 18, 2026';
 
       <p><strong>Information you give us</strong></p>
       <ul>
-        <li><strong>Account &amp; profile</strong> — first name, date of birth, gender, email address or phone number, password (hashed), photos, bio, prompts, occupation, education, height, religion, languages, anthem, social links, and any other content you add to your profile.</li>
+        <li><strong>Account &amp; profile</strong> — first name, date of birth, gender, email address or phone number, photos, bio, prompts, occupation, education, height, religion, languages, anthem, social links, and any other content you add to your profile.</li>
         <li><strong>Verification</strong> — a selfie you submit during photo verification. The selfie is processed in memory by an automated face-match service and discarded as soon as the check completes; we do not store the image. Only a pass/fail flag is recorded against your account.</li>
         <li><strong>Communications</strong> — messages, “Hit Me Up” posts, comments, love-note replies, gifts, video and voice call signaling, and any other content you exchange with other users.</li>
         <li><strong>Customer support</strong> — emails, screenshots, and other information you send when you contact us.</li>
@@ -58,7 +58,6 @@ const updated = 'May 18, 2026';
 
       <p><strong>Information from third parties</strong></p>
       <ul>
-        <li><strong>Authentication providers</strong> — if you sign in with Apple or Google, we receive your name, email, and a unique identifier from them.</li>
         <li><strong>Referrers</strong> — if you join via a referral code, we record who referred you so the referrer earns the reward.</li>
       </ul>
 
@@ -106,14 +105,15 @@ const updated = 'May 18, 2026';
         <li><strong>Other users</strong> — your profile, photos, and messages are visible to people you match or chat with. Approved profile content is visible to other users in the discovery and HMU feeds.</li>
         <li><strong>Service providers (processors)</strong> who operate the platform under contract:
           <ul>
-            <li>Hosting &amp; databases — Amazon Web Services, Supabase</li>
+            <li>Hosting, storage &amp; databases — Hetzner (application servers and database), Amazon Web Services (S3 storage, CloudFront CDN)</li>
+            <li>Authentication &amp; one-time passcodes — our self-hosted authentication service; sign-in codes delivered by email (Amazon SES) and SMS</li>
+            <li>Voice &amp; video calls — Agora (real-time call infrastructure)</li>
             <li>Push notifications — Expo, Apple Push Notification service, Firebase Cloud Messaging</li>
-            <li>Authentication — Firebase Authentication, Apple, Google</li>
             <li>Content moderation — OpenAI (text), our internal image moderation pipeline</li>
             <li>Crash reporting &amp; analytics — Sentry</li>
             <li>Advertising — Google AdMob (only the rewarded-ad and in-feed banner surfaces; no behavioural targeting based on profile content)</li>
             <li>Payments — Apple App Store, Google Play</li>
-            <li>Email delivery — our transactional email provider</li>
+            <li>Email delivery — Amazon SES (transactional email such as sign-in codes and receipts)</li>
           </ul>
         </li>
         <li><strong>Law enforcement and regulators</strong> when required by valid legal process (subpoena, court order, warrant) or when we believe disclosure is necessary to prevent imminent harm.</li>
@@ -122,11 +122,11 @@ const updated = 'May 18, 2026';
 
       <h2>6. International transfers</h2>
       <p>
-        Luvmood is operated from the United States. If you use the Service from
-        outside the US, your information will be transferred to, stored in,
-        and processed in the US and other countries where our service
-        providers operate. Where required, we rely on European Commission
-        Standard Contractual Clauses or equivalent safeguards.
+        Luvmood is operated from Ghana. Our infrastructure providers process
+        and store data in the European Union (Germany) and the United States,
+        so your information may be transferred to, stored in, and processed in
+        those countries. Where required, we rely on Standard Contractual
+        Clauses or equivalent safeguards in our contracts with these providers.
       </p>
 
       <h2>7. How long we keep your information</h2>
@@ -166,6 +166,8 @@ const updated = 'May 18, 2026';
         <li>The right to non-discrimination for exercising any of these rights.</li>
       </ul>
 
+      <p><strong>Ghana residents</strong> — we handle personal data in line with Ghana’s Data Protection Act, 2012 (Act 843). If we can’t resolve a concern you raise with us, you may lodge a complaint with the Data Protection Commission (<a href="https://www.dataprotection.org.gh" target="_blank" rel="noopener">dataprotection.org.gh</a>).</p>
+
       <p>
         We respond to verifiable requests within 30 days (or longer, where the
         law allows, with notice).
@@ -174,8 +176,9 @@ const updated = 'May 18, 2026';
       <h2>9. Security</h2>
       <p>
         We use industry-standard safeguards including encryption in transit
-        (TLS) and at rest, hashed passwords, scoped access controls,
-        rate-limiting, and ongoing monitoring. No system is 100% secure — if
+        (TLS) and at rest, short-lived one-time sign-in codes, scoped access
+        controls, rate-limiting, and ongoing monitoring. No system is 100%
+        secure — if
         we ever experience a breach affecting your data, we will notify you
         and the appropriate regulators as required by law.
       </p>
@@ -183,8 +186,9 @@ const updated = 'May 18, 2026';
       <h2>10. Children</h2>
       <p>
         Luvmood is strictly for users <strong>18 years or older</strong>. We
-        verify date of birth at signup, use age estimation on profile photos,
-        and act on every report of a suspected minor. If you believe a minor
+        verify date of birth at signup, our photo moderation flags images that
+        appear to involve minors, and we act on every report of a suspected
+        minor. If you believe a minor
         is using Luvmood, please email <a href="mailto:safety@luvmood.com">safety@luvmood.com</a> immediately.
       </p>
 
