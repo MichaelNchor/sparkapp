@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" style="isolation:isolate">
+  <title>Luvmood — App icon</title>
+  <defs>
+<linearGradient id="d0" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffb27a"/><stop offset="1" stop-color="#ff5e7d"/></linearGradient>
+    <linearGradient id="d1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff7a5f"/><stop offset="1" stop-color="#e01f6b"/></linearGradient>
+    <linearGradient id="d2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fd297b"/><stop offset="1" stop-color="#b21559"/></linearGradient>
+  </defs>
+  <rect width="240" height="240" rx="54" fill="#ffffff"/>
+  <g transform="translate(-13 -18) scale(1.11)">
+<g style="mix-blend-mode:multiply">
+    <rect x="84" y="116" width="72" height="72" rx="24" transform="rotate(45 120 152)" fill="url(#d1)" opacity=".95"/>
+    <rect x="55" y="65" width="72" height="72" rx="24" transform="rotate(45 91 101)" fill="url(#d0)" opacity=".95"/>
+    <rect x="113" y="65" width="72" height="72" rx="24" transform="rotate(45 149 101)" fill="url(#d2)" opacity=".95"/>
+  </g>
+  </g>
+</svg>
