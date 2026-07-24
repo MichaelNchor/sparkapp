@@ -411,6 +411,11 @@ const Shield = 'M12 2 4 5v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V5z';
     .lp .trustline { gap: 10px; }
     .lp .trustline__dot { display: none; }
     .lp .trustline span { width: 100%; justify-content: center; }
+    /* store badges stay side by side on mobile — no wrap, shrink to fit */
+    .lp .stores { flex-wrap: nowrap; gap: 10px; max-width: 430px; margin-inline: auto; }
+    .lp .store { flex: 1 1 0; min-width: 0; justify-content: center; gap: 8px; padding: 11px 10px; }
+    .lp .store svg { width: 24px; height: 24px; }
+    .lp .store strong { font-size: 15px; white-space: nowrap; }
   }
   @media (prefers-reduced-motion: reduce) {
     .lp .reveal { opacity: 1; transform: none; filter: none; transition: none; }
